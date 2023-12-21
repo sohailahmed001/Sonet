@@ -1,1 +1,1 @@
-export const TITLE = "MY APP";
+export const TITLE = "Sonet";
