@@ -1,0 +1,18 @@
+<div class="sonet-container">
+    <div class="header">
+        <app-sonet-header></app-sonet-header>
+    </div>
+    <div class="layout-body">
+        <div class="sidemenu">
+            <p-panelMenu [model]="sideMenuItems" [multiple]="false">
+            </p-panelMenu>
+        </div>
+        <div class="content">
+            <div>
+                <p-toast [style]="{'margin-top': '40px'}"></p-toast>
+                <p-messages [(value)]="utilsService.errorMessages" [enableService]="false"></p-messages>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

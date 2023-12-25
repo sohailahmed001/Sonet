@@ -23,6 +23,10 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SonetLayoutComponent } from './components/sonet-layout/sonet-layout/sonet-layout.component';
+import { SonetHomeComponent } from './components/sonet/sonet-home/sonet-home.component';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { SonetHeaderComponent } from './components/sonet-layout/sonet-header/sonet-header.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EditUserComponent,
     SearchRoleComponent,
     ManageAuthoritiesComponent,
-    EditRoleComponent
+    EditRoleComponent,
+    SonetLayoutComponent,
+    SonetHomeComponent,
+    SonetHeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +54,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     MultiSelectModule,
     DialogModule,
-    ToastModule
+    ToastModule,
+    PanelMenuModule
   ],
   providers: [
     {

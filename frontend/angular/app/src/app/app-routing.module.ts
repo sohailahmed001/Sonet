@@ -10,6 +10,8 @@ import { ManageAuthoritiesComponent } from './components/manage-authorities/mana
 import { AuthGuard } from './routeguards/auth.routeguard';
 import { SearchRoleComponent } from './components/search-role/search-role.component';
 import { EditRoleComponent } from './components/edit-role/edit-role.component';
+import { SonetLayoutComponent } from './components/sonet-layout/sonet-layout/sonet-layout.component';
+import { SonetHomeComponent } from './components/sonet/sonet-home/sonet-home.component';
 
 const routes: Routes = [
   {
@@ -52,6 +54,16 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       
+    ]
+  },
+  {
+    path: 'sonet',
+    component: SonetLayoutComponent,
+    children: [
+      {
+        path: 'home',
+        component: SonetHomeComponent,
+      },
     ]
   },
   {

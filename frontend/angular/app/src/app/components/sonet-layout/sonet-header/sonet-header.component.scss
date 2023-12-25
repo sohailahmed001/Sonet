@@ -1,0 +1,33 @@
+.sonet-header {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    padding: 0.2rem 2rem;
+}
+
+.logo{
+    height: 60px;
+    display: flex;
+    background-color: var(--primary-theme-color);
+    align-items: center;
+}
+
+.right {
+    padding-top: 0.7rem;
+    padding-left: 1.5rem;
+    width: 100%;
+}
+
+.p-input-icon-left {
+    width: calc(100% - 250px);
+}
+
+.p-inputtext {
+    background-color: var(--primary-theme-color);
+    border: none;
+}
+
+.p-inputtext:enabled:focus {
+    box-shadow: none;
+    border-bottom: 1px solid var(--secondary-theme-color);
+}

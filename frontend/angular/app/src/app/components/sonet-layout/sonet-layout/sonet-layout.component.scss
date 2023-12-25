@@ -1,0 +1,55 @@
+.sonet-container {
+    background-color: var(--primary-color);
+}
+
+.layout-body {
+    width: 100%;
+    display: flex;
+    padding: 1rem 2rem;
+}
+
+.sidemenu {
+    width: 40px;
+}
+
+::ng-deep {
+    .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
+        background-color: var(--primary-color);
+    }
+    .p-panelmenu .p-panelmenu-panel:first-child {
+        .p-panelmenu-header .p-panelmenu-header-content a.p-panelmenu-header-action {
+            border-top-left-radius: 30px !important;
+            border-top-right-radius: 30px !important;
+        }
+    }
+
+    .p-panelmenu .p-panelmenu-panel:last-child {
+        .p-panelmenu-header .p-panelmenu-header-content a.p-panelmenu-header-action {
+            border-bottom-left-radius: 30px !important;
+            border-bottom-right-radius: 30px !important;
+        }
+    }
+
+    a.p-panelmenu-header-action {
+        background-color: #1A1E1F;
+        transition: 400ms !important;
+    }
+
+    a.p-panelmenu-header-action:hover {
+        background-color: var(--secondary-theme-color);
+    }
+
+    .p-highlight .p-panelmenu-header-content a.p-panelmenu-header-action {
+        background-color: var(--secondary-theme-color);
+    }
+
+    .fa {
+        color: rgb(235, 232, 232) !important;
+    }
+}
+
+.content {
+    flex-grow: 1;
+    padding: 0 2rem;
+    height: 90vh;
+}

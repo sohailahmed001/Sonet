@@ -1,0 +1,50 @@
+.home-container {
+    color: white;
+}
+
+.album-container {
+    display: flex;
+}
+
+.album-card {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    margin-right: 1.7rem;
+    padding: 0.8rem;
+}
+
+.album-img-div {
+    width: 160px;
+    height: 160px;
+    background-color: var(--primary-theme-color);
+    align-items: center;
+}
+
+.album-img {
+    width: inherit;
+    border-radius: 15%;
+    border-style: double;
+}
+
+.album-card:hover {
+    .album-img {
+        border: 3px double var(--secondary-theme-color)
+    }
+}
+
+.description {
+    font-size: 12px;
+    line-height: 1rem;
+}
+
+.title {
+    display: block;
+    color: rgb(235, 235, 235);
+}
+
+.artist {
+    display: block;
+    color: rgb(123, 122, 122);
+}
