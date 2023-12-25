@@ -48,3 +48,52 @@
     display: block;
     color: rgb(123, 122, 122);
 }
+
+.song-list {
+    margin-top: 2rem;
+    font-size: 12px;
+    font-weight: 200;
+}
+
+.song-item {
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(44, 44, 44);
+    padding: 0.5rem;
+    padding-right: 1.5rem;
+    border-radius: 15px;
+    background: rgba(51, 55, 59, 0.37);
+    transition-duration: 200ms;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.song-item:hover {
+    border: 1px solid var(--secondary-theme-color);
+    transform: scale(1.02)
+}
+
+.song-img-div {
+    width: 30px;
+    height: 30px;
+    align-items: center;
+}
+
+.song-img {
+    width: inherit;
+    border-radius: 15%;
+}
+
+.s-first {
+    flex: 0 0 200px;
+}
+
+.s-title {
+    flex: 0 0 440px;
+}
+
+.s-dur {
+    flex: 0 0 100px;
+}

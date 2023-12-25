@@ -19,19 +19,16 @@ export class SonetLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.sideMenuItems = [
       {
-        label: '',
         icon: 'fa fa-home',
         routerLink: '/sonet/home',
         expanded: this.checkMenuActive('/sonet/home')
       },
       {
-        label: '',
         icon: 'fa fa-coffee',
         routerLink: '/sonet/dummy',
         expanded: this.checkMenuActive('/sonet/dummy')
       },
       {
-        label: '',
         icon: 'fa fa-leaf',
         routerLink: '/sonet/dummy',
         expanded: this.checkMenuActive('/sonet/dummy')

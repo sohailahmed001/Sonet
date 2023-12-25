@@ -1,11 +1,10 @@
 <div class="sonet-container">
-    <div class="header">
+    <div class="sonet-header">
         <app-sonet-header></app-sonet-header>
     </div>
     <div class="layout-body">
         <div class="sidemenu">
-            <p-panelMenu [model]="sideMenuItems" [multiple]="false">
-            </p-panelMenu>
+            <p-panelMenu [model]="sideMenuItems" [multiple]="false"></p-panelMenu>
         </div>
         <div class="content">
             <div>
@@ -14,5 +13,8 @@
                 <router-outlet></router-outlet>
             </div>
         </div>
+    </div>
+    <div class="sonet-footer">
+        <app-song-playing></app-song-playing>
     </div>
 </div>

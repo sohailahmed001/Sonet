@@ -1,15 +1,25 @@
 .sonet-container {
     background-color: var(--primary-color);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.sonet-header {
+    flex: 0 0 auto;
 }
 
 .layout-body {
     width: 100%;
     display: flex;
     padding: 1rem 2rem;
+    padding-bottom: 0;
+    overflow: hidden;
 }
 
 .sidemenu {
-    width: 40px;
+    flex: 0 0 40px;
+    overflow-y: auto;
 }
 
 ::ng-deep {
@@ -51,5 +61,10 @@
 .content {
     flex-grow: 1;
     padding: 0 2rem;
-    height: 90vh;
+    height: inherit;
+    overflow: auto;
+}
+
+.sonet-footer {
+    flex: 0 0 auto;
 }

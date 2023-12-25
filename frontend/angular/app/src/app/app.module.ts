@@ -27,6 +27,8 @@ import { SonetLayoutComponent } from './components/sonet-layout/sonet-layout/son
 import { SonetHomeComponent } from './components/sonet/sonet-home/sonet-home.component';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { SonetHeaderComponent } from './components/sonet-layout/sonet-header/sonet-header.component';
+import { SongPlayingComponent } from './components/sonet-layout/song-playing/song-playing.component';
+import { SliderModule } from 'primeng/slider';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { SonetHeaderComponent } from './components/sonet-layout/sonet-header/son
     EditRoleComponent,
     SonetLayoutComponent,
     SonetHomeComponent,
-    SonetHeaderComponent
+    SonetHeaderComponent,
+    SongPlayingComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { SonetHeaderComponent } from './components/sonet-layout/sonet-header/son
     MultiSelectModule,
     DialogModule,
     ToastModule,
-    PanelMenuModule
+    PanelMenuModule,
+    SliderModule
   ],
   providers: [
     {

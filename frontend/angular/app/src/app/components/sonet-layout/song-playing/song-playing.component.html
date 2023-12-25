@@ -1,0 +1,24 @@
+<div class="now-playing-container">
+    <div class="details">
+        <div class="song-img-div">
+            <img class="song-img" src="assets/images/album4.jpg" alt="logo" >
+        </div>
+        <div class="description">
+            <div class="s-name">
+                <span>Bird set free</span>
+            </div>
+            <div class="s-artist">
+                <span>Sia</span>
+            </div>
+        </div>
+    </div>
+    <div class="controls">
+        <audio #audioPlayer [src]="audioSamplePath"></audio>
+        <div class="icon-controls">
+            <i [ngClass]="{'control-active': controlActive == 'play'}" class="fa fa-play" (click)="play()"></i>
+            <i [ngClass]="{'control-active': controlActive == 'pause'}" class="fa fa-pause" (click)="pause()"></i>
+            <i [ngClass]="{'control-active': controlActive == 'stop'}" class="fa fa-stop" (click)="stop()"></i>
+        </div>
+        <p-slider [(ngModel)]="sliderValue"></p-slider>
+    </div>
+</div>
