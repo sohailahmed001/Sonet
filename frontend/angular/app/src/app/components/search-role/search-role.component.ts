@@ -44,7 +44,15 @@ export class SearchRoleComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.utilsService.handleSuccess("Roles Deleted Successfully");
+        this.utilsService.deleteObjects('api/roles', rowData.id).subscribe({
+          next: (data: any) => {
+            this.utilsService.handleSuccessMessage('Role deleted successfully');
+            this.getRoles();
+          },
+          error: (error: any) => {
+            this.utilsService.handleError(error);
+          }
+        })
       }
     });
   }

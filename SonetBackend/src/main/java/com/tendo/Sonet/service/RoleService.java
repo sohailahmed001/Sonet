@@ -49,4 +49,10 @@ public class RoleService
         }
         return this.roleRepository.save(newRole);
     }
+
+    public void deleteRole(Long id)
+    {
+        Role role = getRoleByIdWithAuthorities(id);
+        roleRepository.delete(role);
+    }
 }

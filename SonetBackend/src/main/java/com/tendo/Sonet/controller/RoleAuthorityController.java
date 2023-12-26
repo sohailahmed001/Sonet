@@ -67,6 +67,19 @@ public class RoleAuthorityController
         return new ResponseEntity<Role>(role, HttpStatus.OK);
     }
 
+    @DeleteMapping("/roles/{id}")
+    public ResponseEntity<Boolean> deleteRole(@PathVariable Long id)
+    {
+        try
+        {
+            this.roleService.deleteRole(id);
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+        }
+        catch (Exception ex) {
+            throw new RuntimeException("Unable to delete authority due to " + ex.getMessage());
+        }
+    }
+
     @PostMapping("/roles")
     public ResponseEntity<Role> addRole(@RequestBody Role role)
     {
