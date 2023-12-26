@@ -5,10 +5,10 @@
     padding: 0.2rem 2rem;
 }
 
-.logo{
+.logo {
     height: 60px;
     display: flex;
-    background-color: var(--primary-theme-color);
+    background-color: transparent;
     align-items: center;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .p-inputtext {
-    background-color: var(--primary-theme-color);
+    background-color: transparent;
     border: none;
 }
 

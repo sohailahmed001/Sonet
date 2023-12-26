@@ -12,6 +12,7 @@ import { SearchRoleComponent } from './components/search-role/search-role.compon
 import { EditRoleComponent } from './components/edit-role/edit-role.component';
 import { SonetLayoutComponent } from './components/sonet-layout/sonet-layout/sonet-layout.component';
 import { SonetHomeComponent } from './components/sonet/sonet-home/sonet-home.component';
+import { AlbumDetailsComponent } from './components/sonet/album-details/album-details.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: SonetHomeComponent,
+      },
+      {
+        path: 'album-details',
+        component: AlbumDetailsComponent,
       },
     ]
   },

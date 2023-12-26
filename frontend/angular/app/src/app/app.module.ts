@@ -29,6 +29,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { SonetHeaderComponent } from './components/sonet-layout/sonet-header/sonet-header.component';
 import { SongPlayingComponent } from './components/sonet-layout/song-playing/song-playing.component';
 import { SliderModule } from 'primeng/slider';
+import { AlbumDetailsComponent } from './components/sonet/album-details/album-details.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SliderModule } from 'primeng/slider';
     SonetLayoutComponent,
     SonetHomeComponent,
     SonetHeaderComponent,
-    SongPlayingComponent
+    SongPlayingComponent,
+    AlbumDetailsComponent
   ],
   imports: [
     BrowserModule,

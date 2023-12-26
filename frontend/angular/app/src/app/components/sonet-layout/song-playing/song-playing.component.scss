@@ -1,25 +1,19 @@
 .now-playing-container {
     width: 100vw;
-    height: 125px;
     border-top: 1px solid rgba(255, 255, 255, 0.10);
-    background: var(--primary-color);
-    backdrop-filter: blur(15px);
     display: flex;
     color: white;
+    justify-content: center;
 }
 
 .details {
     flex: 0 0 250px;
     display: flex;
-    margin: auto;
-    margin-left: 6.4rem;
-    margin-right: 1rem;
     align-items: center;
 }
 
 .song-img-div {
-    width: 80px;
-    height: 80px;
+    width: 60px;
     align-items: center;
     background-color: var(--primary-color);
 }
@@ -45,8 +39,9 @@
 }
 
 .controls {
-    flex: 0 0 700px;
-    margin: 1rem;
+    flex: 0 0 800px;
+    margin-top: 0.3rem;
+    margin-bottom: 1rem;
 }
 
 .icon-controls {
@@ -54,7 +49,7 @@
     align-items: center;
     margin: auto;
     justify-content: center;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.7rem;
 }
 
 ::ng-deep {
@@ -70,7 +65,7 @@
 
     .icon-controls i {
         color: grey;
-        font-size: 20px;
+        font-size: 16px;
         margin: 1rem;
         transition-duration: 200ms;
     }
@@ -104,7 +99,7 @@
 .volume-container {
     flex: 0 0 300px;
     display: flex;
-    margin: 1rem;
+    margin-left: 1.5rem;
     align-items: center;
 }
 
