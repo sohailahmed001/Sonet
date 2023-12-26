@@ -1,28 +1,28 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-song-playing',
   templateUrl: './song-playing.component.html',
   styleUrls: ['./song-playing.component.scss']
 })
-export class SongPlayingComponent implements OnInit, AfterViewInit {
+export class SongPlayingComponent implements OnInit {
   @ViewChild('audioPlayer') audioPlayerRef: ElementRef;
   audioSamplePath: string = 'assets/sunshine-bliss.mp3' // For Testing
   controlActive: string;
-  volumeValue: number = 20;
   audioDuration = 0;
   currentTrackTime = 0;
+  currentVolume = 0.4;
   isSeeking = false;
+  isSeekingVolume = false;
 
   constructor() {}
 
   ngOnInit(): void {
   }
 
-  ngAfterViewInit() {
-    this.audioPlayerRef.nativeElement.addEventListener('loadedmetadata', () => {
-      this.audioDuration = this.audioPlayerRef.nativeElement.duration;
-    });
+  setInitialValues() {
+    this.audioDuration = this.audioPlayerRef.nativeElement.duration;
+    this.audioPlayerRef.nativeElement.volume = this.currentVolume; 
   }
 
   play() {
@@ -59,5 +59,16 @@ export class SongPlayingComponent implements OnInit, AfterViewInit {
   onSeekEnd(event: any) {
     console.log('End', event)
     this.isSeeking = false;
+  }
+
+  changeVolume(event: any) {
+    this.isSeekingVolume = true;
+    const targetVolume = parseFloat(event.value);
+    this.audioPlayerRef.nativeElement.volume = targetVolume;
+    this.currentVolume = targetVolume;
+  }
+
+  onVolumeSeekEnd(event: any) {
+    this.isSeekingVolume = false;
   }
 }

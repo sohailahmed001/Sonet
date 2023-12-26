@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="controls">
-        <audio #audioPlayer [src]="audioSamplePath" (timeupdate)="updateSlider()"></audio>
+        <audio #audioPlayer [src]="audioSamplePath" (timeupdate)="updateSlider()" (loadedmetadata)="setInitialValues()"></audio>
         <div class="icon-controls">
             <i [ngClass]="{'control-active': controlActive == 'play'}" class="fa fa-play" (click)="play()"></i>
             <i [ngClass]="{'control-active': controlActive == 'pause'}" class="fa fa-pause" (click)="pause()"></i>
@@ -22,7 +22,7 @@
         <p-slider [min]="0" [max]="audioDuration" [(ngModel)]="currentTrackTime" (onChange)="seekAudio($event)" (onSlideEnd)="onSeekEnd($event)"></p-slider>
     </div>
     <div class="volume-container">
-        <span [style.display]="'block'"><i [class]="volumeValue ? 'fas fa-volume-up' : 'fas fa-volume-mute'"></i></span>
-        <p-slider [(ngModel)]="volumeValue"></p-slider>
+        <span [style.display]="'block'"><i [class]="currentVolume ? 'fas fa-volume-up' : 'fas fa-volume-mute'"></i></span>
+        <p-slider [min]="0" [max]="1" [step]="0.1" [(ngModel)]="currentVolume" (onChange)="changeVolume($event)" (onSlideEnd)="onVolumeSeekEnd($event)"></p-slider>
     </div>
 </div>
