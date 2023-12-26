@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { UtilsService } from 'src/app/utils/utils.service';
 
@@ -10,35 +9,26 @@ import { UtilsService } from 'src/app/utils/utils.service';
 })
 export class SonetLayoutComponent implements OnInit {
   sideMenuItems: MenuItem[] = [];
-  backgroundImage: string = 'assets/images/album1.jpg';
+  backgroundImage: string = 'assets/images/album2.jpg';
 
   constructor(
-    public utilsService: UtilsService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) {}
+    public utilsService: UtilsService) {}
 
   ngOnInit(): void {
     this.sideMenuItems = [
       {
         icon: 'fa fa-home',
         routerLink: '/sonet/home',
-        expanded: this.checkMenuActive('/sonet/home')
       },
       {
         icon: 'fa fa-coffee',
         routerLink: '/sonet/dummy',
-        expanded: this.checkMenuActive('/sonet/dummy')
       },
       {
         icon: 'fa fa-leaf',
         routerLink: '/sonet/dummy',
-        expanded: this.checkMenuActive('/sonet/dummy')
       }
     ];
-  }
-
-  checkMenuActive(route: string): boolean {
-    return this.router.url == route;
   }
 
   getBackgroundStyle(): string {

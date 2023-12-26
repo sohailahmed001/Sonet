@@ -14,13 +14,14 @@
 
 .song-img-div {
     width: 60px;
+    height: 60px;
     align-items: center;
     background-color: var(--primary-color);
 }
 
 .song-img {
     width: inherit;
-    border-radius: 15%;
+    border-radius: 18px;
 }
 
 .description {

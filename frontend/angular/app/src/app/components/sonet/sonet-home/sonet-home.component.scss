@@ -28,10 +28,8 @@
     border-style: double;
 }
 
-.album-card:hover {
-    .album-img {
-        border: 3px double var(--secondary-theme-color)
-    }
+.album-img:hover {
+    border: 3px double var(--secondary-theme-color)
 }
 
 .description {

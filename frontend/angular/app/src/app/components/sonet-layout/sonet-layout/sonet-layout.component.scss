@@ -27,6 +27,7 @@
     .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
         background-color: transparent;
     }
+
     .p-panelmenu .p-panelmenu-panel:first-child {
         .p-panelmenu-header .p-panelmenu-header-content a.p-panelmenu-header-action {
             border-top-left-radius: 30px !important;
@@ -41,16 +42,16 @@
         }
     }
 
+    .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-menuitem-link-active {
+        background-color: var(--secondary-theme-color);
+    }
+
     a.p-panelmenu-header-action {
         background-color: #1A1E1F;
         transition: 400ms !important;
     }
 
     a.p-panelmenu-header-action:hover {
-        background-color: var(--secondary-theme-color);
-    }
-
-    .p-highlight .p-panelmenu-header-content a.p-panelmenu-header-action {
         background-color: var(--secondary-theme-color);
     }
 

@@ -35,9 +35,29 @@
 .title {
     font-size: 26px;
     font-weight: 500;
-    color: var(--secondary-theme-color);
+    color: #85c4c1;
 }
 
 .buttons {
     display: flex;
+}
+
+.btn {
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    border-radius: 32px;
+    margin-right: 1rem;
+}
+
+::ng-deep {
+    .btn:hover {
+        .p-button-icon, .p-button-label{
+            color: #85c4c1;
+        }
+        
+        svg {
+            fill: #85c4c1;
+        }
+    }
 }
