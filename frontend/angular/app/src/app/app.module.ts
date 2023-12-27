@@ -32,6 +32,7 @@ import { SliderModule } from 'primeng/slider';
 import { AlbumDetailsComponent } from './components/sonet/album-details/album-details.component';
 import { MyPlaylistsComponent } from './components/sonet/my-playlists/my-playlists.component';
 import { PlaylistListIconComponent } from './svg/playlist-list-icon.component';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { PlaylistListIconComponent } from './svg/playlist-list-icon.component';
     DialogModule,
     ToastModule,
     PanelMenuModule,
-    SliderModule
+    SliderModule,
+    CarouselModule
   ],
   providers: [
     {

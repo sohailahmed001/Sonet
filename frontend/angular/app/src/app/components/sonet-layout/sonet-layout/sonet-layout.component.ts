@@ -43,14 +43,13 @@ export class SonetLayoutComponent implements OnInit {
     ];
   }
 
-  resetBackground(imagePath) {
+  resetBackground(imagePath: string) {
     this.backgroundStyle = this.getBackgroundStyle(imagePath);
     this.cdr.detectChanges();
   }
 
-  getBackgroundStyle(imagePath): string {
-    const path: string = ASSET_IMAGES_PATH + (imagePath || 'album2.jpg') ;
-
+  getBackgroundStyle(imagePath: string): string {
+    const path: string = imagePath ? ASSET_IMAGES_PATH + imagePath : null;
     if(path) {
       const gradient = 'linear-gradient(180deg, rgba(29, 33, 35, 0.70) 0%, #1D2123 61.48%)';
       const imageUrl = `url(${path})`;

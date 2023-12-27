@@ -1,5 +1,38 @@
 <div class="text-white">
-    <h3 style="margin-top: 0;">ALBUMS</h3>
+  <div class="top-section flex ml-3">
+    <div class="carousel-container mb-5">
+      <p-carousel [value]="carouselImages" [numVisible]="1" [numScroll]="1" [responsiveOptions]="responsiveOptions"
+                  [circular]="true" [showIndicators]="false" [showNavigators]="false" [autoplayInterval]="3000">
+        <ng-template let-imageItem pTemplate="item">
+            <div class="image-item">
+              <div class="album-img-div">
+                <img [src]="imageItem.src"[alt]="imageItem.name" class="album-img" />
+              </div>
+            </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+    <div class="most-liked ml-6">
+      <span class="block text-lg font-medium  mb-3">Most Liked</span>
+      <div class="ml-album-container p-2 mb-3 border-round-xl" *ngFor="let album of mostLikedAlbums">
+        <div class="flex align-items-center">
+          <div class="album-img-div mr-3">
+            <img class="album-img" [src]="album.image" alt="Album Image" [routerLink]="album.routerLink">
+          </div>
+          <div [style.font-weight]="'200'">
+            <span class="block mb-1" [style.font-size]="'13.5px'">{{ album.title }}</span>
+            <span class="block text-500" [style.font-size]="'11px'">{{ album.artist }}</span>
+          </div>
+          <div class="like flex justify-content-center align-items-center" (click)="album.liked = !album.liked">
+            <i [style.color]="album.liked ? 'red' : 'white'" [class]="album.liked ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="albums-list">
+    <h3 class="mt-0 mb-0 ml-3 font-medium">New releases</h3>
     <div class="flex flex-wrap">
       <div class="flex flex-column align-items-start gap-2 p-3" *ngFor="let album of albums">
         <div class="album-img-div">
@@ -10,8 +43,9 @@
           <span class="block text-600">{{ album.artist }}</span>
         </div>
       </div>
+    </div>
   </div>
-    <div class="song-list">
+    <!-- <div class="song-list">
       <div class="song-item" *ngFor="let song of songs">
         <div class="s-first">
           <div class="song-img-div">
@@ -28,5 +62,5 @@
           <i class="fa fa-ellipsis-v" style="font-size: 13px;"></i>
         </div>
       </div>
-    </div>
-  </div>
+    </div> -->
+</div>

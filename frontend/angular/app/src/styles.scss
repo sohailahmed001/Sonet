@@ -4,6 +4,8 @@
 
 :root {
     --song-playing-height: 86px;
+    --carousel-width: 600px;
+    --carousel-height: 334px;
 }
 
 body,
@@ -257,8 +259,8 @@ a.p-panelmenu-header-action:hover {
 }
 
 .album-img-div {
-    width: 160px;
-    height: 160px;
+    width: 145px;
+    height: 145px;
     background-color: transparent;
     align-items: center;
 }
@@ -269,6 +271,8 @@ a.p-panelmenu-header-action:hover {
     border-style: double;
     height: inherit;
     object-fit: cover;
+    transition-duration: 500ms;
+    cursor: pointer;
 }
 
 .album-img:hover {

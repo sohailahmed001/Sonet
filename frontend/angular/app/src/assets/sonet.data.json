@@ -3,38 +3,44 @@
     "title": "Liked Songs",
     "artist": "Your Favourites",
     "image": "assets/images/liked-songs.jpg",
-    "routerLink": "/sonet/album-details"
+    "routerLink": "/sonet/album-details",
+    "liked": false
   },
   "albums": [
     {
       "title": "Bird set free",
       "artist": "Sia",
       "image": "assets/images/album1.jpg",
-      "routerLink": "/sonet/album-details"
+      "routerLink": "/sonet/album-details",
+      "liked": false
     },
     {
       "title": "You want it darker",
       "artist": "Leonard Cohen",
       "image": "assets/images/album2.jpg",
-      "routerLink": "/sonet/album-details"
+      "routerLink": "/sonet/album-details",
+      "liked": true
     },
     {
       "title": "Iron",
       "artist": "Woodkid",
       "image": "assets/images/album3.jpg",
-      "routerLink": "/sonet/album-details"
+      "routerLink": "/sonet/album-details",
+      "liked": true
     },
     {
       "title": "Golden Age",
       "artist": "Woodkid",
       "image": "assets/images/album4.jpg",
-      "routerLink": "/sonet/album-details"
+      "routerLink": "/sonet/album-details",
+      "liked": false
     },
     {
       "title": "Don't stop me now",
       "artist": "Queen",
       "image": "assets/images/album5.jpg",
-      "routerLink": "/sonet/album-details"
+      "routerLink": "/sonet/album-details",
+      "liked": false
     }
   ],
   "songs": [
