@@ -13,6 +13,7 @@ import { EditRoleComponent } from './components/edit-role/edit-role.component';
 import { SonetLayoutComponent } from './components/sonet-layout/sonet-layout/sonet-layout.component';
 import { SonetHomeComponent } from './components/sonet/sonet-home/sonet-home.component';
 import { AlbumDetailsComponent } from './components/sonet/album-details/album-details.component';
+import { MyPlaylistsComponent } from './components/sonet/my-playlists/my-playlists.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,10 @@ const routes: Routes = [
       {
         path: 'album-details',
         component: AlbumDetailsComponent,
+      },
+      {
+        path: 'my-playlists',
+        component: MyPlaylistsComponent,
       },
     ]
   },

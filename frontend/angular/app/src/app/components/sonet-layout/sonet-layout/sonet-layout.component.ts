@@ -22,7 +22,7 @@ export class SonetLayoutComponent implements OnInit {
       },
       {
         icon: 'fa fa-coffee',
-        routerLink: '/sonet/dummy',
+        routerLink: '/sonet/my-playlists',
       },
       {
         icon: 'fa fa-leaf',

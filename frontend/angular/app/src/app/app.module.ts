@@ -30,6 +30,7 @@ import { SonetHeaderComponent } from './components/sonet-layout/sonet-header/son
 import { SongPlayingComponent } from './components/sonet-layout/song-playing/song-playing.component';
 import { SliderModule } from 'primeng/slider';
 import { AlbumDetailsComponent } from './components/sonet/album-details/album-details.component';
+import { MyPlaylistsComponent } from './components/sonet/my-playlists/my-playlists.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AlbumDetailsComponent } from './components/sonet/album-details/album-de
     SonetHomeComponent,
     SonetHeaderComponent,
     SongPlayingComponent,
-    AlbumDetailsComponent
+    AlbumDetailsComponent,
+    MyPlaylistsComponent
   ],
   imports: [
     BrowserModule,

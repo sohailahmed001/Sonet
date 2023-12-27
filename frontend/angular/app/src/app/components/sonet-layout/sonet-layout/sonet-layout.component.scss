@@ -70,6 +70,8 @@
 .sonet-footer {
     flex: 0 0 auto;
     overflow: hidden;
+    position: fixed;
+    bottom: 0px;
 }
 
 ::-webkit-scrollbar {
