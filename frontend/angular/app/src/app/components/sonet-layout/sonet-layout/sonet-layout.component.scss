@@ -71,3 +71,12 @@
     flex: 0 0 auto;
     overflow: hidden;
 }
+
+::-webkit-scrollbar {
+    width: 0px; /* width of the scrollbar */
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }

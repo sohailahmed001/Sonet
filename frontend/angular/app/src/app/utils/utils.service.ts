@@ -94,4 +94,9 @@ export class UtilsService {
     }
     return headers;
   }
+
+  // should be in assests always
+  getDataFromJSON(fileName): Observable<any> {
+    return this.httpClient.get<any>('assets/' + fileName);
+  }
 }

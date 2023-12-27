@@ -1,137 +1,32 @@
 <div class="home-container">
     <h3 style="margin-top: 0;">ALBUMS</h3>
     <div class="album-container">
-        <div class="album-card">
-            <div class="album-img-div">
-                <img class="album-img" src="assets/images/album1.jpg" alt="logo" [routerLink]="'/sonet/album-details'" >
-            </div>
-            <div class="description">
-                <span class="title">Bird set free</span>
-                <span class="artist">Sia</span>
-            </div>
+      <div class="album-card" *ngFor="let album of albums">
+        <div class="album-img-div">
+          <img class="album-img" [src]="album.image" alt="Album Image" [routerLink]="album.routerLink">
         </div>
-
-        <div class="album-card">
-            <div class="album-img-div">
-                <img class="album-img" src="assets/images/album2.jpg" alt="logo" [routerLink]="'/sonet/album-details'" >
-            </div>
-            <div class="description">
-                <span class="title">You want it darker</span>
-                <span class="artist">Leonard Cohen</span>
-            </div>
+        <div class="description">
+          <span class="title">{{ album.title }}</span>
+          <span class="artist">{{ album.artist }}</span>
         </div>
-
-        <div class="album-card">
-            <div class="album-img-div">
-                <img class="album-img" src="assets/images/album3.jpg" alt="logo" [routerLink]="'/sonet/album-details'" >
-            </div>
-            <div class="description">
-                <span class="title">Iron</span>
-                <span class="artist">Woodkid</span>
-            </div>
-        </div>
-
-        <div class="album-card">
-            <div class="album-img-div">
-                <img class="album-img" src="assets/images/album4.jpg" alt="logo" [routerLink]="'/sonet/album-details'" >
-            </div>
-            <div class="description">
-                <span class="title">Golden Age</span>
-                <span class="artist">Woodkid</span>
-            </div>
-        </div>
-
-        <div class="album-card">
-            <div class="album-img-div">
-                <img class="album-img" src="assets/images/album5.jpg" alt="logo" [routerLink]="'/sonet/album-details'" >
-            </div>
-            <div class="description">
-                <span class="title">Don't stop me now</span>
-                <span class="artist">Queen</span>
-            </div>
-        </div>
+      </div>
     </div>
-
     <div class="song-list">
-        <div class="song-item">
-            <div class="s-first">
-                <div class="song-img-div">
-                    <img class="song-img" src="assets/images/album2.jpg" alt="logo" >
-                </div>
-            </div>
-            <div class="s-title">
-                <span>Bird set free - Sia</span>
-            </div>
-            <div class="s-dur">
-                <span>4:56</span>
-            </div>
-            <div>
-                <i class="fa fa-ellipsis-v" style="font-size: 13px;"></i>
-            </div>
+      <div class="song-item" *ngFor="let song of songs">
+        <div class="s-first">
+          <div class="song-img-div">
+            <img class="song-img" [src]="song.image" alt="Song Image">
+          </div>
         </div>
-        <div class="song-item">
-            <div class="s-first">
-                <div class="song-img-div">
-                    <img class="song-img" src="assets/images/album4.jpg" alt="logo" >
-                </div>
-            </div>
-            <div class="s-title">
-                <span>Alive - Sia</span>
-            </div>
-            <div class="s-dur">
-                <span>3:45</span>
-            </div>
-            <div>
-                <i class="fa fa-ellipsis-v" style="font-size: 13px;"></i>
-            </div>
+        <div class="s-title">
+          <span>{{ song.title }}</span>
         </div>
-        <div class="song-item">
-            <div class="s-first">
-                <div class="song-img-div">
-                    <img class="song-img" src="assets/images/album3.jpg" alt="logo" >
-                </div>
-            </div>
-            <div class="s-title">
-                <span>The Greatest - Sia</span>
-            </div>
-            <div class="s-dur">
-                <span>4:49</span>
-            </div>
-            <div>
-                <i class="fa fa-ellipsis-v" style="font-size: 13px;"></i>
-            </div>
+        <div class="s-dur">
+          <span>{{ song.duration }}</span>
         </div>
-        <div class="song-item">
-            <div class="s-first">
-                <div class="song-img-div">
-                    <img class="song-img" src="assets/images/album1.jpg" alt="logo" >
-                </div>
-            </div>
-            <div class="s-title">
-                <span>Elastic Heart - Sia</span>
-            </div>
-            <div class="s-dur">
-                <span>5:38</span>
-            </div>
-            <div>
-                <i class="fa fa-ellipsis-v" style="font-size: 13px;"></i>
-            </div>
+        <div>
+          <i class="fa fa-ellipsis-v" style="font-size: 13px;"></i>
         </div>
-        <div class="song-item">
-            <div class="s-first">
-                <div class="song-img-div">
-                    <img class="song-img" src="assets/images/album1.jpg" alt="logo" >
-                </div>
-            </div>
-            <div class="s-title">
-                <span>Elastic Heart - Sia</span>
-            </div>
-            <div class="s-dur">
-                <span>5:38</span>
-            </div>
-            <div>
-                <i class="fa fa-ellipsis-v" style="font-size: 13px;"></i>
-            </div>
-        </div>
+      </div>
     </div>
-</div>
+  </div>
