@@ -201,6 +201,9 @@ a.p-panelmenu-header-action:hover {
     max-width: 80%;
 }
 
+
+//<<<-------------------------------------------- SONET SCSS---------------------------------------------------->>> 
+
 .song-list {
     margin-top: 2rem;
     font-size: 12px;
@@ -248,4 +251,23 @@ a.p-panelmenu-header-action:hover {
 
 .s-dur {
     flex: 0 0 100px;
+}
+
+.album-img-div {
+    width: 160px;
+    height: 160px;
+    background-color: transparent;
+    align-items: center;
+}
+
+.album-img {
+    width: inherit;
+    border-radius: 15%;
+    border-style: double;
+    height: inherit;
+    object-fit: cover;
+}
+
+.album-img:hover {
+    border: 3px double var(--secondary-theme-color)
 }

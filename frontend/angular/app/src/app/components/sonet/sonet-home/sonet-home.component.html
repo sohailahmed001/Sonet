@@ -1,16 +1,16 @@
-<div class="home-container">
+<div class="text-white">
     <h3 style="margin-top: 0;">ALBUMS</h3>
-    <div class="album-container">
-      <div class="album-card" *ngFor="let album of albums">
+    <div class="flex flex-wrap">
+      <div class="flex flex-column align-items-start gap-2 p-3" *ngFor="let album of albums">
         <div class="album-img-div">
           <img class="album-img" [src]="album.image" alt="Album Image" [routerLink]="album.routerLink">
         </div>
-        <div class="description">
-          <span class="title">{{ album.title }}</span>
-          <span class="artist">{{ album.artist }}</span>
+        <div class="text-xs">
+          <span class="block">{{ album.title }}</span>
+          <span class="block text-600">{{ album.artist }}</span>
         </div>
       </div>
-    </div>
+  </div>
     <div class="song-list">
       <div class="song-item" *ngFor="let song of songs">
         <div class="s-first">

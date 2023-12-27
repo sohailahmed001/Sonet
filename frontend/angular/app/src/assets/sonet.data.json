@@ -1,61 +1,67 @@
 {
-    "albums": [
-      {
-        "title": "Bird set free",
-        "artist": "Sia",
-        "image": "assets/images/album1.jpg",
-        "routerLink": "/sonet/album-details"
-      },
-      {
-        "title": "You want it darker",
-        "artist": "Leonard Cohen",
-        "image": "assets/images/album2.jpg",
-        "routerLink": "/sonet/album-details"
-      },
-      {
-        "title": "Iron",
-        "artist": "Woodkid",
-        "image": "assets/images/album3.jpg",
-        "routerLink": "/sonet/album-details"
-      },
-      {
-        "title": "Golden Age",
-        "artist": "Woodkid",
-        "image": "assets/images/album4.jpg",
-        "routerLink": "/sonet/album-details"
-      },
-      {
-        "title": "Don't stop me now",
-        "artist": "Queen",
-        "image": "assets/images/album5.jpg",
-        "routerLink": "/sonet/album-details"
-      }
-    ],
-    "songs": [
-      {
-        "title": "Bird set free - Sia",
-        "duration": "4:56",
-        "image": "assets/images/album2.jpg"
-      },
-      {
-        "title": "Alive - Sia",
-        "duration": "3:45",
-        "image": "assets/images/album4.jpg"
-      },
-      {
-        "title": "The Greatest - Sia",
-        "duration": "4:49",
-        "image": "assets/images/album3.jpg"
-      },
-      {
-        "title": "Elastic Heart - Sia",
-        "duration": "5:38",
-        "image": "assets/images/album1.jpg"
-      },
-      {
-        "title": "Elastic Heart - Sia",
-        "duration": "5:38",
-        "image": "assets/images/album1.jpg"
-      }
-    ]
-  }
+  "likedAlbum": {
+    "title": "Liked Songs",
+    "artist": "Your Favourites",
+    "image": "assets/images/liked-songs.jpg",
+    "routerLink": "/sonet/album-details"
+  },
+  "albums": [
+    {
+      "title": "Bird set free",
+      "artist": "Sia",
+      "image": "assets/images/album1.jpg",
+      "routerLink": "/sonet/album-details"
+    },
+    {
+      "title": "You want it darker",
+      "artist": "Leonard Cohen",
+      "image": "assets/images/album2.jpg",
+      "routerLink": "/sonet/album-details"
+    },
+    {
+      "title": "Iron",
+      "artist": "Woodkid",
+      "image": "assets/images/album3.jpg",
+      "routerLink": "/sonet/album-details"
+    },
+    {
+      "title": "Golden Age",
+      "artist": "Woodkid",
+      "image": "assets/images/album4.jpg",
+      "routerLink": "/sonet/album-details"
+    },
+    {
+      "title": "Don't stop me now",
+      "artist": "Queen",
+      "image": "assets/images/album5.jpg",
+      "routerLink": "/sonet/album-details"
+    }
+  ],
+  "songs": [
+    {
+      "title": "Bird set free - Sia",
+      "duration": "4:56",
+      "image": "assets/images/album2.jpg"
+    },
+    {
+      "title": "Alive - Sia",
+      "duration": "3:45",
+      "image": "assets/images/album4.jpg"
+    },
+    {
+      "title": "The Greatest - Sia",
+      "duration": "4:49",
+      "image": "assets/images/album3.jpg"
+    },
+    {
+      "title": "Elastic Heart - Sia",
+      "duration": "5:38",
+      "image": "assets/images/album1.jpg"
+    },
+    {
+      "title": "Elastic Heart - Sia",
+      "duration": "5:38",
+      "image": "assets/images/album1.jpg"
+    }
+  ]
+}

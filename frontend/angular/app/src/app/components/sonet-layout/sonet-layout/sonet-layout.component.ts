@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { ASSET_IMAGES_PATH } from 'src/app/utils/constant';
 import { UtilsService } from 'src/app/utils/utils.service';
 
 @Component({
@@ -9,20 +11,31 @@ import { UtilsService } from 'src/app/utils/utils.service';
 })
 export class SonetLayoutComponent implements OnInit {
   sideMenuItems: MenuItem[] = [];
-  backgroundImage: string = 'assets/images/album2.jpg';
+  backgroundStyle: any;
 
   constructor(
-    public utilsService: UtilsService) {}
+    public utilsService: UtilsService, 
+    public router: Router,
+    private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    this.resetBackground(null);
+
     this.sideMenuItems = [
       {
         icon: 'fa fa-home',
-        routerLink: '/sonet/home',
+        command: () => {
+          this.resetBackground(null);
+          this.router.navigate(['sonet/home'])
+        }
       },
       {
         icon: 'fa fa-coffee',
         routerLink: '/sonet/my-playlists',
+        command: () => {
+          this.resetBackground('playlist-bg.jpg');
+          this.router.navigate(['sonet/my-playlists'])
+        }
       },
       {
         icon: 'fa fa-leaf',
@@ -31,12 +44,20 @@ export class SonetLayoutComponent implements OnInit {
     ];
   }
 
-  getBackgroundStyle(): string {
-    if(this.backgroundImage) {
+  resetBackground(imagePath) {
+    this.backgroundStyle = this.getBackgroundStyle(imagePath);
+    this.cdr.detectChanges();
+  }
+
+  getBackgroundStyle(imagePath): string {
+    const path: string = ASSET_IMAGES_PATH + (imagePath || 'album2.jpg') ;
+
+    if(path) {
       const gradient = 'linear-gradient(180deg, rgba(29, 33, 35, 0.70) 0%, #1D2123 61.48%)';
-      const imageUrl = `url(${this.backgroundImage})`;
+      const imageUrl = `url(${path})`;
       return `${gradient}, ${imageUrl} center / cover no-repeat`;
     }
+
     return null;
   }
 }

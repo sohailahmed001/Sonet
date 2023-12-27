@@ -1,1 +1,34 @@
-<p>my-playlists works!</p>
+<div class="text-white grid-nogutter" >
+    <div class="flex">
+        <div>
+            <img style="padding-right: 5px;" src="assets/images/playlist_fill.png" />
+        </div>
+        <div>
+            <h3 style="margin-top: 0;">MY PLAYLISTS</h3>
+        </div>
+    </div>
+
+    <div *ngIf="likedAlbum" class="flex flex-wrap">
+
+        <!-- LIKED ALBUM -->
+        <ng-container *ngTemplateOutlet="albumTemplate; context: { rowData: likedAlbum }"></ng-container>
+
+        <!-- SAVED ALBUMS -->
+        <ng-container *ngFor="let album of albums">
+            <ng-container *ngTemplateOutlet="albumTemplate; context: { rowData: album }"></ng-container>
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #albumTemplate let-rowData="rowData">
+    <div class="flex flex-column align-items-start gap-2 p-3">
+      <div class="album-img-div">
+        <img class="album-img" [src]="rowData.image" alt="Album Image" [routerLink]="rowData.routerLink">
+      </div>
+      <div class="text-xs">
+        <span class="block">{{ rowData.title }}</span>
+        <span class="block text-600">{{ rowData.artist }}</span>
+      </div>
+    </div>
+</ng-template>
+  
