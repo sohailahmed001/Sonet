@@ -31,6 +31,7 @@ import { SongPlayingComponent } from './components/sonet-layout/song-playing/son
 import { SliderModule } from 'primeng/slider';
 import { AlbumDetailsComponent } from './components/sonet/album-details/album-details.component';
 import { MyPlaylistsComponent } from './components/sonet/my-playlists/my-playlists.component';
+import { PlaylistListIconComponent } from './svg/playlist-list-icon.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MyPlaylistsComponent } from './components/sonet/my-playlists/my-playlis
     SonetHeaderComponent,
     SongPlayingComponent,
     AlbumDetailsComponent,
-    MyPlaylistsComponent
+    MyPlaylistsComponent,
+    PlaylistListIconComponent
   ],
   imports: [
     BrowserModule,

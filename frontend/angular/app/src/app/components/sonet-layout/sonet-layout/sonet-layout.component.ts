@@ -24,9 +24,9 @@ export class SonetLayoutComponent implements OnInit {
     this.sideMenuItems = [
       {
         icon: 'fa fa-home',
+        routerLink: '/sonet/home',
         command: () => {
           this.resetBackground(null);
-          this.router.navigate(['sonet/home'])
         }
       },
       {
@@ -34,7 +34,6 @@ export class SonetLayoutComponent implements OnInit {
         routerLink: '/sonet/my-playlists',
         command: () => {
           this.resetBackground('playlist-bg.jpg');
-          this.router.navigate(['sonet/my-playlists'])
         }
       },
       {

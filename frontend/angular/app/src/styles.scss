@@ -2,6 +2,9 @@
 @import "primeicons/primeicons.css";
 @import '/src/assets/themes/color.scss';
 
+:root {
+    --song-playing-height: 86px;
+}
 
 body,
 html {

@@ -16,6 +16,7 @@
     padding: 1rem 2rem;
     padding-bottom: 0;
     overflow: hidden;
+    margin-bottom: var(--song-playing-height);
 }
 
 .sidemenu {
@@ -70,8 +71,9 @@
 .sonet-footer {
     flex: 0 0 auto;
     overflow: hidden;
-    position: fixed;
-    bottom: 0px;
+    position: absolute;
+    bottom: 0;
+    backdrop-filter: blur(5px);
 }
 
 ::-webkit-scrollbar {

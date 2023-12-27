@@ -1,5 +1,6 @@
 .now-playing-container {
     width: 100vw;
+    height: var(--song-playing-height);
     border-top: 1px solid rgba(255, 255, 255, 0.10);
     display: flex;
     color: white;
@@ -112,7 +113,7 @@
 ::ng-deep {
     .volume-container .p-slider .p-slider-handle {
         border: 1px solid var(--secondary-theme-color);
-        margin-top: -0.285rem;
+        margin-top: -0.265rem;
         margin-left: -0.3rem;
         width: 0.5rem;
         height: 0.5rem;
