@@ -4,6 +4,7 @@ import com.tendo.Sonet.dto.RegistrationDTO;
 import com.tendo.Sonet.exception.NotFoundException;
 import com.tendo.Sonet.model.*;
 import com.tendo.Sonet.repository.*;
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.*;
+import java.util.logging.*;
 
 @Service
 public class UserService implements UserDetailsService
@@ -36,8 +38,7 @@ public class UserService implements UserDetailsService
     {
         try
         {
-            List<AppUser>       usersList       = this.userRepository.findByUsernameWithRolesAndAuthorities(username);
-            Optional<AppUser>   userOptional    = Optional.ofNullable(usersList).map(users -> users.get(0));
+            Optional<AppUser>   userOptional    = getUserByUsername(username);
 
             if (userOptional.isPresent())
             {

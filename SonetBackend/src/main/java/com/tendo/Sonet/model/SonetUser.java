@@ -39,7 +39,7 @@ public class SonetUser
     {
         this.firstName  =   registrationDTO.getFirstName();
         this.middleName =   registrationDTO.getMiddleName();
-        this.lastName   =   registrationDTO.getMiddleName();
+        this.lastName   =   registrationDTO.getLastName();
         this.photo      =   registrationDTO.getPhoto();
     }
 
