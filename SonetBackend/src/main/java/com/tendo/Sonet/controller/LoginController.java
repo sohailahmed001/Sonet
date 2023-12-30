@@ -1,6 +1,7 @@
 package com.tendo.Sonet.controller;
 
-import com.tendo.Sonet.model.AppUser;
+import com.tendo.Sonet.dto.RegistrationDTO;
+import com.tendo.Sonet.model.*;
 import com.tendo.Sonet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -17,12 +18,12 @@ public class LoginController
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<AppUser> registerUser(@RequestBody AppUser user)
+    public ResponseEntity<AppUser> registerUser(@RequestBody RegistrationDTO registrationDTO)
     {
         try
         {
-            AppUser savedUser   =   this.userService.createNewUser(user);
-            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+            AppUser appUser =   this.userService.createNewUser(registrationDTO);
+            return new ResponseEntity<>(appUser, HttpStatus.CREATED);
         }
         catch (Exception ex)
         {

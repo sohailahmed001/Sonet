@@ -1,5 +1,6 @@
 package com.tendo.Sonet.service;
 
+import com.tendo.Sonet.dto.RegistrationDTO;
 import com.tendo.Sonet.exception.NotFoundException;
 import com.tendo.Sonet.model.*;
 import com.tendo.Sonet.repository.*;
@@ -23,6 +24,9 @@ public class UserService implements UserDetailsService
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private SonetUserRepository sonetUserRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -62,8 +66,28 @@ public class UserService implements UserDetailsService
         }
     }
 
-    public AppUser createNewUser(AppUser newUser) {
-        return addOrUpdateUser(newUser);
+    public AppUser createNewUser(RegistrationDTO registrationDTO)
+    {
+        AppUser     user        = saveAppUser(registrationDTO);
+        SonetUser   sonetUser   = saveSonetUser(registrationDTO);
+
+        // set sonet user for Main User
+        user.setSonetUser(sonetUser);
+
+        return userRepository.save(user) ;
+    }
+
+    private SonetUser saveSonetUser(RegistrationDTO registrationDTO)
+    {
+        SonetUser   sonetUser   =   new SonetUser(registrationDTO);
+        return sonetUserRepository.save(sonetUser);
+    }
+
+    //@TODO give default Role to user !!
+    private AppUser saveAppUser(RegistrationDTO registrationDTO)
+    {
+        AppUser user    =   new AppUser(registrationDTO.getUsername(), registrationDTO.getPassword());
+        return addOrUpdateUser(user);
     }
 
     public AppUser addOrUpdateUser(AppUser user)

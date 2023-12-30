@@ -32,6 +32,10 @@ public class AppUser {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @OneToOne
+    @JoinColumn(name = "sonet_user_id")
+    private SonetUser sonetUser;
+
     public Long getId() {
         return id;
     }
@@ -70,5 +74,22 @@ public class AppUser {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public SonetUser getSonetUser()
+    {
+        return sonetUser;
+    }
+
+    public void setSonetUser(SonetUser sonetUser)
+    {
+        this.sonetUser = sonetUser;
+    }
+
+    public AppUser(String username, String password)
+    {
+        this.username = username;
+        this.password= password;
+        this.createdDate = new Date();
     }
 }
