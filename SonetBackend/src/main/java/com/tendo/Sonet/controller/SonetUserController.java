@@ -7,14 +7,14 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/sonet")
+@RequestMapping("/api/sonet")
 public class SonetUserController
 {
     @Autowired
     private SonetUserService sonetUserService;
 
     @PostMapping("/sonet-users")
-    public ResponseEntity<SonetUser> updateSonetUser(@RequestBody SonetUser user)
+    public ResponseEntity<SonetUser> updateSonetUser(@ModelAttribute  SonetUser user)
     {
         SonetUser sonetUser = this.sonetUserService.updateSonetUser(user);
 
@@ -22,7 +22,7 @@ public class SonetUserController
     }
 
     @GetMapping("/sonet-users/{id}")
-    public ResponseEntity<SonetUser> updateSonetUser( @PathVariable Long id)
+    public ResponseEntity<SonetUser> getSonetUser( @PathVariable Long id)
     {
         SonetUser sonetUser = this.sonetUserService.getSonetUserByID(id);
 

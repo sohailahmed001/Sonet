@@ -26,6 +26,7 @@ public class SonetUser
     private String lastName;
 
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] photo;
 
     @Transient

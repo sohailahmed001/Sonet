@@ -86,6 +86,10 @@ public class AppUser {
         this.sonetUser = sonetUser;
     }
 
+    public AppUser()
+    {
+    }
+
     public AppUser(String username, String password)
     {
         this.username = username;

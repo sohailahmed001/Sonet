@@ -59,12 +59,17 @@ public class UserService implements UserDetailsService
         {
             List<AppUser>   usersList   =   this.userRepository.findByUsername(username);
 
-            return Optional.ofNullable(usersList).map(users -> users.get(0));
+            if (usersList != null && !usersList.isEmpty())
+            {
+                return Optional.of(usersList.get(0));
+            }
         }
         catch (Exception ex)
         {
-            return Optional.empty();
+            ex.printStackTrace();
         }
+
+        return Optional.empty();
     }
 
     public AppUser createNewUser(RegistrationDTO registrationDTO)
