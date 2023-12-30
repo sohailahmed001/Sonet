@@ -25,9 +25,18 @@ public class SonetUser
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] photo;
+    @Column(name = "photo_url")
+    private String photoURL;
+
+    public String getPhotoURL()
+    {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL)
+    {
+        this.photoURL = photoURL;
+    }
 
     @Transient
     private MultipartFile imageFile; // Transient field to handle file upload
@@ -41,17 +50,7 @@ public class SonetUser
         this.firstName  =   registrationDTO.getFirstName();
         this.middleName =   registrationDTO.getMiddleName();
         this.lastName   =   registrationDTO.getLastName();
-        this.photo      =   registrationDTO.getPhoto();
-    }
-
-    public byte[] getPhoto()
-    {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo)
-    {
-        this.photo = photo;
+        this.photoURL   =   registrationDTO.getPhoto();
     }
 
     public MultipartFile getImageFile()

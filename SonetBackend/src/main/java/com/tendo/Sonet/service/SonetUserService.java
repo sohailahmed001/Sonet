@@ -3,10 +3,10 @@ package com.tendo.Sonet.service;
 import com.tendo.Sonet.exception.NotFoundException;
 import com.tendo.Sonet.model.SonetUser;
 import com.tendo.Sonet.repository.SonetUserRepository;
+import com.tendo.Sonet.utils.SONETUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import java.io.IOException;
-import java.util.logging.*;
 
 @Service
 public class SonetUserService
@@ -20,15 +20,8 @@ public class SonetUserService
 
         if (sonetUser.getImageFile() != null)
         {
-            try
-            {
-                byte[]  bytes   = sonetUser.getImageFile().getBytes();
-                savedUser.setPhoto(bytes);
-            }
-            catch (IOException e)
-            {
-                throw new RuntimeException("Unable to save Image !!");
-            }
+            String imageURL = SONETUtils.processImage(sonetUser.getImageFile(), false);
+            savedUser.setPhotoURL(imageURL);
         }
 
         return sonetUserRepository.save(savedUser);

@@ -21,9 +21,6 @@ public class Artist
     @OneToMany(mappedBy = "artist")
     private List<Album> albums;
 
-    public Artist()
-    {
-    }
     public Long getId()
     {
         return id;
@@ -32,6 +29,16 @@ public class Artist
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+    public SonetUser getSonetUser()
+    {
+        return sonetUser;
+    }
+
+    public void setSonetUser(SonetUser sonetUser)
+    {
+        this.sonetUser = sonetUser;
     }
 
     public String getBio()
@@ -62,5 +69,9 @@ public class Artist
     public void setAlbums(List<Album> albums)
     {
         this.albums = albums;
+    }
+
+    public Artist()
+    {
     }
 }
