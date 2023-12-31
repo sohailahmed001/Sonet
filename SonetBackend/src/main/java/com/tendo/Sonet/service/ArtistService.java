@@ -19,7 +19,7 @@ public class ArtistService
 
     public Artist getArtistByID(Long id)
     {
-        return artistRepository.findArtistWithAlbums(id)
+        return artistRepository.findById(id)
                             .orElseThrow(() -> new NotFoundException(Artist.class));
     }
 }
