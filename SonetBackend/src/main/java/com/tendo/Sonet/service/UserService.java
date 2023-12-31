@@ -11,6 +11,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 import java.util.logging.*;
 
@@ -72,6 +74,7 @@ public class UserService implements UserDetailsService
         return Optional.empty();
     }
 
+    @Transactional
     public AppUser createNewUser(RegistrationDTO registrationDTO)
     {
         AppUser     user        = saveAppUser(registrationDTO);

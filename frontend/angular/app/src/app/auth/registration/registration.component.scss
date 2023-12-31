@@ -3,9 +3,38 @@
     padding: 0px  !important;
 }
 
-::ng-deep .p-password{
-   width: 100%;
-   input{
-    width: 100%;
-   }
+::ng-deep {
+    .p-password {
+        width: 100%;
+        input{
+            width: 100%;
+        }
+    }
+
+    .reg-card .p-card {
+        height: 100vh;
+        overflow: auto
+    }
+    
+    .p-inputtext:enabled:focus, .p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
+        box-shadow: 0px 0 4px 2px var(--secondary-theme-color);
+        border: none;
+    }
+    
+    .p-calendar-w-btn .p-datepicker-trigger:enabled {
+        box-shadow: none;
+    }
+    
+    .p-calendar-w-btn .p-datepicker-trigger, .sign-in {
+        background-color: var(--secondary-theme-color);
+        border: 1px solid var(--secondary-theme-color);
+    }
+
+    .p-inputtext:hover {
+        border-color: black;
+    }
+
+    .p-calendar-w-btn .p-datepicker-trigger:hover, .sign-in:hover {
+        filter: brightness(92%);
+    }
 }

@@ -1,6 +1,6 @@
 <form #myform="ngForm">
     <div class="card flex justify-content-center" [style]="{'width' : '360px'}">
-        <p-card header="Login Form" subheader="Please enter you login details">
+        <p-card class="login-card" header="Sonet" subheader="Please enter your login details">
             <p-messages [(value)]="utilsService.errorMessages" [enableService]="false"></p-messages>
 
             <div class="field">
@@ -18,7 +18,7 @@
 
             <div class="field flex justify-content-center">
                 <label>Not a user ?
-                    <a [routerLink]="['/register']">
+                    <a class="text-400" [routerLink]="['/register']">
                         Please Click here to register</a>
                 </label>
             </div>

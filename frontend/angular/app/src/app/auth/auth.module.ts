@@ -15,6 +15,7 @@ import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { MessagesModule } from 'primeng/messages';
     ToastModule,
     RouterModule,
     InputTextModule,
-    MessagesModule
+    MessagesModule,
+    CalendarModule
   ],
   exports:[
     FormsModule,

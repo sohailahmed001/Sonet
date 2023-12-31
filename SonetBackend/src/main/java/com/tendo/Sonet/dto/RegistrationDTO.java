@@ -2,6 +2,8 @@ package com.tendo.Sonet.dto;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class RegistrationDTO
 {
@@ -14,6 +16,7 @@ public class RegistrationDTO
     private String middleName;
     private String lastName;
     private String photo;
+    private Date dob;
 
     public String getUsername()
     {
@@ -73,6 +76,14 @@ public class RegistrationDTO
     public void setPhoto(String photo)
     {
         this.photo = photo;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 
     public RegistrationDTO()

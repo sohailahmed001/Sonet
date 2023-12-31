@@ -1,19 +1,39 @@
 <form #myform="ngForm">
-    <div class="card flex justify-content-center" [style]="{'width' : '360px'}">
-        <p-card header="Registration Form" subheader="Please enter your details">
+    <div class="reg-card flex justify-content-center">
+        <p-card header="Registration" subheader="Please enter your details">
             <p-messages [(value)]="utilsService.errorMessages" [enableService]="false"></p-messages>
 
             <div class="field">
                 <label>Username*</label>
-                <input pInputText id="username" type="text" [(ngModel)]="username" required="required" name="username" class="w-full"/>
+                <input pInputText id="username" type="text" [(ngModel)]="user.username" required="required" name="username" class="w-full"/>
             </div>
             <div class="field">
                 <label>Password*</label>
-                <input pInputText [(ngModel)]="password" name="password" type="password" class="w-full"/>
+                <input pInputText [(ngModel)]="user.password" name="password" type="password" class="w-full"/>
+            </div>
+
+            <div class="field">
+                <label>FirstName*</label>
+                <input pInputText id="firstName" type="text" [(ngModel)]="user.firstName" required="required" name="firstName" class="w-full"/>
+            </div>
+
+            <div class="field">
+                <label>MiddleName</label>
+                <input pInputText id="middleName" type="text" [(ngModel)]="user.middleName" name="middleName" class="w-full"/>
+            </div>
+
+            <div class="field">
+                <label>LastName*</label>
+                <input pInputText id="lastName" type="text" [(ngModel)]="user.lastName" required="required" name="lastName" class="w-full"/>
+            </div>
+
+            <div class="field">
+                <label>Date Of Birth*</label>
+                <p-calendar name="dob" [(ngModel)]="user.dob" [minDate]="minDate" [maxDate]="maxDate" [defaultDate]="maxDate" placeholder="must be 16 or above" [showIcon]="true"></p-calendar>
             </div>
 
             <div class="field flex justify-content-center">
-                <button pButton icon="pi pi-sign-in" iconpos="right" label="Sign in" class="p-button-sm ui-btn-primary shadow-2 border-round-3xl" (click)="onSignInClick()"></button>
+                <button pButton icon="pi pi-sign-in" iconpos="right" label="Sign in" class="sign-in p-button-sm shadow-2 border-round-3xl" (click)="onSignInClick()"></button>
             </div>
 
             <div class="field flex justify-content-center">

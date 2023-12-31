@@ -1,7 +1,18 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { UtilsService } from 'src/app/utils/utils.service';
+
+class RegistrationUser {
+  username: string;
+  password: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  photo: any;
+  dob: Date;
+  gender: any;
+}
 
 @Component({
   selector: 'app-registration',
@@ -9,24 +20,28 @@ import { UtilsService } from 'src/app/utils/utils.service';
   styleUrls: ['./registration.component.scss'],
 })
 
-export class RegistrationComponent {
-  username: string;
-  password: string;
+export class RegistrationComponent implements OnInit {
+  user: RegistrationUser = new RegistrationUser();
+  minDate: Date;
+  maxDate: Date;
   showLoader = false;
 
   constructor(public utilsService: UtilsService, private userService: UserService, private router: Router) { }
+  
+  ngOnInit(): void {
+    this.minDate = new Date();
+    this.maxDate = new Date();
+
+    this.minDate.setFullYear(new Date().getFullYear() - 120);
+    this.maxDate.setFullYear(new Date().getFullYear() - 16)
+  }
 
   onSignInClick() {
     this.utilsService.clearErrorMessages();
 
     this.showLoader = true;
 
-    let userObj = {
-      username: this.username,
-      password: this.password,
-    }
-
-    this.utilsService.saveObjects("api/register", userObj).subscribe(
+    this.utilsService.saveObjects("api/register", this.user).subscribe(
       {
         next: (data) => {
           this.showLoader = false;

@@ -28,15 +28,8 @@ public class SonetUser
     @Column(name = "photo_url")
     private String photoURL;
 
-    public String getPhotoURL()
-    {
-        return photoURL;
-    }
-
-    public void setPhotoURL(String photoURL)
-    {
-        this.photoURL = photoURL;
-    }
+    @Column(name = "dob", nullable = false)
+    private Date dob;
 
     @Transient
     private MultipartFile imageFile; // Transient field to handle file upload
@@ -51,6 +44,7 @@ public class SonetUser
         this.middleName =   registrationDTO.getMiddleName();
         this.lastName   =   registrationDTO.getLastName();
         this.photoURL   =   registrationDTO.getPhoto();
+        this.dob        =   registrationDTO.getDob();
     }
 
     public MultipartFile getImageFile()
@@ -101,5 +95,23 @@ public class SonetUser
     public void setLastName(String lastName)
     {
         this.lastName = lastName;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getPhotoURL()
+    {
+        return photoURL;
+    }
+
+    public void setPhotoURL(String photoURL)
+    {
+        this.photoURL = photoURL;
     }
 }
