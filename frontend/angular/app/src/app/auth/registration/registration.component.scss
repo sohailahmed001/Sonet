@@ -46,5 +46,17 @@
     .reg-card ::-webkit-scrollbar-track {
         background: transparent;
     }
+
+    .user-type-select .p-selectbutton .p-highlight {
+        border-color: var(--secondary-theme-color);
+        background-color: var(--secondary-theme-color) !important;
+    }
+
+    .user-type-select .p-selectbutton .p-element:enabled, .user-type-select .p-selectbutton .p-element:focus {
+        border-color: var(--secondary-theme-color);
+        box-shadow: none;
+    }
 }
+
+
 

@@ -16,7 +16,7 @@ import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { CalendarModule } from 'primeng/calendar';
-
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,8 @@ import { CalendarModule } from 'primeng/calendar';
     RouterModule,
     InputTextModule,
     MessagesModule,
-    CalendarModule
+    CalendarModule,
+    SelectButtonModule
   ],
   exports:[
     FormsModule,

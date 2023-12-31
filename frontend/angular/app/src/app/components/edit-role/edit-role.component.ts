@@ -82,9 +82,9 @@ export class EditRoleComponent implements OnInit {
   onSaveClick() {
     this.showLoader = true; 
     this.utilsService.saveObjects('api/roles', this.role).subscribe({
-      next : (data) => {
+      next : (data: any) => {
         this.utilsService.handleSuccessMessage('Role Saved');
-        this.getRoleByID(this.role.id);
+        this.getRoleByID(data.id);
         this.showLoader = false;
       },
       error : (error) => {

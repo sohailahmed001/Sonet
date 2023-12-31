@@ -1,10 +1,12 @@
 package com.tendo.Sonet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tendo.Sonet.dto.RegistrationDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.*;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "sonet_user")
@@ -30,6 +32,11 @@ public class SonetUser
 
     @Column(name = "dob", nullable = false)
     private Date dob;
+
+    @JsonIgnoreProperties("sonetUser")
+    @OneToOne
+    @JoinColumn(name = "app_user_id", nullable = false)
+    private AppUser appUser;
 
     @Transient
     private MultipartFile imageFile; // Transient field to handle file upload
@@ -113,5 +120,13 @@ public class SonetUser
     public void setPhotoURL(String photoURL)
     {
         this.photoURL = photoURL;
+    }
+
+    public AppUser getAppUser() {
+        return appUser;
+    }
+
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 }

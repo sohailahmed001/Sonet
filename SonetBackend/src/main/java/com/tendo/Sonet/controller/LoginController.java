@@ -18,12 +18,12 @@ public class LoginController
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<AppUser> registerUser(@RequestBody RegistrationDTO registrationDTO)
+    public ResponseEntity<SonetUser> registerUser(@RequestBody RegistrationDTO registrationDTO)
     {
         try
         {
-            AppUser appUser =   this.userService.createNewUser(registrationDTO);
-            return new ResponseEntity<>(appUser, HttpStatus.CREATED);
+            SonetUser user =   this.userService.createNewUser(registrationDTO);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
         }
         catch (Exception ex)
         {

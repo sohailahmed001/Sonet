@@ -33,6 +33,9 @@ public class UserService implements UserDetailsService
     private SonetUserRepository sonetUserRepository;
 
     @Autowired
+    private ArtistRepository artistRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -76,25 +79,38 @@ public class UserService implements UserDetailsService
     }
 
     @Transactional
-    public AppUser createNewUser(RegistrationDTO registrationDTO)
+    public SonetUser createNewUser(RegistrationDTO registrationDTO)
     {
-        AppUser     user        = saveAppUser(registrationDTO);
-        SonetUser   sonetUser   = saveSonetUser(registrationDTO);
+        AppUser     user        =   createAppUser(registrationDTO);
+        SonetUser sonetUser     =   createSonetUser(registrationDTO, user);
 
-        // set sonet user for Main User
-        user.setSonetUser(sonetUser);
+        if(registrationDTO.getUserType() == UserType.ARTIST) {
+            createNewArtist(registrationDTO, sonetUser);
+        }
 
-        return userRepository.save(user) ;
+        return sonetUser;
     }
 
-    private SonetUser saveSonetUser(RegistrationDTO registrationDTO)
-    {
+    private Artist createNewArtist(RegistrationDTO registrationDTO, SonetUser sonetUser) {
+        Artist artist = new Artist();
+        artist.setSonetUser(sonetUser);
+        return this.artistRepository.save(artist);
+    }
+
+    private SonetUser createSonetUser(RegistrationDTO registrationDTO, AppUser user) {
         SonetUser   sonetUser   =   new SonetUser(registrationDTO);
+        sonetUser.setAppUser(user);
+        user.setSonetUser(sonetUser);
+        return saveSonetUser(sonetUser);
+    }
+
+    private SonetUser saveSonetUser(SonetUser sonetUser)
+    {
         return sonetUserRepository.save(sonetUser);
     }
 
     //@TODO give default Role to user !!
-    private AppUser saveAppUser(RegistrationDTO registrationDTO)
+    private AppUser createAppUser(RegistrationDTO registrationDTO)
     {
         AppUser user    =   new AppUser(registrationDTO.getUsername(), registrationDTO.getPassword());
         return addOrUpdateUser(user);

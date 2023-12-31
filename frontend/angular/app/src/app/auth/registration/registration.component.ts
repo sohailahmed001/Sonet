@@ -13,6 +13,12 @@ class RegistrationUser {
   photo: any;
   dob: Date;
   gender: any;
+  userType: any;
+}
+
+enum Usertype {
+  LISTENER = 'LISTENER',
+  ARTIST = 'ARTIST'
 }
 
 @Component({
@@ -27,6 +33,7 @@ export class RegistrationComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
   showLoader = false;
+  registerAsOptions: any[];
 
   constructor(public utilsService: UtilsService, private userService: UserService, private router: Router) { }
   
@@ -35,7 +42,14 @@ export class RegistrationComponent implements OnInit {
     this.maxDate = new Date();
 
     this.minDate.setFullYear(new Date().getFullYear() - 120);
-    this.maxDate.setFullYear(new Date().getFullYear() - 16)
+    this.maxDate.setFullYear(new Date().getFullYear() - 16);
+
+    this.registerAsOptions = [
+      { label: 'Listener', value: Usertype.LISTENER},
+      { label: 'Artist', value: Usertype.ARTIST, }
+    ];
+
+    this.user.userType = Usertype.LISTENER;
   }
 
   onSignInClick() {

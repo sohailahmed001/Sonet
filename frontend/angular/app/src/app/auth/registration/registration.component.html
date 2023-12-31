@@ -4,6 +4,13 @@
             <p-messages [(value)]="utilsService.errorMessages" [enableService]="false"></p-messages>
 
             <div class="field">
+                <p-selectButton name="userType" class="user-type-select" #userType="ngModel" [options]="registerAsOptions" [unselectable]="true" [(ngModel)]="user.userType" [required]="true" optionLabel="label" optionValue="value"></p-selectButton>
+                <div *ngIf="userType.invalid && (userType.dirty || userType.touched)" class="p-error">
+                    <small *ngIf="userType.errors['required']">Please select either Listener / Artist.</small>
+                </div>
+            </div>
+
+            <div class="field">
                 <label>Username*</label>
                 <input pInputText #username="ngModel" id="username" type="text" [(ngModel)]="user.username" required="required"  name="username" class="w-full"/>
                 <div *ngIf="username.invalid && (username.dirty || username.touched)" class="p-error">

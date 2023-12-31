@@ -13,14 +13,6 @@ public class ArtistController
     @Autowired
     private ArtistService artistService;
 
-    @PostMapping("/artists")
-    public ResponseEntity<Artist> createArtist(@RequestBody Artist artist)
-    {
-        Artist createdArtist = artistService.createArtist(artist);
-
-        return new ResponseEntity<>(createdArtist, HttpStatus.CREATED);
-    }
-
     @GetMapping("/artists/{id}")
     public ResponseEntity<Artist> getArtistByID(@PathVariable Long id)
     {

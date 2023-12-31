@@ -1,8 +1,10 @@
 package com.tendo.Sonet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -33,8 +35,8 @@ public class AppUser
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @OneToOne
-    @JoinColumn(name = "sonet_user_id")
+    @JsonIgnoreProperties("appUser")
+    @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL)
     private SonetUser sonetUser;
 
     public Long getId()

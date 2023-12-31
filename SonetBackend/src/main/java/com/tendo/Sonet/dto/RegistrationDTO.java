@@ -1,5 +1,8 @@
 package com.tendo.Sonet.dto;
 
+import com.tendo.Sonet.model.UserType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -17,6 +20,8 @@ public class RegistrationDTO
     private String lastName;
     private String photo;
     private Date dob;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
     public String getUsername()
     {
@@ -84,6 +89,14 @@ public class RegistrationDTO
 
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     public RegistrationDTO()
