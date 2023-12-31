@@ -59,9 +59,3 @@
 </form>
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 
-<ng-template #errorTemplate let-control let-message="message">
-    <div *ngIf="control && (control.invalid && (control.dirty || control.touched))" class="p-error">
-      <small>{{ message }}</small>
-    </div>
-</ng-template>
-
