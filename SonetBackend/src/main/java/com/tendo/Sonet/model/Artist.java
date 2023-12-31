@@ -1,5 +1,6 @@
 package com.tendo.Sonet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import java.util.*;
@@ -49,16 +50,6 @@ public class Artist
     public void setBio(String bio)
     {
         this.bio = bio;
-    }
-
-    public SonetUser getUserProfile()
-    {
-        return sonetUser;
-    }
-
-    public void setUserProfile(SonetUser sonetUser)
-    {
-        this.sonetUser = sonetUser;
     }
 
     public List<Album> getAlbums()

@@ -7,8 +7,9 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name="user")
-public class AppUser {
+@Table(name = "user")
+public class AppUser
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -22,7 +23,7 @@ public class AppUser {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @Column(name="created_date")
+    @Column(name = "created_date")
     private Date createdDate;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -36,43 +37,53 @@ public class AppUser {
     @JoinColumn(name = "sonet_user_id")
     private SonetUser sonetUser;
 
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public String getUsername() {
+    public String getUsername()
+    {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String username)
+    {
         this.username = username;
     }
 
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
     }
 
-    public Date getCreatedDate() {
+    public Date getCreatedDate()
+    {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(Date createdDate)
+    {
         this.createdDate = createdDate;
     }
 
-    public Set<Role> getRoles() {
+    public Set<Role> getRoles()
+    {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<Role> roles)
+    {
         this.roles = roles;
     }
 
@@ -93,7 +104,7 @@ public class AppUser {
     public AppUser(String username, String password)
     {
         this.username = username;
-        this.password= password;
+        this.password = password;
         this.createdDate = new Date();
     }
 }
