@@ -9,10 +9,10 @@ import java.util.*;
 
 public class SONETUtils
 {
-    private static  final    String STATIC_RESOURCE_PATH    = "/SonetBackend/src/main/resources/static";
-    private static  final    String IMAGES_DIR              = "/images";
-    private static  final    String AUDIO_DIR               = "/audios";
-    private static  final    String UPLOAD_DIRECTORY        = System.getProperty("user.dir") + STATIC_RESOURCE_PATH; ;
+    private static  final    String STATIC_RESOURCE_PATH    =   "/SonetBackend/src/main/resources/static";
+    private static  final    String IMAGES_DIR              =   "/images";
+    private static  final    String AUDIO_DIR               =   "/audios";
+    private static  final    String UPLOAD_DIRECTORY        =   System.getProperty("user.dir") + STATIC_RESOURCE_PATH; ;
 
     public static String processImage(MultipartFile file, boolean chooseSongPath) {
         try
@@ -40,9 +40,7 @@ public class SONETUtils
 
             Files.copy(file.getInputStream(), filePath);
 
-            String fileUrl = dirPath + "/" + fileName;
-
-            return fileUrl;
+            return dirPath + "/" + fileName;
         }
         catch (IOException e)
         {

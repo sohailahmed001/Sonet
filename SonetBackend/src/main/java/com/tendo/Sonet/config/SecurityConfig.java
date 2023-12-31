@@ -26,9 +26,9 @@ import java.util.*;
 public class SecurityConfig
 {
     private static final String[] AUTHENTICATED_APIS    =   { "/api/test", "/api/users/**", "/api/roles/**", "/api/authorities/**", "/api/sonet/**"};
-    private static final String[] GET_PERMITTED_APIS    =   { "/api/login", "/images/**" };
+    private static final String[] GET_PERMITTED_APIS    =   { "/api/login" };
     private static final String[] POST_PERMITTED_APIS   =   { "/api/register" };
-    private static final String[] CSRF_IGNORE_APIS      =   { "/api/register", "/images/**" };
+    private static final String[] CSRF_IGNORE_APIS      =   { "/api/register" };
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception
@@ -97,10 +97,6 @@ public class SecurityConfig
     public PasswordEncoder getPasswordEncoder()
     {
         return new BCryptPasswordEncoder();
-    }
-
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().requestMatchers("/images/**");
     }
 
     @Bean
