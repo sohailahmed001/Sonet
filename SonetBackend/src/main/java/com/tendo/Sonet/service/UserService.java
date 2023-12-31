@@ -40,11 +40,12 @@ public class UserService implements UserDetailsService
     {
         try
         {
-            Optional<AppUser>   userOptional    = getUserByUsername(username);
+            List<AppUser>   users    = this.userRepository.findByUsernameWithRolesAndAuthorities(username);
 
-            if (userOptional.isPresent())
+            if (users != null && !users.isEmpty())
             {
-                return userOptional.map(user -> new User(user.getUsername(), user.getPassword(), getGrantedAuthorities(user))).get();
+                AppUser user = users.get(0);
+                return new User(user.getUsername(), user.getPassword(), getGrantedAuthorities(user));
             }
         }
         catch (Exception e)
