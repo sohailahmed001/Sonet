@@ -1,6 +1,6 @@
 package com.tendo.Sonet.utils;
 
-import java.io.IOException;
+import java.io.*;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,7 +14,8 @@ public class SONETUtils
     private static  final    String AUDIO_DIR               =   "/audios";
     private static  final    String UPLOAD_DIRECTORY        =   System.getProperty("user.dir") + STATIC_RESOURCE_PATH; ;
 
-    public static String processImage(MultipartFile file, boolean chooseSongPath) {
+    public static String processImage(MultipartFile file, boolean chooseSongPath)
+    {
         try
         {
             if (file.isEmpty())
@@ -22,14 +23,13 @@ public class SONETUtils
                 throw new IllegalArgumentException("File is empty");
             }
 
+            // random ID to avoid naming conflict
+            String  randomID            =   UUID.randomUUID().toString();
             String  originalFileName    =   StringUtils.cleanPath(file.getOriginalFilename());
             String  fileExtension       =   StringUtils.getFilenameExtension(originalFileName);
-            String  randomID            =   UUID.randomUUID().toString();
             String  fileName            =   randomID + "." + fileExtension;
             String  dirPath             =   chooseSongPath ? getAudioDir() : getImagesDir();
             Path    uploadPath          =   Paths.get(dirPath);
-
-            System.out.println(dirPath);
 
             if (!Files.exists(uploadPath))
             {
@@ -38,14 +38,34 @@ public class SONETUtils
 
             Path    filePath    =   uploadPath.resolve(fileName).normalize();
 
+
+            // saving file in directory
             Files.copy(file.getInputStream(), filePath);
 
-            return dirPath + "/" + fileName;
+            return uploadPath.toAbsolutePath() + "/" + fileName;
         }
         catch (IOException e)
         {
             e.printStackTrace();
             throw new IllegalStateException("Couldn't save image");
+        }
+    }
+
+    public static void deleteIfFileExist(String filePath)
+    {
+        Path fileCurrentPath = Paths.get(filePath);
+
+        if (Files.exists(fileCurrentPath))
+        {
+            try
+            {
+                Files.delete(fileCurrentPath);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                throw new IllegalStateException("Couldn't save image");
+            }
         }
     }
 

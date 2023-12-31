@@ -20,6 +20,12 @@ public class SonetUserService
 
         if (sonetUser.getImageFile() != null)
         {
+            // delete old Photo if new photo is getting uploaded
+            if (savedUser.getPhotoURL() != null)
+            {
+                SONETUtils.deleteIfFileExist(savedUser.getPhotoURL());
+            }
+
             String imageURL = SONETUtils.processImage(sonetUser.getImageFile(), false);
             savedUser.setPhotoURL(imageURL);
         }
