@@ -5,31 +5,46 @@
 
             <div class="field">
                 <label>Username*</label>
-                <input pInputText id="username" type="text" [(ngModel)]="user.username" required="required" name="username" class="w-full"/>
+                <input pInputText #username="ngModel" id="username" type="text" [(ngModel)]="user.username" required="required"  name="username" class="w-full"/>
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="p-error">
+                    <small *ngIf="username.errors['required']">Username is required.</small>
+                </div>
             </div>
             <div class="field">
                 <label>Password*</label>
-                <input pInputText [(ngModel)]="user.password" name="password" type="password" class="w-full"/>
+                <input pInputText #password="ngModel" [(ngModel)]="user.password" name="password" type="password" required="required" class="w-full"/>
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="p-error">
+                    <small *ngIf="password.errors['required']">Password is required.</small>
+                </div>
             </div>
 
             <div class="field">
-                <label>FirstName*</label>
-                <input pInputText id="firstName" type="text" [(ngModel)]="user.firstName" required="required" name="firstName" class="w-full"/>
+                <label>First Name*</label>
+                <input pInputText #firstName="ngModel" id="firstName" type="text" [(ngModel)]="user.firstName" required="required" name="firstName" class="w-full"/>
+                <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="p-error">
+                    <small *ngIf="firstName.errors['required']">First Name is required.</small>
+                </div>
             </div>
 
             <div class="field">
-                <label>MiddleName</label>
+                <label>Middle Name</label>
                 <input pInputText id="middleName" type="text" [(ngModel)]="user.middleName" name="middleName" class="w-full"/>
             </div>
 
             <div class="field">
-                <label>LastName*</label>
-                <input pInputText id="lastName" type="text" [(ngModel)]="user.lastName" required="required" name="lastName" class="w-full"/>
+                <label>Last Name*</label>
+                <input pInputText #lastName="ngModel" id="lastName" type="text" [(ngModel)]="user.lastName" required="required" name="lastName" class="w-full"/>
+                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="p-error">
+                    <small *ngIf="lastName.errors['required']">Last Name is required.</small>
+                </div>
             </div>
 
             <div class="field">
-                <label>Date Of Birth*</label>
-                <p-calendar name="dob" [(ngModel)]="user.dob" [minDate]="minDate" [maxDate]="maxDate" [defaultDate]="maxDate" placeholder="must be 16 or above" [showIcon]="true"></p-calendar>
+                <label>Date of Birth*</label>
+                <p-calendar name="dob" #dob="ngModel" [(ngModel)]="user.dob" [minDate]="minDate" [maxDate]="maxDate" [defaultDate]="maxDate" [required]="true" placeholder="must be 16 or above" [showIcon]="true"></p-calendar>
+                <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="p-error">
+                    <small *ngIf="dob.errors['required']">Date of birth is required.</small>
+                </div>
             </div>
 
             <div class="field flex justify-content-center">
@@ -43,4 +58,10 @@
     </div>
 </form>
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+
+<ng-template #errorTemplate let-control let-message="message">
+    <div *ngIf="control && (control.invalid && (control.dirty || control.touched))" class="p-error">
+      <small>{{ message }}</small>
+    </div>
+</ng-template>
 

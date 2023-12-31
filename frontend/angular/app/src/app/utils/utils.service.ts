@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
+import { FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,16 @@ export class UtilsService {
 
   clearErrorMessages() {
     this.errorMessages = [];
+  }
+
+  markFormGroupTouched(formGroup: FormGroup): void {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 
   handleError(error: any = null) {

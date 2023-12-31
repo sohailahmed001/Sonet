@@ -12,8 +12,9 @@
     }
 
     .reg-card .p-card {
-        height: 100vh;
-        overflow: auto
+        height: 95vh;
+        margin-top: 1rem;
+        overflow: auto;
     }
     
     .p-inputtext:enabled:focus, .p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
@@ -37,4 +38,13 @@
     .p-calendar-w-btn .p-datepicker-trigger:hover, .sign-in:hover {
         filter: brightness(92%);
     }
+
+    .reg-card ::-webkit-scrollbar {
+        width: 0px;
+    }
+      
+    .reg-card ::-webkit-scrollbar-track {
+        background: transparent;
+    }
 }
+

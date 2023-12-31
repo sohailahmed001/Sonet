@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { UtilsService } from 'src/app/utils/utils.service';
@@ -21,6 +22,7 @@ class RegistrationUser {
 })
 
 export class RegistrationComponent implements OnInit {
+  @ViewChild('myform') form: NgForm;
   user: RegistrationUser = new RegistrationUser();
   minDate: Date;
   maxDate: Date;
@@ -38,6 +40,11 @@ export class RegistrationComponent implements OnInit {
 
   onSignInClick() {
     this.utilsService.clearErrorMessages();
+
+    if (this.form.form.invalid) {
+      this.utilsService.markFormGroupTouched(this.form.form);
+      return;
+    }
 
     this.showLoader = true;
 
