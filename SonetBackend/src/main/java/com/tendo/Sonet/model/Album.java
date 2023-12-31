@@ -3,6 +3,7 @@ package com.tendo.Sonet.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -19,11 +20,11 @@ public class Album
     @Column(nullable = false)
     private String description;
 
-    @Column(name = "release_date", nullable = false)
+    @Column(name = "release_date")
     private Date releaseDate;
 
     @Column(name = "created_date", nullable = false)
-    private Date createdDate;
+    private Date createdDate = new Date();
 
     @ManyToOne
     @JoinColumn(name = "artist_id", nullable = false)
@@ -33,8 +34,8 @@ public class Album
     private List<Song> songs;
 
     @Lob
-    @Column(name = "cover_image", columnDefinition = "LONGBLOB", nullable = false)
-    private byte[] coverImage;
+    @Column(name = "cover_image_url", nullable = false)
+    private String coverImageURL;
 
     @Transient
     private MultipartFile coverImageFile;
@@ -113,19 +114,19 @@ public class Album
         this.songs = songs;
     }
 
-    public byte[] getCoverImage()
-    {
-        return coverImage;
-    }
-
-    public void setCoverImage(byte[] coverImage)
-    {
-        this.coverImage = coverImage;
-    }
-
     public MultipartFile getCoverImageFile()
     {
         return coverImageFile;
+    }
+
+    public String getCoverImageURL()
+    {
+        return coverImageURL;
+    }
+
+    public void setCoverImageURL(String coverImageURL)
+    {
+        this.coverImageURL = coverImageURL;
     }
 
     public void setCoverImageFile(MultipartFile coverImageFile)

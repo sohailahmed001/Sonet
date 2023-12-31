@@ -20,7 +20,7 @@ public class Artist
     private SonetUser sonetUser;
 
     @OneToMany(mappedBy = "artist")
-    private List<Album> albums;
+    private List<Album> albums = new ArrayList<>();
 
     public Long getId()
     {
