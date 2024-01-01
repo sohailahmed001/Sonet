@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -97,6 +98,13 @@ public class AppUser
     public void setSonetUser(SonetUser sonetUser)
     {
         this.sonetUser = sonetUser;
+    }
+
+    public void addRole(Role role) {
+        if(this.getRoles() == null) {
+            this.roles = new HashSet<>();
+        }
+        this.getRoles().add(role);
     }
 
     public AppUser()

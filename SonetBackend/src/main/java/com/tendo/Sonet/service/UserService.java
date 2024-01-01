@@ -81,14 +81,25 @@ public class UserService implements UserDetailsService
     @Transactional
     public SonetUser createNewUser(RegistrationDTO registrationDTO)
     {
-        AppUser     user        =   createAppUser(registrationDTO);
-        SonetUser sonetUser     =   createSonetUser(registrationDTO, user);
+        AppUser     user            =   createAppUser(registrationDTO);
+        SonetUser   sonetUser       =   createSonetUser(registrationDTO, user);
+        List<Role>  listenerRoles   =   this.roleRepository.findRoleByName("ROLE_LISTENER");
+        List<Role>  artistRoles     =   this.roleRepository.findRoleByName("ROLE_ARTIST");
 
         if(registrationDTO.getUserType() == UserType.ARTIST) {
             createNewArtist(registrationDTO, sonetUser);
+
+            if(artistRoles != null && !artistRoles.isEmpty()) {
+                user.addRole(artistRoles.get(0));
+            }
         }
 
-        return sonetUser;
+        if(listenerRoles != null && !listenerRoles.isEmpty()) {
+            user.addRole(listenerRoles.get(0));
+        }
+
+        this.saveUser(user);
+        return this.sonetUserRepository.findById(sonetUser.getId()).orElseThrow(() -> new NotFoundException(SonetUser.class));
     }
 
     private Artist createNewArtist(RegistrationDTO registrationDTO, SonetUser sonetUser) {
