@@ -1,7 +1,7 @@
-<div [ngClass]="{'p-blur': showChangePasswordDialog}" class="text-white grid-nogutter" >
+<div class="text-white grid-nogutter" >
     <div class="flex align-items-start mb-4">
-        <div class="pt-1">
-            <app-playlist-list-icon [style.margin-right]="'8px'"></app-playlist-list-icon>
+        <div class="mr-2">
+            <i class="fas fa-user-edit text-sm"></i>
         </div>
         <div>
             <h3 class="mt-0">MY PROFILE</h3>
@@ -54,7 +54,7 @@
 </div>
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 
-<p-dialog class="pass-dialog" *ngIf="showChangePasswordDialog" header="Change Password" [(visible)]="showChangePasswordDialog" [modal]="false" [style]="{ width: '500px' }" [draggable]="false" [resizable]="false"
+<p-dialog class="pass-dialog" *ngIf="showChangePasswordDialog" header="Change Password" [(visible)]="showChangePasswordDialog" [modal]="true" [style]="{ width: '500px' }" [draggable]="false" [resizable]="false"
         [closeOnEscape]="false" (onHide)="dialogClose()">
     <form #passform="ngForm">
         <div class="reg-card">

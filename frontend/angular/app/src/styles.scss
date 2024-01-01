@@ -325,7 +325,7 @@ p-selectButton .p-selectbutton .p-highlight {
     background-color: var(--secondary-theme-color) !important;
 }
 
-p-selectButton .p-selectbutton .p-element:enabled, .user-type-select .p-selectbutton .p-element:focus {
+p-selectButton .p-selectbutton .p-element:enabled, p-selectButton .p-selectbutton .p-element:focus {
     border-color: var(--secondary-theme-color);
     box-shadow: none;
 }
