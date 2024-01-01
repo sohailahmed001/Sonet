@@ -25,7 +25,8 @@ import java.util.*;
 @EnableWebSecurity
 public class SecurityConfig
 {
-    private static final String[] AUTHENTICATED_APIS    =   { "/api/test", "/api/users/**", "/api/roles/**", "/api/authorities/**", "/api/sonet/**"};
+    private static final String[] ADMIN_APIS    =   { "/api/test", "/api/users/**", "/api/roles/**", "/api/authorities/**"};
+    private static final String[] SONET_AUTHENTICATED_APIS    =   { "/api/sonet/**"};
     private static final String[] GET_PERMITTED_APIS    =   { "/api/login", "/error" };
     private static final String[] POST_PERMITTED_APIS   =   { "/api/register", "/error" };
     private static final String[] CSRF_IGNORE_APIS      =   { "/api/register" };
@@ -47,7 +48,8 @@ public class SecurityConfig
                 .addFilterAfter(getJWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(getJWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(AUTHENTICATED_APIS).authenticated()
+                    .requestMatchers(ADMIN_APIS).hasRole("ADMIN")
+                    .requestMatchers(SONET_AUTHENTICATED_APIS).hasAnyRole("LISTENER", "ARTIST")
                     .requestMatchers(HttpMethod.GET, GET_PERMITTED_APIS).permitAll()
                     .requestMatchers(HttpMethod.POST, POST_PERMITTED_APIS).permitAll())
                 .httpBasic(httpBasicCustomizer -> httpBasicCustomizer.authenticationEntryPoint(getCustomBasicAuthenticationEntryPoint()));
