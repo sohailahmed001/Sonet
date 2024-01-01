@@ -37,8 +37,8 @@ export class LoginComponent {
           this.authService.processAuthData(data);
 
           setTimeout(() => {
-            this.router.navigate(['/home']);
-          }, 500);
+            this.redirectBasedOnRole()
+          }, 200);
 
           this.showLoader = false;
         },
@@ -50,5 +50,17 @@ export class LoginComponent {
         }
       }
     )
+  }
+
+  redirectBasedOnRole() {
+    const userRolesAndAuths = this.authService.getUserRolesAndAuthorities() || [];
+
+    if (userRolesAndAuths.includes('ROLE_ADMIN')) {
+      this.router.navigate(['/home']);
+    } else if (userRolesAndAuths.includes('canListenSongs')) {
+      this.router.navigate(['/sonet', 'home']);
+    } else {
+      this.router.navigate(['/unauthorized']);
+    }
   }
 }

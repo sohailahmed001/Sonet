@@ -1,5 +1,4 @@
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
-import { JwtHelperService } from "@auth0/angular-jwt";
 import { Injectable, inject } from "@angular/core";
 import { AuthService } from "../auth/auth.service";
 
@@ -8,21 +7,23 @@ import { AuthService } from "../auth/auth.service";
 export class AuthGuardService {
 
     constructor(private router: Router,
-        private authService: AuthService,
-        private jwtService: JwtHelperService) {
+        private authService: AuthService) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        const jwtToken = this.authService.getJWTToken();
-        const isExpired = this.jwtService.isTokenExpired(jwtToken);
+        const expectedRoles = route.data['roles'];
 
-        if (jwtToken && !isExpired) {
-            return true;
+        if (!this.authService.isAuthenticated()) {
+            this.authService.logout();
+            this.router.navigate(['/login']);
+            return false;
         }
 
-        this.authService.logout();
-        this.router.navigate(['/login']);
-        return false;
+        if(!this.authService.hasAnyRole(expectedRoles)) {
+            this.router.navigate(['/unauthorized']);
+            return false;
+        }
+        return true;
     };
 }
 

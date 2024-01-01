@@ -2,10 +2,14 @@
     <div class="logo">
         <img class="logo-img" src="assets/images/logo.png" alt="logo" >
     </div>
-    <div class="right">
+    <div class="right flex">
         <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input id="search-input" class="p-inputtext-sm" type="text" pInputText placeholder="Search" />
         </span>
+        <div class="right-btn">
+            <p-button icon="fa fa-power-off" label="Logout" (click)="logout()">
+            </p-button>
+        </div>
     </div>
 </div>

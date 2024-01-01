@@ -17,12 +17,14 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessagesModule } from 'primeng/messages';
 import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegistrationComponent,
-    LayoutComponent
+    LayoutComponent,
+    UnauthorizedComponent
     ],
   imports: [
     FormsModule,

@@ -24,36 +24,32 @@ const routes: Routes = [
   {
     path : '',
     component : FullLayoutComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ADMIN'] },
     children : [
       {
         path: 'home',
         component: HomeComponent,
-        canActivate: [AuthGuard]
       },
       {
         path: 'search-user',
         component: SearchUserComponent,
-        canActivate: [AuthGuard]
       },
       {
         path: 'edit-user/:id',
         component: EditUserComponent,
-        canActivate: [AuthGuard]
       },
       {
         path: 'manage-authority',
         component: ManageAuthoritiesComponent,
-        canActivate: [AuthGuard]
       },
       {
         path: 'search-role',
         component: SearchRoleComponent,
-        canActivate: [AuthGuard]
       },
       {
         path: 'edit-role/:id',
         component: EditRoleComponent,
-        canActivate: [AuthGuard]
       },
       
     ]
@@ -65,14 +61,20 @@ const routes: Routes = [
       {
         path: 'home',
         component: SonetHomeComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ROLE_LISTENER', 'ROLE_ARTIST'] }
       },
       {
         path: 'album-details',
         component: AlbumDetailsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ROLE_LISTENER', 'ROLE_ARTIST'] }
       },
       {
         path: 'my-playlists',
         component: MyPlaylistsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ROLE_LISTENER', 'ROLE_ARTIST'] }
       },
     ]
   },

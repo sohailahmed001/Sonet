@@ -25,25 +25,25 @@
 }
 
 ::ng-deep {
-    .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
+    .sonet-side-menu .p-panelmenu-header .p-panelmenu-header-content {
         background-color: transparent;
     }
 
-    .p-panelmenu .p-panelmenu-panel:first-child {
+    .sonet-side-menu .p-panelmenu-panel:first-child {
         .p-panelmenu-header .p-panelmenu-header-content a.p-panelmenu-header-action {
             border-top-left-radius: 30px !important;
             border-top-right-radius: 30px !important;
         }
     }
 
-    .p-panelmenu .p-panelmenu-panel:last-child {
+    .sonet-side-menu .p-panelmenu-panel:last-child {
         .p-panelmenu-header .p-panelmenu-header-content a.p-panelmenu-header-action {
             border-bottom-left-radius: 30px !important;
             border-bottom-right-radius: 30px !important;
         }
     }
 
-    .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-menuitem-link-active {
+    .sonet-side-menu .p-panelmenu-header .p-panelmenu-header-content .p-menuitem-link-active {
         background-color: var(--secondary-theme-color);
     }
 

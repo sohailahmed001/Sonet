@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AppUser } from '../model/app-user.model';
 import { getCookie, setCookie } from 'typescript-cookie';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
     errorMessages: any[];
     PROJECT_PREFIX: string = environment.PROJECT_PREFIX;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private jwtService: JwtHelperService) { }
 
     login(userDetails: AppUser): Observable<any> {
         const httpHeaders = new HttpHeaders({
@@ -44,13 +45,23 @@ export class AuthService {
         return this.jwtToken;
     }
 
-    isLoggedIn(): boolean {
-        const token = this.getJWTToken();
-        return token != null;
+    isAuthenticated(): boolean {
+        const jwtToken = this.getJWTToken();
+        return jwtToken && !this.jwtService.isTokenExpired(jwtToken);
     }
 
-    getUser(): any {
-        // do nothing
+    hasAnyRole(roles: any[]): boolean {
+        if(!(roles || []).length) {
+            return true;
+        }
+        return (this.getUserRolesAndAuthorities() || []).some(userRole => roles.includes(userRole))
+    }
+
+    getUserRolesAndAuthorities(): any[] {
+        const jwtToken = this.getJWTToken();
+        const decodedToken = this.jwtService.decodeToken(jwtToken);
+        const userRolesStr = (decodedToken.authorities || '');
+        return userRolesStr.includes(',') ? userRolesStr.split(',') : [userRolesStr];
     }
 
     setJWTToken(jwt){
