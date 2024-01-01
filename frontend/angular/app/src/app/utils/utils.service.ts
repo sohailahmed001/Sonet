@@ -110,4 +110,12 @@ export class UtilsService {
   getDataFromJSON(fileName): Observable<any> {
     return this.httpClient.get<any>('assets/' + fileName);
   }
+
+  setMinMaxDatesForDob(minDate: Date, maxDate: Date) {
+    minDate = new Date();
+    maxDate = new Date();
+
+    minDate.setFullYear(new Date().getFullYear() - 120);
+    maxDate.setFullYear(new Date().getFullYear() - 16);
+  }
 }

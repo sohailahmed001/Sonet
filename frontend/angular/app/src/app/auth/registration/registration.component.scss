@@ -16,28 +16,6 @@
         margin-top: 1rem;
         overflow: auto;
     }
-    
-    .p-inputtext:enabled:focus, .p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
-        box-shadow: 0px 0 4px 2px var(--secondary-theme-color);
-        border: none;
-    }
-    
-    .p-calendar-w-btn .p-datepicker-trigger:enabled {
-        box-shadow: none;
-    }
-    
-    .p-calendar-w-btn .p-datepicker-trigger, .sign-in {
-        background-color: var(--secondary-theme-color);
-        border: 1px solid var(--secondary-theme-color);
-    }
-
-    .p-inputtext:hover {
-        border-color: black;
-    }
-
-    .p-calendar-w-btn .p-datepicker-trigger:hover, .sign-in:hover {
-        filter: brightness(92%);
-    }
 
     .reg-card ::-webkit-scrollbar {
         width: 0px;
@@ -45,16 +23,6 @@
       
     .reg-card ::-webkit-scrollbar-track {
         background: transparent;
-    }
-
-    .user-type-select .p-selectbutton .p-highlight {
-        border-color: var(--secondary-theme-color);
-        background-color: var(--secondary-theme-color) !important;
-    }
-
-    .user-type-select .p-selectbutton .p-element:enabled, .user-type-select .p-selectbutton .p-element:focus {
-        border-color: var(--secondary-theme-color);
-        box-shadow: none;
     }
 }
 

@@ -25,11 +25,11 @@ import java.util.*;
 @EnableWebSecurity
 public class SecurityConfig
 {
-    private static final String[] ADMIN_APIS    =   { "/api/test", "/api/users/**", "/api/roles/**", "/api/authorities/**"};
-    private static final String[] SONET_AUTHENTICATED_APIS    =   { "/api/sonet/**"};
-    private static final String[] GET_PERMITTED_APIS    =   { "/api/login", "/error" };
-    private static final String[] POST_PERMITTED_APIS   =   { "/api/register", "/error" };
-    private static final String[] CSRF_IGNORE_APIS      =   { "/api/register" };
+    private static final String[] ADMIN_APIS                =   { "/api/test", "/api/users/**", "/api/roles/**", "/api/authorities/**"};
+    private static final String[] SONET_AUTHENTICATED_APIS  =   { "/api/sonet/**"};
+    private static final String[] GET_PERMITTED_APIS        =   { "/api/login", "/error" };
+    private static final String[] POST_PERMITTED_APIS       =   { "/api/register", "/error" };
+    private static final String[] CSRF_IGNORE_APIS          =   { "/api/register" };
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception

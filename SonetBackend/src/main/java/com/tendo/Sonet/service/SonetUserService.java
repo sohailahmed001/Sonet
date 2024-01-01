@@ -1,18 +1,28 @@
 package com.tendo.Sonet.service;
 
+import com.tendo.Sonet.dto.PasswordDTO;
 import com.tendo.Sonet.exception.NotFoundException;
+import com.tendo.Sonet.model.AppUser;
 import com.tendo.Sonet.model.SonetUser;
 import com.tendo.Sonet.repository.SonetUserRepository;
 import com.tendo.Sonet.utils.SONETUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.*;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SonetUserService
 {
     @Autowired
     private SonetUserRepository sonetUserRepository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public SonetUser updateSonetUser(SonetUser sonetUser)
     {
@@ -42,5 +52,27 @@ public class SonetUserService
     {
         return this.sonetUserRepository.findById(id)
                                     .orElseThrow(() -> new NotFoundException(SonetUser.class));
+    }
+
+    public SonetUser getSonetUserByUsername(String username) {
+        List<SonetUser> users = this.sonetUserRepository.findByUsername(username);
+
+        if(users != null && !users.isEmpty()) {
+            return users.get(0);
+        }
+        throw new NotFoundException(SonetUser.class);
+    }
+
+    public void updatePassword(PasswordDTO passwordDTO) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        AppUser appUser = this.userService.getUserByUsername(username).orElseThrow(() -> new NotFoundException(AppUser.class));
+
+        if(this.passwordEncoder.matches(passwordDTO.getCurrentPassword(), appUser.getPassword())) {
+            appUser.setPassword(this.passwordEncoder.encode(passwordDTO.getNewPassword()));
+            this.userService.saveUser(appUser);
+        }
+        else {
+            throw new RuntimeException("Provided current password does not match with your existing password");
+        }
     }
 }

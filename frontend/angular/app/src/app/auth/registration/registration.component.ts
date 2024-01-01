@@ -38,11 +38,7 @@ export class RegistrationComponent implements OnInit {
   constructor(public utilsService: UtilsService, private userService: UserService, private router: Router) { }
   
   ngOnInit(): void {
-    this.minDate = new Date();
-    this.maxDate = new Date();
-
-    this.minDate.setFullYear(new Date().getFullYear() - 120);
-    this.maxDate.setFullYear(new Date().getFullYear() - 16);
+    this.utilsService.setMinMaxDatesForDob(this.minDate, this.maxDate);
 
     this.registerAsOptions = [
       { label: 'Listener', value: Usertype.LISTENER},

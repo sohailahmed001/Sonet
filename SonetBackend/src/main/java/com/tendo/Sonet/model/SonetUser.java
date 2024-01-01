@@ -1,5 +1,6 @@
 package com.tendo.Sonet.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tendo.Sonet.dto.RegistrationDTO;
 import jakarta.persistence.*;
@@ -31,6 +32,7 @@ public class SonetUser
     private String photoURL;
 
     @Column(name = "dob", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dob;
 
     @JsonIgnoreProperties("sonetUser")

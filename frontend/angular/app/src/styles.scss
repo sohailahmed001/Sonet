@@ -278,3 +278,54 @@ a.p-panelmenu-header-action:hover {
 .album-img:hover {
     border: 3px double var(--secondary-theme-color)
 }
+
+.p-dialog .p-dialog-header {
+    background-color: var(--secondary-theme-color);
+    color: white;
+    padding: 12px;
+    padding-left: 18px;
+}
+
+.p-dialog .p-dialog-content {
+    background-color: var(--primary-theme-color);
+    padding-top: 2rem;
+    color: white;
+}
+
+.p-dialog .p-dialog-footer {
+    padding: 8px;
+    background-color: var(--primary-theme-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.p-inputtext:enabled:focus, .p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
+    box-shadow: 0px 0 4px 2px var(--secondary-theme-color);
+    border: none;
+}
+
+.p-calendar-w-btn .p-datepicker-trigger:enabled {
+    box-shadow: none;
+}
+
+.p-calendar-w-btn .p-datepicker-trigger, .sign-in {
+    background-color: var(--secondary-theme-color);
+    border: 1px solid var(--secondary-theme-color);
+}
+
+.p-inputtext:hover {
+    border-color: black;
+}
+
+.p-calendar-w-btn .p-datepicker-trigger:hover, .sign-in:hover {
+    filter: brightness(92%);
+}
+
+p-selectButton .p-selectbutton .p-highlight {
+    border-color: var(--secondary-theme-color);
+    background-color: var(--secondary-theme-color) !important;
+}
+
+p-selectButton .p-selectbutton .p-element:enabled, .user-type-select .p-selectbutton .p-element:focus {
+    border-color: var(--secondary-theme-color);
+    box-shadow: none;
+}

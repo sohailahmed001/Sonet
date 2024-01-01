@@ -49,3 +49,13 @@
         filter: brightness(90%);
     }
 }
+
+.user-icon {
+    border: 2px solid var(--secondary-theme-color);
+    border-radius: 50%;
+    padding: 6px;
+}
+
+.user-icon .fa:hover {
+    color: var(--secondary-theme-color) !important;
+}

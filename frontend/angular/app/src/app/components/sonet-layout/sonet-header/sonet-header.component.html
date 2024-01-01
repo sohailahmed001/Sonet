@@ -7,9 +7,11 @@
             <i class="pi pi-search"></i>
             <input id="search-input" class="p-inputtext-sm" type="text" pInputText placeholder="Search" />
         </span>
-        <div class="right-btn">
-            <p-button icon="fa fa-power-off" label="Logout" (click)="logout()">
-            </p-button>
+        <div class="right-btn flex text-center align-items-center">
+            <div class="user-icon">
+                <i class="fa fa-user-cog text-xl cursor-pointer" (click)="router.navigate(['/sonet', 'my-profile'])"></i>
+            </div>
+            <p-button class="ml-4" icon="fa fa-power-off" label="Logout" (click)="logout()"></p-button>
         </div>
     </div>
 </div>

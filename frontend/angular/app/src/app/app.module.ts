@@ -33,6 +33,8 @@ import { AlbumDetailsComponent } from './components/sonet/album-details/album-de
 import { MyPlaylistsComponent } from './components/sonet/my-playlists/my-playlists.component';
 import { PlaylistListIconComponent } from './svg/playlist-list-icon.component';
 import { CarouselModule } from 'primeng/carousel';
+import { MyProfileComponent } from './components/sonet/my-profile/my-profile.component';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { CarouselModule } from 'primeng/carousel';
     SongPlayingComponent,
     AlbumDetailsComponent,
     MyPlaylistsComponent,
-    PlaylistListIconComponent
+    PlaylistListIconComponent,
+    MyProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,8 @@ import { CarouselModule } from 'primeng/carousel';
     ToastModule,
     PanelMenuModule,
     SliderModule,
-    CarouselModule
+    CarouselModule,
+    CalendarModule
   ],
   providers: [
     {

@@ -1,0 +1,83 @@
+<div [ngClass]="{'p-blur': showChangePasswordDialog}" class="text-white grid-nogutter" >
+    <div class="flex align-items-start mb-4">
+        <div class="pt-1">
+            <app-playlist-list-icon [style.margin-right]="'8px'"></app-playlist-list-icon>
+        </div>
+        <div>
+            <h3 class="mt-0">MY PROFILE</h3>
+        </div>
+        <div class="btn btn-pwd ml-5">
+            <p-button icon="pi pi-wrench" label="Change password" (click)="onChangePasswordClick()"></p-button>
+        </div>
+    </div>
+
+    <form #detailsForm="ngForm">
+        <div class="grid">
+            <div class="field col-4">
+                <label>Username*</label>
+                <input pInputText #username="ngModel" id="username" type="text" [(ngModel)]="user.appUser.username" required="required"  name="username" class="w-full"/>
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="p-error">
+                    <small *ngIf="username.errors['required']">Username is required.</small>
+                </div>
+            </div>
+
+            <div class="field col-3">
+                <label>First Name*</label>
+                <input pInputText #firstName="ngModel" id="firstName" type="text" [(ngModel)]="user.firstName" required="required" name="firstName" class="w-full"/>
+                <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="p-error">
+                    <small *ngIf="firstName.errors['required']">First Name is required.</small>
+                </div>
+            </div>
+
+            <div class="field col-3">
+                <label>Middle Name</label>
+                <input pInputText id="middleName" type="text" [(ngModel)]="user.middleName" name="middleName" class="w-full"/>
+            </div>
+
+            <div class="field col-3">
+                <label>Last Name*</label>
+                <input pInputText #lastName="ngModel" id="lastName" type="text" [(ngModel)]="user.lastName" required="required" name="lastName" class="w-full"/>
+                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="p-error">
+                    <small *ngIf="lastName.errors['required']">Last Name is required.</small>
+                </div>
+            </div>
+
+            <div class="field col-3">
+                <label>Date of Birth*</label>
+                <p-calendar name="dob" #dob="ngModel" [(ngModel)]="user.dob" dateFormat="dd-MM-yy" [minDate]="minDate" [maxDate]="maxDate" [defaultDate]="maxDate" [required]="true" placeholder="must be 16 or above" [showIcon]="true"></p-calendar>
+                <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="p-error">
+                    <small *ngIf="dob.errors['required']">Date of birth is required.</small>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
+
+<p-dialog class="pass-dialog" *ngIf="showChangePasswordDialog" header="Change Password" [(visible)]="showChangePasswordDialog" [modal]="false" [style]="{ width: '500px' }" [draggable]="false" [resizable]="false"
+        [closeOnEscape]="false" (onHide)="dialogClose()">
+    <form #passform="ngForm">
+        <div class="reg-card">
+            <div class="field">
+                <label>Current Password*</label>
+                <input pInputText #currentPassword="ngModel" [(ngModel)]="passwordDto.currentPassword" name="password" type="password" required="required" class="w-full"/>
+                <div *ngIf="currentPassword.invalid && (currentPassword.dirty || currentPassword.touched)" class="p-error">
+                    <small *ngIf="currentPassword.errors['required']">Current Password is required.</small>
+                </div>
+            </div>
+            <div class="field">
+                <label>New Password*</label>
+                <input pInputText #newPassword="ngModel" [(ngModel)]="passwordDto.newPassword" name="password" type="password" required="required" class="w-full"/>
+                <div *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)" class="p-error">
+                    <small *ngIf="newPassword.errors['required']">New Password is required.</small>
+                </div>
+            </div>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <div class="btn btn-pwd-save">
+            <p-button icon="pi pi-key" (click)="changePassword()" label="Confirm" pAutoFocus [autofocus]="true"></p-button>
+        </div>
+    </ng-template>
+</p-dialog>
+  

@@ -1,0 +1,34 @@
+::ng-deep {
+    .p-inputtext:hover {
+        border-color: var(--secondary-theme-color);
+    }
+
+    .btn .p-button {
+        border-radius: 32px;
+        font-size: 11px;
+        padding: 8px;
+        background-color: var(--danger-theme-color);
+        border-color: var(--danger-theme-color);
+    }
+
+    .btn-pwd .p-button .pi {
+        font-size: 12px;
+    }
+
+    .btn-pwd-save  .p-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .btn-pwd-save  .p-button .pi {
+        font-size: 16px;
+    }
+
+    .btn .p-button:hover {
+        filter: brightness(90%);
+    }
+
+    .p-blur {
+        filter: blur(2px) !important;
+    }
+}

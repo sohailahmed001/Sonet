@@ -14,6 +14,7 @@ import { SonetLayoutComponent } from './components/sonet-layout/sonet-layout/son
 import { SonetHomeComponent } from './components/sonet/sonet-home/sonet-home.component';
 import { AlbumDetailsComponent } from './components/sonet/album-details/album-details.component';
 import { MyPlaylistsComponent } from './components/sonet/my-playlists/my-playlists.component';
+import { MyProfileComponent } from './components/sonet/my-profile/my-profile.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,12 @@ const routes: Routes = [
       {
         path: 'my-playlists',
         component: MyPlaylistsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ROLE_LISTENER', 'ROLE_ARTIST'] }
+      },
+      {
+        path: 'my-profile',
+        component: MyProfileComponent,
         canActivate: [AuthGuard],
         data: { roles: ['ROLE_LISTENER', 'ROLE_ARTIST'] }
       },

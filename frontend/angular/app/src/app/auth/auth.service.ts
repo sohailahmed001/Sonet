@@ -57,6 +57,12 @@ export class AuthService {
         return (this.getUserRolesAndAuthorities() || []).some(userRole => roles.includes(userRole))
     }
 
+    getUsername(): string {
+        const jwtToken = this.getJWTToken();
+        const decodedToken = this.jwtService.decodeToken(jwtToken);
+        return decodedToken.username;
+    }
+
     getUserRolesAndAuthorities(): any[] {
         const jwtToken = this.getJWTToken();
         const decodedToken = this.jwtService.decodeToken(jwtToken);
