@@ -1,18 +1,14 @@
 package com.tendo.Sonet.service;
 
-import com.tendo.Sonet.dto.PasswordDTO;
 import com.tendo.Sonet.exception.NotFoundException;
-import com.tendo.Sonet.model.AppUser;
 import com.tendo.Sonet.model.SonetUser;
 import com.tendo.Sonet.repository.SonetUserRepository;
 import com.tendo.Sonet.utils.SONETUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.*;
-import java.io.IOException;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SonetUserService
@@ -26,7 +22,7 @@ public class SonetUserService
 
     public SonetUser updateSonetUser(SonetUser sonetUser)
     {
-        SonetUser   savedUser   = getSonetUser(sonetUser);
+        SonetUser   savedUser   = getSonetUserByID(sonetUser.getId());
 
         if (sonetUser.getImageFile() != null)
         {
@@ -37,21 +33,15 @@ public class SonetUserService
             }
 
             String imageURL = SONETUtils.processImage(sonetUser.getImageFile(), false);
-            savedUser.setPhotoURL(imageURL);
+            sonetUser.setPhotoURL(imageURL);
         }
 
-        return sonetUserRepository.save(savedUser);
-    }
-
-    private SonetUser getSonetUser(SonetUser sonetUser)
-    {
-        return sonetUserRepository.findById(sonetUser.getId()).orElseThrow(() -> new NotFoundException(SonetUser.class));
+        return sonetUserRepository.save(sonetUser);
     }
 
     public SonetUser getSonetUserByID(Long id)
     {
-        return this.sonetUserRepository.findById(id)
-                                    .orElseThrow(() -> new NotFoundException(SonetUser.class));
+        return this.sonetUserRepository.findById(id).orElseThrow(() -> new NotFoundException(SonetUser.class));
     }
 
     public SonetUser getSonetUserByUsername(String username) {
@@ -61,18 +51,5 @@ public class SonetUserService
             return users.get(0);
         }
         throw new NotFoundException(SonetUser.class);
-    }
-
-    public void updatePassword(PasswordDTO passwordDTO) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        AppUser appUser = this.userService.getUserByUsername(username).orElseThrow(() -> new NotFoundException(AppUser.class));
-
-        if(this.passwordEncoder.matches(passwordDTO.getCurrentPassword(), appUser.getPassword())) {
-            appUser.setPassword(this.passwordEncoder.encode(passwordDTO.getNewPassword()));
-            this.userService.saveUser(appUser);
-        }
-        else {
-            throw new RuntimeException("Provided current password does not match with your existing password");
-        }
     }
 }

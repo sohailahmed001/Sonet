@@ -3,10 +3,10 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { SonetUser } from 'src/app/model/common.model';
 import { SonetService } from 'src/app/services/sonet.service';
 import { UtilsService } from 'src/app/utils/utils.service';
-import { SonetLayoutComponent } from '../../sonet-layout/sonet-layout/sonet-layout.component';
 import { NgForm } from '@angular/forms';
 
-class PasswordDto {
+class CredDto {
+  username: string;
   currentPassword: string;
   newPassword: string;
 }
@@ -17,19 +17,21 @@ class PasswordDto {
   styleUrls: ['./my-profile.component.scss']
 })
 export class MyProfileComponent implements OnInit {
-  @ViewChild('passform') passform: NgForm;
+  @ViewChild('detailsForm') detailsForm: NgForm;
+  @ViewChild('credentialsForm') credentialsForm: NgForm;
+  username: string;
   user: SonetUser = new SonetUser();
-  passwordDto: PasswordDto = new PasswordDto()
+  credDto: CredDto = new CredDto()
   minDate: Date;
   maxDate: Date;
+  changePassword: boolean = false;
   showLoader: boolean = false;
-  showChangePasswordDialog: boolean = false;
+  showChangeCredDialog: boolean = false;
 
   constructor(
     private sonetService: SonetService,
     public utilsService: UtilsService,
-    private authService: AuthService,
-    private sonetLayoutComponent: SonetLayoutComponent) { }
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.utilsService.setMinMaxDatesForDob(this.minDate, this.maxDate);
@@ -37,10 +39,10 @@ export class MyProfileComponent implements OnInit {
   }
 
   getUserByUsername() {
-    const username = this.authService.getUsername();
+    this.username = this.authService.getUsername();
 
     this.showLoader = true;
-    this.sonetService.getUserByUsername(username).subscribe({
+    this.sonetService.getUserByUsername(this.username).subscribe({
       next: (data: any) => {
         this.showLoader = false;
         this.user = data;
@@ -52,28 +54,33 @@ export class MyProfileComponent implements OnInit {
     });
   }
 
-  onChangePasswordClick() {
-    this.passwordDto = new PasswordDto()
-    this.showChangePasswordDialog = true;
+  onChangeCredClick() {
+    this.credDto = new CredDto()
+    this.credDto.username = this.username;
+    this.showChangeCredDialog = true;
   }
 
-  changePassword() {
+  changeCredentials() {
     this.utilsService.clearErrorMessages();
 
-    if (this.passform.form.invalid) {
-      this.utilsService.markFormGroupTouched(this.passform.form);
+    if (this.credentialsForm.form.invalid) {
+      this.utilsService.markFormGroupTouched(this.credentialsForm.form);
       return;
+    }
+
+    if(!this.changePassword) {
+      this.credDto.newPassword = null;
     }
 
     this.showLoader = true;
 
-    this.utilsService.saveObjects("api/sonet/change-password", this.passwordDto).subscribe(
+    this.utilsService.saveObjects("api/change-credentials", this.credDto).subscribe(
       {
         next: (data) => {
           this.showLoader = false;
-          this.utilsService.handleSuccessMessage("Password Changed");
+          this.utilsService.handleSuccessMessage("Credentials Changed");
           this.dialogClose();
-          this.getUserByUsername();
+          this.authService.logoutAndRedirectLogin();
         },
         error: (er) => {
           this.showLoader = false;
@@ -85,6 +92,31 @@ export class MyProfileComponent implements OnInit {
   }
 
   dialogClose() {
-    this.showChangePasswordDialog = false;
+    this.showChangeCredDialog = false;
+  }
+
+  onSaveClick() {
+    this.utilsService.clearErrorMessages();
+
+    if (this.detailsForm.form.invalid) {
+      this.utilsService.markFormGroupTouched(this.detailsForm.form);
+      return;
+    }
+
+    this.showLoader = true;
+
+    this.utilsService.saveObjects("api/sonet/sonet-users", this.user).subscribe(
+      {
+        next: (data) => {
+          this.showLoader = false;
+          this.utilsService.handleSuccessMessage("Updated Details");
+          this.getUserByUsername();
+        },
+        error: (er) => {
+          this.showLoader = false;
+          this.utilsService.handleError(er);
+        }
+      }
+    )
   }
 }

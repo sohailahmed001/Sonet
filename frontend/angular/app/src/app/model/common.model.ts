@@ -1,5 +1,3 @@
-import { AppUser } from "./app-user.model";
-
 export class Role {
     id: number;
     name: string;
@@ -12,11 +10,7 @@ export class SonetUser {
     middleName: string;
     lastName: string;
     photo: any;
-    dob: Date;
+    dob: string;
     gender: any;
     appUser: any;
-
-    constructor() {
-        this.appUser = new AppUser();
-    }
 }

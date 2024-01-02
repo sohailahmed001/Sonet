@@ -1,5 +1,6 @@
 package com.tendo.Sonet.controller;
 
+import com.tendo.Sonet.dto.CredentialsDTO;
 import com.tendo.Sonet.exception.NotFoundException;
 import com.tendo.Sonet.model.AppUser;
 import com.tendo.Sonet.service.UserService;
@@ -38,5 +39,20 @@ public class UserController
         catch (Exception ex) {
             throw new RuntimeException("Unable to update user due to " + ex.getMessage());
         }
+    }
+
+    @PostMapping("/change-credentials")
+    public ResponseEntity<Boolean> changeUserCredentials(@RequestBody CredentialsDTO credentialsDTO)
+    {
+        if(credentialsDTO.getUsername() == null || credentialsDTO.getUsername().isEmpty()) {
+            throw new RuntimeException("Please provide a Username");
+        }
+
+        if(credentialsDTO.getCurrentPassword() == null || credentialsDTO.getCurrentPassword().isEmpty()) {
+            throw new RuntimeException("Please provide your Current Password");
+        }
+
+        this.userService.updateCredentials(credentialsDTO);
+        return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
     }
 }

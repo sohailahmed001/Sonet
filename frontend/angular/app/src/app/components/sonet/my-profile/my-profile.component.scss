@@ -11,17 +11,28 @@
         border-color: var(--danger-theme-color);
     }
 
-    .btn-pwd .p-button .pi {
+    .btn-cred .p-button .pi {
         font-size: 12px;
     }
 
-    .btn-pwd-save  .p-button {
+    .btn-cred-save  .p-button {
         font-size: 14px;
         padding: 10px;
     }
 
-    .btn-pwd-save  .p-button .pi {
+    .btn-cred-save  .p-button .pi {
         font-size: 16px;
+    }
+
+    .btn-save .p-button {
+        background-color: var(--secondary-theme-color);
+        border-color: var(--secondary-theme-color);
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .btn-save .p-button .pi {
+        font-size: 12px;
     }
 
     .btn .p-button:hover {

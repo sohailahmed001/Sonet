@@ -6,21 +6,13 @@
         <div>
             <h3 class="mt-0">MY PROFILE</h3>
         </div>
-        <div class="btn btn-pwd ml-5">
-            <p-button icon="pi pi-wrench" label="Change password" (click)="onChangePasswordClick()"></p-button>
+        <div class="btn btn-cred ml-5">
+            <p-button icon="pi pi-wrench" label="Change credentials" (click)="onChangeCredClick()"></p-button>
         </div>
     </div>
 
     <form #detailsForm="ngForm">
         <div class="grid">
-            <div class="field col-4">
-                <label>Username*</label>
-                <input pInputText #username="ngModel" id="username" type="text" [(ngModel)]="user.appUser.username" required="required"  name="username" class="w-full"/>
-                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="p-error">
-                    <small *ngIf="username.errors['required']">Username is required.</small>
-                </div>
-            </div>
-
             <div class="field col-3">
                 <label>First Name*</label>
                 <input pInputText #firstName="ngModel" id="firstName" type="text" [(ngModel)]="user.firstName" required="required" name="firstName" class="w-full"/>
@@ -44,30 +36,48 @@
 
             <div class="field col-3">
                 <label>Date of Birth*</label>
-                <p-calendar name="dob" #dob="ngModel" [(ngModel)]="user.dob" dateFormat="dd-MM-yy" [minDate]="minDate" [maxDate]="maxDate" [defaultDate]="maxDate" [required]="true" placeholder="must be 16 or above" [showIcon]="true"></p-calendar>
+                <p-calendar name="dob" #dob="ngModel" dataType="string" [(ngModel)]="user.dob" dateFormat="dd-mm-yy" [minDate]="minDate" [maxDate]="maxDate" [defaultDate]="maxDate" appendTo="body" [required]="true" placeholder="must be 16 or above" [showIcon]="true"></p-calendar>
                 <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="p-error">
                     <small *ngIf="dob.errors['required']">Date of birth is required.</small>
                 </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <div class="btn btn-save">
+                <p-button icon="pi pi-save" label="Save" (click)="onSaveClick()"></p-button>
             </div>
         </div>
     </form>
 </div>
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 
-<p-dialog class="pass-dialog" *ngIf="showChangePasswordDialog" header="Change Password" [(visible)]="showChangePasswordDialog" [modal]="true" [style]="{ width: '500px' }" [draggable]="false" [resizable]="false"
+<p-dialog *ngIf="showChangeCredDialog" header="Change Credentials" [(visible)]="showChangeCredDialog" [modal]="true" [style]="{ width: '500px' }" [draggable]="false" [resizable]="false"
         [closeOnEscape]="false" (onHide)="dialogClose()">
-    <form #passform="ngForm">
+    <form #credentialsForm="ngForm">
+        <div class="mb-3">
+            <p-message severity="info" text="Would require login on change"></p-message>
+        </div>
         <div class="reg-card">
             <div class="field">
+                <label>Username*</label>
+                <input pInputText #username="ngModel" id="username" type="text" [(ngModel)]="credDto.username" required="required"  name="username" class="w-full"/>
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="p-error">
+                    <small *ngIf="username.errors['required']">Username is required.</small>
+                </div>
+            </div>
+            <div class="field">
                 <label>Current Password*</label>
-                <input pInputText #currentPassword="ngModel" [(ngModel)]="passwordDto.currentPassword" name="password" type="password" required="required" class="w-full"/>
+                <input pInputText #currentPassword="ngModel" [(ngModel)]="credDto.currentPassword" name="currentPassword" type="password" required="required" class="w-full"/>
                 <div *ngIf="currentPassword.invalid && (currentPassword.dirty || currentPassword.touched)" class="p-error">
                     <small *ngIf="currentPassword.errors['required']">Current Password is required.</small>
                 </div>
             </div>
             <div class="field">
+                <p-checkbox label="Change password" name="changePassword" [binary]="true" [(ngModel)]="changePassword"></p-checkbox>
+            </div>
+            <div *ngIf="changePassword" class="field">
                 <label>New Password*</label>
-                <input pInputText #newPassword="ngModel" [(ngModel)]="passwordDto.newPassword" name="password" type="password" required="required" class="w-full"/>
+                <input pInputText #newPassword="ngModel" [(ngModel)]="credDto.newPassword" name="newPassword" type="password" required="required" class="w-full"/>
                 <div *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)" class="p-error">
                     <small *ngIf="newPassword.errors['required']">New Password is required.</small>
                 </div>
@@ -75,8 +85,8 @@
         </div>
     </form>
     <ng-template pTemplate="footer">
-        <div class="btn btn-pwd-save">
-            <p-button icon="pi pi-key" (click)="changePassword()" label="Confirm" pAutoFocus [autofocus]="true"></p-button>
+        <div class="btn btn-cred-save">
+            <p-button icon="pi pi-key" (click)="changeCredentials()" label="Confirm" pAutoFocus [autofocus]="true"></p-button>
         </div>
     </ng-template>
 </p-dialog>

@@ -5,6 +5,7 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +36,7 @@ import { PlaylistListIconComponent } from './svg/playlist-list-icon.component';
 import { CarouselModule } from 'primeng/carousel';
 import { MyProfileComponent } from './components/sonet/my-profile/my-profile.component';
 import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import { CalendarModule } from 'primeng/calendar';
     PanelMenuModule,
     SliderModule,
     CarouselModule,
-    CalendarModule
+    CalendarModule,
+    CheckboxModule,
+    MessageModule
   ],
   providers: [
     {

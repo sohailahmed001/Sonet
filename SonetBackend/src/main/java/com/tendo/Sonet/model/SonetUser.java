@@ -32,7 +32,7 @@ public class SonetUser
     private String photoURL;
 
     @Column(name = "dob", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date dob;
 
     @JsonIgnoreProperties("sonetUser")

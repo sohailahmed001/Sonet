@@ -329,3 +329,38 @@ p-selectButton .p-selectbutton .p-element:enabled, p-selectButton .p-selectbutto
     border-color: var(--secondary-theme-color);
     box-shadow: none;
 }
+
+.p-inline-message.p-inline-message-info {
+    background-color: var(--primary-theme-color);
+    color: var(--info-theme-color);
+    padding-left: 0;
+    font-weight: 500;
+}
+
+.p-inline-message.p-inline-message-info .p-inline-message-icon {
+    color: var(--info-theme-color);
+}
+
+.p-checkbox {
+    align-items: center;
+}
+
+.p-checkbox .p-checkbox-box {
+    height: 19px;
+    width: 19px;
+    border-radius: 3px;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+    border-color: var(--secondary-theme-color);
+    background: var(--secondary-theme-color);
+}
+
+.p-checkbox .p-checkbox-box.p-focus {
+    box-shadow: none;
+    border: none;
+}
+
+.p-checkbox .p-checkbox-box:hover {
+    border-color: var(--secondary-theme-color);
+}

@@ -1,20 +1,20 @@
 package com.tendo.Sonet.service;
 
+import com.tendo.Sonet.dto.CredentialsDTO;
 import com.tendo.Sonet.dto.RegistrationDTO;
 import com.tendo.Sonet.exception.NotFoundException;
 import com.tendo.Sonet.model.*;
 import com.tendo.Sonet.repository.*;
-import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.logging.*;
 
 @Service
 public class UserService implements UserDetailsService
@@ -153,6 +153,21 @@ public class UserService implements UserDetailsService
         }
 
         return saveUser(user);
+    }
+
+    public void updateCredentials(CredentialsDTO credentialsDTO) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        AppUser appUser = getUserByUsername(username).orElseThrow(() -> new NotFoundException(AppUser.class));
+
+        if (!this.passwordEncoder.matches(credentialsDTO.getCurrentPassword(), appUser.getPassword())) {
+            throw new RuntimeException("Provided current password does not match with your existing password");
+        }
+
+        if(credentialsDTO.getNewPassword() != null && !credentialsDTO.getNewPassword().isEmpty()) {
+            appUser.setPassword(this.passwordEncoder.encode(credentialsDTO.getNewPassword()));
+        }
+        appUser.setUsername(credentialsDTO.getUsername());
+        saveUser(appUser);
     }
 
     public AppUser saveUser(AppUser user)

@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { AppUser } from '../model/app-user.model';
 import { getCookie, setCookie } from 'typescript-cookie';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,7 @@ export class AuthService {
     errorMessages: any[];
     PROJECT_PREFIX: string = environment.PROJECT_PREFIX;
 
-    constructor(private http: HttpClient, private jwtService: JwtHelperService) { }
+    constructor(private http: HttpClient, private jwtService: JwtHelperService, private router: Router) { }
 
     login(userDetails: AppUser): Observable<any> {
         const httpHeaders = new HttpHeaders({
@@ -36,6 +37,11 @@ export class AuthService {
         this.jwtToken = null;
         sessionStorage.removeItem(this.PROJECT_PREFIX + 'Authorization');
         setCookie('XSRF-TOKEN', '');
+    }
+
+    logoutAndRedirectLogin(): void {
+        this.logout();
+        this.router.navigate(['/login']);
     }
 
     getJWTToken(): string {

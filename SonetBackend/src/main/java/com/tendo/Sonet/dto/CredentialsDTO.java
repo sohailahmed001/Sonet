@@ -1,8 +1,17 @@
 package com.tendo.Sonet.dto;
 
-public class PasswordDTO {
+public class CredentialsDTO {
+    private String username;
     private String currentPassword;
     private String newPassword;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getCurrentPassword() {
         return currentPassword;
