@@ -33,7 +33,6 @@ public class Album
     @OneToMany(mappedBy = "album")
     private List<Song> songs;
 
-    @Lob
     @Column(name = "cover_image_url", nullable = false)
     private String coverImageURL;
 

@@ -1,0 +1,70 @@
+<div class="flex align-items-start text-white">
+    <div>
+        <i class="fas fa-music mr-2 mt-1"></i>
+    </div>
+    <h3 class="mt-0">CREATE ALBUM</h3>
+</div>
+<div class="alb-top card mb-2 flex align-items-center ml-5">
+    <div class="btn mr-4">
+        <p-button [disabled]="currentStep == 0" icon="pi pi-chevron-left" label="Prev" (click)="goToPreviousStep()"></p-button>
+    </div>
+    <div class="col-10">
+        <p-steps [model]="createStepItems" [readonly]="false" [activeIndex]="currentStep" [styleClass]="'completed-'+visitedSteps"></p-steps>
+    </div>
+    <div class="btn">
+        <p-button [disabled]="currentStep == 2" icon="pi pi-chevron-right" label="Next" (click)="goToNextStep()"></p-button>
+    </div>
+</div>
+
+<!-- DETAILS -->
+<div *ngIf="currentStep == 0">
+    <p-fieldset legend="Details" class="field-container">
+        <form #detailsForm="ngForm">
+            <div class="flex flex-wrap">
+                <div class="field col-6">
+                    <label>Title*</label>
+                    <input pInputText #title="ngModel" type="text" [(ngModel)]="album.title" required="required" name="title" placeholder="Album title" class="w-full"/>
+                    <div *ngIf="title.invalid && (title.dirty || title.touched)" class="p-error">
+                        <small *ngIf="title.errors['required']">Title is required.</small>
+                    </div>
+                </div>
+
+                <div class="field col-6">
+                    <label>Description</label>
+                    <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="album.description" name="description" placeholder="Description..." class="w-full"></textarea>
+                </div>
+
+                <div class="field col-6">
+                    <label>Release Date*</label>
+                    <p-calendar name="releaseDate" #releaseDate="ngModel" dataType="string" [(ngModel)]="album.releaseDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [maxDate]="todayDate" [defaultDate]="todayDate" appendTo="body" [required]="true" [showIcon]="true"></p-calendar>
+                    <div *ngIf="releaseDate.invalid && (releaseDate.dirty || releaseDate.touched)" class="p-error">
+                        <small *ngIf="releaseDate.errors['required']">Release Date is required.</small>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </p-fieldset>
+</div>
+
+<!-- ADD SONGS -->
+<div *ngIf="currentStep == 1">
+    <p-accordion class="w-full">
+        <p-accordionTab *ngFor="let song of songs">
+            <ng-template pTemplate="header">
+                <span class="flex align-items-center gap-2 w-full">
+                    <p-avatar image="assets/images/sing-img.webp" shape="circle" />
+                    <span class="font-bold white-space-nowrap">{{ song.name }}</span>
+                </span>
+            </ng-template>
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </p-accordionTab>
+    </p-accordion>
+</div>
+
+<!-- PUBLISH -->
+<div *ngIf="currentStep == 2">
+
+</div>

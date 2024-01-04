@@ -93,9 +93,10 @@ public class UserService implements UserDetailsService
                 user.addRole(artistRoles.get(0));
             }
         }
-
-        if(listenerRoles != null && !listenerRoles.isEmpty()) {
-            user.addRole(listenerRoles.get(0));
+        else {
+            if (listenerRoles != null && !listenerRoles.isEmpty()) {
+                user.addRole(listenerRoles.get(0));
+            }
         }
 
         this.saveUser(user);

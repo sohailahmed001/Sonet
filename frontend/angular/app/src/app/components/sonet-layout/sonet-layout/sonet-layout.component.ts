@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from 'src/app/auth/auth.service';
 import { ASSET_IMAGES_PATH } from 'src/app/utils/constant';
 import { UtilsService } from 'src/app/utils/utils.service';
 
@@ -12,11 +13,16 @@ import { UtilsService } from 'src/app/utils/utils.service';
 export class SonetLayoutComponent implements OnInit {
   sideMenuItems: MenuItem[] = [];
   backgroundStyle: any;
+  tooltipOptions:any = {
+    showDelay: 250,
+    hideDelay: 100
+  };
 
   constructor(
     public utilsService: UtilsService, 
     public router: Router,
-    private cdr: ChangeDetectorRef) {}
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.resetBackground(null);
@@ -24,23 +30,32 @@ export class SonetLayoutComponent implements OnInit {
     this.sideMenuItems = [
       {
         icon: 'fa fa-home',
+        tooltip: 'Home',
+        tooltipOptions: this.tooltipOptions,
         routerLink: '/sonet/home',
         command: () => {
           this.resetBackground(null);
         }
       },
       {
-        icon: 'fa fa-coffee',
+        icon: 'fas fa-headphones-alt',
+        tooltip: 'My Playlist',
+        tooltipOptions: this.tooltipOptions,
         routerLink: '/sonet/my-playlists',
         command: () => {
           this.resetBackground('playlist-bg.jpg');
         }
       },
-      {
-        icon: 'fa fa-leaf',
-        routerLink: '/sonet/dummy',
-      }
     ];
+
+    if(this.authService.hasAnyRole(['ROLE_ARTIST'])) {
+      this.sideMenuItems.push({
+        icon: '	fas fa-record-vinyl',
+        tooltip: 'My Albums',
+        tooltipOptions: this.tooltipOptions,
+        routerLink: '/sonet/my-albums',
+      });
+    }
   }
 
   resetBackground(imagePath: string) {

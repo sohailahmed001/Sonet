@@ -1,0 +1,31 @@
+<div class="text-white grid-nogutter" >
+    <div class="flex align-items-start">
+        <div>
+            <i class="fas fa-record-vinyl mr-2" [style]="{'font-size': '14px', 'padding-top': '5px'}"></i>
+        </div>
+        <div>
+            <h3 class="mt-0">MY ALBUMS</h3>
+        </div>
+        <div class="btn btn-create ml-5">
+            <p-button icon="pi pi-plus" label="Create Album" (click)="router.navigate(['/sonet', 'create-album'])"></p-button>
+        </div>
+    </div>
+    <div class="flex flex-wrap">
+        <ng-container *ngFor="let album of albums">
+            <ng-container *ngTemplateOutlet="albumTemplate; context: { rowData: album }"></ng-container>
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #albumTemplate let-rowData="rowData">
+    <div class="flex flex-column align-items-start gap-2 p-3">
+      <div class="album-img-div">
+        <img class="album-img" [src]="rowData.image" alt="Album Image" [routerLink]="rowData.routerLink">
+      </div>
+      <div class="text-xs">
+        <span class="block">{{ rowData.title }}</span>
+        <span class="block text-600">{{ rowData.artist }}</span>
+      </div>
+    </div>
+</ng-template>
+  

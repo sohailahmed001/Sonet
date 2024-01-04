@@ -364,3 +364,55 @@ p-selectButton .p-selectbutton .p-element:enabled, p-selectButton .p-selectbutto
 .p-checkbox .p-checkbox-box:hover {
     border-color: var(--secondary-theme-color);
 }
+
+.p-tooltip .p-tooltip-arrow {
+    border-right-color: var(--info-theme-color);
+}
+
+.p-tooltip .p-tooltip-text {
+    background: var(--info-theme-color);
+    font-size: 13px;
+    border-radius: 3px;
+    padding: 6px;
+}
+
+.btn .p-button {
+    border-radius: 32px;
+    font-size: 11px;
+    padding: 8px;
+    background-color: var(--secondary-theme-color);
+    border-color: var(--secondary-theme-color);
+}
+
+.btn .p-button:hover {
+    filter: brightness(90%);
+}
+
+.btn .p-button .pi {
+    font-size: 12px;
+}
+
+.p-button:enabled {
+    box-shadow: none;
+}
+
+.p-fieldset {
+    background-color: var(--dark-alt-color);
+    color: rgb(185, 185, 185);
+    border-color: rgba(255, 255, 255, 0.10);
+}
+
+.p-fieldset .p-fieldset-legend {
+    padding: 8px;
+    background-color: var(--secondary-theme-color);
+    filter: brightness(91%);
+    border: none;
+    color: white;
+    border-radius: 4px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.p-fieldset .p-fieldset-content {
+    padding: 1rem;
+}

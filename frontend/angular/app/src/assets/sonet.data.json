@@ -45,27 +45,27 @@
   ],
   "songs": [
     {
-      "title": "Bird set free - Sia",
+      "name": "Bird set free - Sia",
       "duration": "4:56",
       "image": "assets/images/album2.jpg"
     },
     {
-      "title": "Alive - Sia",
+      "name": "Alive - Sia",
       "duration": "3:45",
       "image": "assets/images/album4.jpg"
     },
     {
-      "title": "The Greatest - Sia",
+      "name": "The Greatest - Sia",
       "duration": "4:49",
       "image": "assets/images/album3.jpg"
     },
     {
-      "title": "Elastic Heart - Sia",
+      "name": "Elastic Heart - Sia",
       "duration": "5:38",
       "image": "assets/images/album1.jpg"
     },
     {
-      "title": "Elastic Heart - Sia",
+      "name": "Elastic Heart - Sia",
       "duration": "5:38",
       "image": "assets/images/album1.jpg"
     }

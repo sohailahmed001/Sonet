@@ -14,3 +14,24 @@ export class SonetUser {
     gender: any;
     appUser: any;
 }
+
+export class Song {
+    id: number;
+    name: string;
+    view: number;
+    likes: number;
+    createdDate: string;
+    album: any;
+    primaryPhoto: any;
+}
+
+export class Album {
+    id: number;
+    title: string;
+    description: string;
+    releaseDate: string;
+    createdDate: string;
+    artist: any;
+    songs: any[];
+    coverImageURL: string;
+}

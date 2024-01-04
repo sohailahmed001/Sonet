@@ -37,6 +37,13 @@ import { CarouselModule } from 'primeng/carousel';
 import { MyProfileComponent } from './components/sonet/my-profile/my-profile.component';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { MyAlbumsComponent } from './components/sonet/my-albums/my-albums.component';
+import { StepsModule } from 'primeng/steps';
+import { CreateAlbumComponent } from './components/sonet/create-album/create-album.component';
+import { AccordionModule } from 'primeng/accordion';
+import { AvatarModule } from 'primeng/avatar';
+import { FieldsetModule } from 'primeng/fieldset';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [
@@ -54,7 +61,9 @@ import { CheckboxModule } from 'primeng/checkbox';
     AlbumDetailsComponent,
     MyPlaylistsComponent,
     PlaylistListIconComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    MyAlbumsComponent,
+    CreateAlbumComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +84,12 @@ import { CheckboxModule } from 'primeng/checkbox';
     CarouselModule,
     CalendarModule,
     CheckboxModule,
-    MessageModule
+    MessageModule,
+    StepsModule,
+    AccordionModule,
+    AvatarModule,
+    FieldsetModule,
+    InputTextareaModule
   ],
   providers: [
     {
