@@ -396,6 +396,14 @@ p-selectButton .p-selectbutton .p-element:enabled, p-selectButton .p-selectbutto
     box-shadow: none;
 }
 
+.p-button.p-fileupload-choose:focus  {
+    box-shadow: none;
+}
+
+.p-button.p-fileupload-choose:hover {
+    filter: brightness(91%);
+}
+
 .p-fieldset {
     background-color: var(--dark-alt-color);
     color: rgb(185, 185, 185);

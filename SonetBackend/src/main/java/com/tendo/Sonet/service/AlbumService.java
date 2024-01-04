@@ -2,6 +2,7 @@ package com.tendo.Sonet.service;
 
 import com.tendo.Sonet.exception.NotFoundException;
 import com.tendo.Sonet.model.Album;
+import com.tendo.Sonet.model.Song;
 import com.tendo.Sonet.repository.AlbumRepository;
 import com.tendo.Sonet.utils.SONETUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ public class AlbumService
 {
     @Autowired
     private AlbumRepository albumRepository;
+    @Autowired
+    private ArtistService artistService;
 
     public Album createOrUpdateAlbum(Album album)
     {
@@ -52,6 +55,23 @@ public class AlbumService
             String  coverImageURL   = SONETUtils.processImage(coverImageFile, false);
 
             album.setCoverImageURL(coverImageURL);
+        }
+
+        if(album.getArtist() == null)
+        {
+            album.setArtist(this.artistService.getArtistByLoggedInUser());
+        }
+
+        if(album.getSongs() != null)
+        {
+            for(Song song: album.getSongs())
+            {
+                if(song.getPrimaryImageFile() != null)
+                {
+                    String coverImageURL = SONETUtils.processImage(song.getPrimaryImageFile(), false);
+                    song.setPrimaryPhotoUrl(coverImageURL);
+                }
+            }
         }
 
         return albumRepository.save(album);

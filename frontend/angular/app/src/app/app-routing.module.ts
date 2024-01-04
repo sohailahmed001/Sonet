@@ -92,7 +92,7 @@ const routes: Routes = [
         data: { roles: ['ROLE_ARTIST'] }
       },
       {
-        path: 'create-album',
+        path: 'create-album/:id',
         component: CreateAlbumComponent,
         canActivate: [AuthGuard],
         data: { roles: ['ROLE_ARTIST'] }

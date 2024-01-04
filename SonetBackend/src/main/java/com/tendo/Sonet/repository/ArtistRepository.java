@@ -11,4 +11,7 @@ public interface ArtistRepository extends JpaRepository<Artist, Long>
 {
     @Query("SELECT a FROM Artist a LEFT JOIN FETCH a.albums WHERE a.id = :artistId")
     Optional<Artist> findArtistWithAlbums(@Param("artistId") Long artistId);
+
+    @Query("SELECT a FROM Artist a LEFT JOIN FETCH a.sonetUser su LEFT JOIN FETCH su.appUser au LEFT JOIN FETCH au.roles r WHERE au.username = :username AND r.name = 'ROLE_ARTIST'")
+    List<Artist> findArtistWithUsername(String username);
 }

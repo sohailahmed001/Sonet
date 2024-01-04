@@ -1,3 +1,5 @@
+import { SafeUrl } from "@angular/platform-browser";
+
 export class Role {
     id: number;
     name: string;
@@ -22,7 +24,8 @@ export class Song {
     likes: number;
     createdDate: string;
     album: any;
-    primaryPhoto: any;
+    primaryPhotoUrl: string;
+    primaryImageFile: any;
 }
 
 export class Album {
@@ -34,4 +37,6 @@ export class Album {
     artist: any;
     songs: any[];
     coverImageURL: string;
+    coverImageFile: any;
+    selectedImageURL: SafeUrl;
 }

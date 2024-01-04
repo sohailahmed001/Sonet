@@ -30,6 +30,23 @@
                 </div>
 
                 <div class="field col-6">
+                    <div class="flex">
+                        <div>
+                            <label class="mb-6">Album Cover Image</label>
+                            <div class="flex align-items-center">
+                                <div class="btn btn-clear mr-2">
+                                    <button *ngIf="album.selectedImageURL || album.coverImageURL" pButton type="button" icon="pi pi-times" (click)="onClearImageClick(albumCoverUpload, album, 'selectedImageURL')"></button>
+                                </div>
+                                <p-fileUpload #albumCoverUpload mode="basic" name="albumCoverImage" [url]="album.coverImageFile" accept="image/*" [showCancelButton]="true" [maxFileSize]="1000000" (onSelect)="onAlbumCoverSelect($event)" chooseLabel="Select Album Cover"></p-fileUpload>
+                            </div>
+                        </div>
+                        <div *ngIf="album.selectedImageURL || album.coverImageURL" class="flex mt-2 ml-4">
+                            <p-image [src]="album.selectedImageURL || album.coverImageURL" alt="Cover Image" width="100" [preview]="true" [imageStyle]="{'border-radius': '18px', 'border': '2px solid #85c4c1'}" appendTo="body"></p-image>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field col-6">
                     <label>Description</label>
                     <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="album.description" name="description" placeholder="Description..." class="w-full"></textarea>
                 </div>
@@ -56,10 +73,23 @@
                     <span class="font-bold white-space-nowrap">{{ song.name }}</span>
                 </span>
             </ng-template>
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+            <p-fieldset legend="Song Details" class="field-container">
+                <form #songDetailsForm="ngForm">
+                    <div class="flex flex-wrap">
+                        <div class="field">
+                            <label>Name*</label>
+                            <input pInputText #name="ngModel" type="text" [(ngModel)]="song.name" required="required" name="name" placeholder="Song name" class="w-full"/>
+                            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="p-error">
+                                <small *ngIf="name.errors['required']">Name is required.</small>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Primary Image*</label>
+                            <p-fileUpload mode="basic" name="primaryImage" accept="image/*" [maxFileSize]="1000000" (onSelect)="onSongImageSelect($event)" chooseLabel="Select Song"></p-fileUpload>
+                        </div>
+                    </div>
+                </form>
+            </p-fieldset>
         </p-accordionTab>
     </p-accordion>
 </div>
@@ -68,3 +98,4 @@
 <div *ngIf="currentStep == 2">
 
 </div>
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>

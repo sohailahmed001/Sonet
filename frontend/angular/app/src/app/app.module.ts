@@ -44,6 +44,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { AvatarModule } from 'primeng/avatar';
 import { FieldsetModule } from 'primeng/fieldset';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     AccordionModule,
     AvatarModule,
     FieldsetModule,
-    InputTextareaModule
+    InputTextareaModule,
+    FileUploadModule,
+    ImageModule
   ],
   providers: [
     {

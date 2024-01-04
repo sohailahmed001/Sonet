@@ -1,5 +1,6 @@
 package com.tendo.Sonet.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,19 +22,23 @@ public class Album
     private String description;
 
     @Column(name = "release_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date releaseDate;
 
     @Column(name = "created_date", nullable = false)
     private Date createdDate = new Date();
 
+    @Column(name = "is_published", nullable = false)
+    private boolean isPublished = false;
+
     @ManyToOne
     @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
 
-    @OneToMany(mappedBy = "album")
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     private List<Song> songs;
 
-    @Column(name = "cover_image_url", nullable = false)
+    @Column(name = "cover_image_url")
     private String coverImageURL;
 
     @Transient
@@ -131,5 +136,13 @@ public class Album
     public void setCoverImageFile(MultipartFile coverImageFile)
     {
         this.coverImageFile = coverImageFile;
+    }
+
+    public boolean isPublished() {
+        return isPublished;
+    }
+
+    public void setPublished(boolean published) {
+        isPublished = published;
     }
 }

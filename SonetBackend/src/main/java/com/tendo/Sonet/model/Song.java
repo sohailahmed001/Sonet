@@ -26,12 +26,22 @@ public class Song
     @JoinColumn(name = "album_id", nullable = false)
     private Album album;
 
+    @Column(name = "primary_photo_url", nullable = false)
+    private String primaryPhotoUrl;
+
     @Lob
-    @Column(name = "primary_photo", columnDefinition = "LONGBLOB", nullable = false)
-    private byte[] primaryPhoto;
+    @Column(name = "audio_file", columnDefinition = "LONGBLOB", nullable = false)
+    private byte[] audioFile;
 
     @Transient
-    private MultipartFile songImage;
+    private MultipartFile primaryImageFile;
+
+    @Transient
+    private MultipartFile tempAudioFile;
+
+    public Song()
+    {
+    }
 
     public Long getId()
     {
@@ -93,26 +103,6 @@ public class Song
         this.album = album;
     }
 
-    public byte[] getPrimaryPhoto()
-    {
-        return primaryPhoto;
-    }
-
-    public void setPrimaryPhoto(byte[] primaryPhoto)
-    {
-        this.primaryPhoto = primaryPhoto;
-    }
-
-    public MultipartFile getSongImage()
-    {
-        return songImage;
-    }
-
-    public void setSongImage(MultipartFile songImage)
-    {
-        this.songImage = songImage;
-    }
-
     public byte[] getAudioFile()
     {
         return audioFile;
@@ -133,14 +123,19 @@ public class Song
         this.tempAudioFile = tempAudioFile;
     }
 
-    @Lob
-    @Column(name = "audio_file", columnDefinition = "LONGBLOB", nullable = false)
-    private byte[] audioFile;
+    public String getPrimaryPhotoUrl() {
+        return primaryPhotoUrl;
+    }
 
-    @Transient
-    private MultipartFile tempAudioFile;
+    public void setPrimaryPhotoUrl(String primaryPhotoUrl) {
+        this.primaryPhotoUrl = primaryPhotoUrl;
+    }
 
-    public Song()
-    {
+    public MultipartFile getPrimaryImageFile() {
+        return primaryImageFile;
+    }
+
+    public void setPrimaryImageFile(MultipartFile primaryImageFile) {
+        this.primaryImageFile = primaryImageFile;
     }
 }

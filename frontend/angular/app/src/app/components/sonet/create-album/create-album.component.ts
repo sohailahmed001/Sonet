@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Album, Song } from 'src/app/model/common.model';
 import { UtilsService } from 'src/app/utils/utils.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-album',
@@ -9,14 +12,16 @@ import { UtilsService } from 'src/app/utils/utils.service';
   styleUrls: ['./create-album.component.scss']
 })
 export class CreateAlbumComponent implements OnInit {
+  @ViewChild('detailsForm') detailsForm: NgForm;
   album: Album = new Album();
   createStepItems: MenuItem[];
   currentStep: number = 0;
   visitedSteps: number = 0;
   songs: Song[] = [];
   todayDate: Date = new Date();
+  showLoader: boolean = false;
 
-  constructor(private utilsService: UtilsService) {}
+  constructor(private utilsService: UtilsService, private sanitizer: DomSanitizer, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.createStepItems = [
@@ -47,17 +52,57 @@ export class CreateAlbumComponent implements OnInit {
       }
     ];
 
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if(id == 0) {
+        this.album = new Album();
+      }
+      else if(id > 0) {
+        this.getAlbumById(id);
+      }
+    });
+
     this.getLocalDataJson();
   }
 
-  goToNextStep() {
-    if(this.currentStep < 2) {
-      ++this.currentStep > this.visitedSteps && this.visitedSteps++
-    }
+  getAlbumById(id: number) {
+    this.utilsService.getObjectByID('api/sonet/albums', id).subscribe({
+      next: (data: Album) => {
+        console.log('alb', data);
+        this.album = data;
+      },
+      error: (error) => {
+        this.utilsService.handleError(error);
+      }
+    })
   }
 
   goToPreviousStep() {
     this.currentStep == 0 ? this.currentStep : this.currentStep--;
+  }
+
+  goToNextStep() {
+    // if(this.detailsForm.form.invalid) {
+    //   this.utilsService.markFormGroupTouched(this.detailsForm.form);
+    //   return;
+    // }
+
+    this.showLoader = true;
+    this.utilsService.saveObjects('api/sonet/albums', this.album).subscribe({
+      next: (data: Album) => {
+        console.log('Save', data);
+        this.showLoader = false;
+        this.utilsService.handleSuccess();
+        this.getAlbumById(data.id);
+        if(this.currentStep < 2) {
+          ++this.currentStep > this.visitedSteps && this.visitedSteps++
+        }
+      },
+      error: (error) => {
+        this.showLoader = false;
+        this.utilsService.handleError(error);
+      }
+    });
   }
 
   getLocalDataJson() {
@@ -70,5 +115,27 @@ export class CreateAlbumComponent implements OnInit {
         this.utilsService.handleError(error);
       }
     });
+  }
+
+  onAlbumCoverSelect(event: any) {
+    console.log(event);
+
+    const formData = new FormData();
+    if (event.currentFiles) {
+      formData.append('coverImageFile', event.currentFiles[0], event.currentFiles[0].name)
+      this.album.coverImageFile = formData.get('coverImageFile')
+      const unsafeUrl = event.currentFiles[0].objectURL.changingThisBreaksApplicationSecurity;
+      this.album.selectedImageURL = this.sanitizer.bypassSecurityTrustUrl(unsafeUrl);
+      console.log(this.album);
+    }
+  }
+
+  onSongImageSelect(event: any) {
+    console.log(event)
+  }
+
+  onClearImageClick(photoUpload: any, entity: any, attributeName: string) {
+    entity[attributeName] = null;
+    photoUpload.clear();
   }
 }

@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/sonet")
 public class AlbumController
 {
-
     @Autowired
     private AlbumService albumService;
 
     @PostMapping("/albums")
-    private ResponseEntity<Album> createOrUpdateAlbum(@ModelAttribute Album album)
+    private ResponseEntity<Album> createOrUpdateAlbum(@RequestBody Album album)
     {
         Album updateAlbum = albumService.createOrUpdateAlbum(album);
 
@@ -23,10 +22,10 @@ public class AlbumController
     }
 
     @GetMapping("/albums/{id}")
-    public ResponseEntity<Album> getAlbumByID(@PathVariable Long id)
+    public ResponseEntity<Album> getAlbumByID(@PathVariable(value = "id") Long id)
     {
         Album album = albumService.getAlbumByID(id);
 
-        return new ResponseEntity<>(album, HttpStatus.FOUND);
+        return new ResponseEntity<>(album, HttpStatus.OK);
     }
 }
