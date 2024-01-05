@@ -1,6 +1,7 @@
 package com.tendo.Sonet.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,10 +40,11 @@ public class Album
     private List<Song> songs;
 
     @Column(name = "cover_image_url")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String coverImageURL;
 
     @Transient
-    private MultipartFile coverImageFile;
+    private byte[] coverImageFile;
 
     public Album()
     {
@@ -118,11 +120,6 @@ public class Album
         this.songs = songs;
     }
 
-    public MultipartFile getCoverImageFile()
-    {
-        return coverImageFile;
-    }
-
     public String getCoverImageURL()
     {
         return coverImageURL;
@@ -133,8 +130,12 @@ public class Album
         this.coverImageURL = coverImageURL;
     }
 
-    public void setCoverImageFile(MultipartFile coverImageFile)
-    {
+    public byte[] getCoverImageFile() {
+        return coverImageFile;
+    }
+
+    @Access(AccessType.PROPERTY)
+    public void setCoverImageFile(byte[] coverImageFile) {
         this.coverImageFile = coverImageFile;
     }
 

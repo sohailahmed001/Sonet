@@ -2,6 +2,7 @@ package com.tendo.Sonet.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tendo.Sonet.dto.RegistrationDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -29,6 +30,7 @@ public class SonetUser
     private String lastName;
 
     @Column(name = "photo_url")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String photoURL;
 
     @Column(name = "dob", nullable = false)
@@ -41,7 +43,7 @@ public class SonetUser
     private AppUser appUser;
 
     @Transient
-    private MultipartFile imageFile; // Transient field to handle file upload
+    private byte[] imageFile;
 
     public SonetUser()
     {
@@ -54,16 +56,6 @@ public class SonetUser
         this.lastName   =   registrationDTO.getLastName();
         this.photoURL   =   registrationDTO.getPhoto();
         this.dob        =   registrationDTO.getDob();
-    }
-
-    public MultipartFile getImageFile()
-    {
-        return imageFile;
-    }
-
-    public void setImageFile(MultipartFile imageFile)
-    {
-        this.imageFile = imageFile;
     }
 
     public Long getId()
@@ -130,5 +122,13 @@ public class SonetUser
 
     public void setAppUser(AppUser appUser) {
         this.appUser = appUser;
+    }
+
+    public byte[] getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(byte[] imageFile) {
+        this.imageFile = imageFile;
     }
 }

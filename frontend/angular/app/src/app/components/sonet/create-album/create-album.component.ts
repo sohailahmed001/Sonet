@@ -5,6 +5,9 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Album, Song } from 'src/app/model/common.model';
 import { UtilsService } from 'src/app/utils/utils.service';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { FileUploadEvent } from 'primeng/fileupload';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-album',
@@ -20,10 +23,26 @@ export class CreateAlbumComponent implements OnInit {
   songs: Song[] = [];
   todayDate: Date = new Date();
   showLoader: boolean = false;
+  baseUrl: string = environment.baseURL;
 
   constructor(private utilsService: UtilsService, private sanitizer: DomSanitizer, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.setStepItems();
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if(id == 0) {
+        this.album = new Album();
+      }
+      else if(id > 0) {
+        this.getAlbumById(id);
+      }
+    });
+
+    this.getLocalDataJson();
+  }
+
+  setStepItems() {
     this.createStepItems = [
       {
           label: 'Details',
@@ -51,18 +70,6 @@ export class CreateAlbumComponent implements OnInit {
           expanded: this.currentStep == 2,
       }
     ];
-
-    this.route.params.subscribe(params => {
-      const id = params['id'];
-      if(id == 0) {
-        this.album = new Album();
-      }
-      else if(id > 0) {
-        this.getAlbumById(id);
-      }
-    });
-
-    this.getLocalDataJson();
   }
 
   getAlbumById(id: number) {
@@ -70,11 +77,18 @@ export class CreateAlbumComponent implements OnInit {
       next: (data: Album) => {
         console.log('alb', data);
         this.album = data;
+        this.postAlbumFetch();
       },
       error: (error) => {
         this.utilsService.handleError(error);
       }
     })
+  }
+
+  postAlbumFetch() {
+    if(this.album.coverImageFile) {
+      this.album.selectedImageURL = 'data:image/jpeg;base64,'+ this.album.coverImageFile;
+    }
   }
 
   goToPreviousStep() {
@@ -117,16 +131,14 @@ export class CreateAlbumComponent implements OnInit {
     });
   }
 
-  onAlbumCoverSelect(event: any) {
-    console.log(event);
-
-    const formData = new FormData();
-    if (event.currentFiles) {
-      formData.append('coverImageFile', event.currentFiles[0], event.currentFiles[0].name)
-      this.album.coverImageFile = formData.get('coverImageFile')
-      const unsafeUrl = event.currentFiles[0].objectURL.changingThisBreaksApplicationSecurity;
-      this.album.selectedImageURL = this.sanitizer.bypassSecurityTrustUrl(unsafeUrl);
-      console.log(this.album);
+  onAlbumCoverUpload(event: FileUploadEvent) {
+    if(event.originalEvent)
+    {
+      this.album.coverImageURL = (event.originalEvent as HttpResponse<any>).body?.downloadUri
+      if ((event.files || []).length) {
+        const unsafeUrl = (event.files[0] as any).objectURL?.changingThisBreaksApplicationSecurity;
+        this.album.selectedImageURL = this.sanitizer.bypassSecurityTrustUrl(unsafeUrl);
+      }
     }
   }
 
@@ -134,7 +146,8 @@ export class CreateAlbumComponent implements OnInit {
     console.log(event)
   }
 
-  onClearImageClick(photoUpload: any, entity: any, attributeName: string) {
+  onClearImageClick(photoUpload: any, entity: any, selectedImageURL: string, attributeName: string) {
+    entity[selectedImageURL] = null;
     entity[attributeName] = null;
     photoUpload.clear();
   }

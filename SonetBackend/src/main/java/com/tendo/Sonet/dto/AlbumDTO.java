@@ -1,0 +1,120 @@
+package com.tendo.Sonet.dto;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tendo.Sonet.model.Album;
+import com.tendo.Sonet.model.Artist;
+import com.tendo.Sonet.model.Song;
+import jakarta.persistence.*;
+
+import java.util.Date;
+import java.util.List;
+
+public class AlbumDTO {
+    private Long id;
+    private String title;
+    private String description;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private Date releaseDate;
+    private Date createdDate = new Date();
+    private boolean isPublished = false;
+    private Artist artist;
+    private List<Song> songs;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String coverImageURL;
+    private byte[] coverImageFile;
+
+    public AlbumDTO() {
+    }
+
+    public AlbumDTO(Album album) {
+        this.id = album.getId();
+        this.description = album.getDescription();
+        this.isPublished = album.isPublished();
+        this.title = album.getTitle();
+        this.releaseDate = album.getReleaseDate();
+        this.createdDate = album.getCreatedDate();
+        this.coverImageFile = album.getCoverImageFile();
+        this.artist = album.getArtist();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public boolean isPublished() {
+        return isPublished;
+    }
+
+    public void setPublished(boolean published) {
+        isPublished = published;
+    }
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
+    public String getCoverImageURL() {
+        return coverImageURL;
+    }
+
+    public void setCoverImageURL(String coverImageURL) {
+        this.coverImageURL = coverImageURL;
+    }
+
+    public byte[] getCoverImageFile() {
+        return coverImageFile;
+    }
+
+    public void setCoverImageFile(byte[] coverImageFile) {
+        this.coverImageFile = coverImageFile;
+    }
+}

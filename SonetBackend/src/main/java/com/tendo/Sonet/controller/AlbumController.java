@@ -1,5 +1,6 @@
 package com.tendo.Sonet.controller;
 
+import com.tendo.Sonet.dto.AlbumDTO;
 import com.tendo.Sonet.model.*;
 import com.tendo.Sonet.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class AlbumController
     }
 
     @GetMapping("/albums/{id}")
-    public ResponseEntity<Album> getAlbumByID(@PathVariable(value = "id") Long id)
+    public ResponseEntity<AlbumDTO> getAlbumByID(@PathVariable(value = "id") Long id)
     {
-        Album album = albumService.getAlbumByID(id);
+        AlbumDTO album = albumService.getAlbumByID(id);
 
         return new ResponseEntity<>(album, HttpStatus.OK);
     }

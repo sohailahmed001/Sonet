@@ -35,13 +35,13 @@
                             <label class="mb-6">Album Cover Image</label>
                             <div class="flex align-items-center">
                                 <div class="btn btn-clear mr-2">
-                                    <button *ngIf="album.selectedImageURL || album.coverImageURL" pButton type="button" icon="pi pi-times" (click)="onClearImageClick(albumCoverUpload, album, 'selectedImageURL')"></button>
+                                    <button *ngIf="album.selectedImageURL" pButton type="button" icon="pi pi-times" (click)="onClearImageClick(albumCoverUpload, album, 'selectedImageURL', 'coverImageURL')"></button>
                                 </div>
-                                <p-fileUpload #albumCoverUpload mode="basic" name="albumCoverImage" [url]="album.coverImageFile" accept="image/*" [showCancelButton]="true" [maxFileSize]="1000000" (onSelect)="onAlbumCoverSelect($event)" chooseLabel="Select Album Cover"></p-fileUpload>
+                                <p-fileUpload #albumCoverUpload mode="basic" name="file" [auto]="true" [url]="baseUrl+'api/file/uploadSingle'" [withCredentials]="true" accept="image/*" [showCancelButton]="true" [maxFileSize]="1000000" (onUpload)="onAlbumCoverUpload($event)" chooseLabel="Upload Album Cover"></p-fileUpload>
                             </div>
                         </div>
-                        <div *ngIf="album.selectedImageURL || album.coverImageURL" class="flex mt-2 ml-4">
-                            <p-image [src]="album.selectedImageURL || album.coverImageURL" alt="Cover Image" width="100" [preview]="true" [imageStyle]="{'border-radius': '18px', 'border': '2px solid #85c4c1'}" appendTo="body"></p-image>
+                        <div *ngIf="album.selectedImageURL" class="flex mt-2 ml-4">
+                            <p-image [src]="album.selectedImageURL" alt="Cover Image" width="100" [preview]="true" [imageStyle]="{'border-radius': '18px', 'border': '2px solid #85c4c1'}" appendTo="body"></p-image>
                         </div>
                     </div>
                 </div>

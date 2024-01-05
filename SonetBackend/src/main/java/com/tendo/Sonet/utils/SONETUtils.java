@@ -1,6 +1,12 @@
 package com.tendo.Sonet.utils;
 
 import java.io.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
+import org.springframework.util.MimeType;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -9,10 +15,11 @@ import java.util.*;
 
 public class SONETUtils
 {
-    private static  final    String STATIC_RESOURCE_PATH    =   "/SonetBackend/src/main/resources/static";
-    private static  final    String IMAGES_DIR              =   "/images";
-    private static  final    String AUDIO_DIR               =   "/audios";
-    private static  final    String UPLOAD_DIRECTORY        =   System.getProperty("user.dir") + STATIC_RESOURCE_PATH; ;
+    private static  final   Logger  logger                  =   LoggerFactory.getLogger(SONETUtils.class);
+    private static  final   String  STATIC_RESOURCE_PATH    =   "/src/main/resources/static";
+    private static  final   String  IMAGES_DIR              =   "/images";
+    private static  final   String  AUDIO_DIR               =   "/audios";
+    private static  final   String  UPLOAD_DIRECTORY        =   System.getProperty("user.dir") + STATIC_RESOURCE_PATH; ;
 
     public static String processImage(MultipartFile file, boolean chooseSongPath)
     {
@@ -28,7 +35,8 @@ public class SONETUtils
             String  originalFileName    =   StringUtils.cleanPath(file.getOriginalFilename());
             String  fileExtension       =   StringUtils.getFilenameExtension(originalFileName);
             String  fileName            =   randomID + "." + fileExtension;
-            String  dirPath             =   chooseSongPath ? getAudioDir() : getImagesDir();
+            String  resourceDirectory   =   chooseSongPath ? AUDIO_DIR : IMAGES_DIR;
+            String  dirPath             =   UPLOAD_DIRECTORY + "/" + resourceDirectory;
             Path    uploadPath          =   Paths.get(dirPath);
 
             if (!Files.exists(uploadPath))
@@ -42,7 +50,7 @@ public class SONETUtils
             // saving file in directory
             Files.copy(file.getInputStream(), filePath);
 
-            return uploadPath.toAbsolutePath() + "/" + fileName;
+            return resourceDirectory + "/" + fileName;
         }
         catch (IOException e)
         {
@@ -69,13 +77,32 @@ public class SONETUtils
         }
     }
 
-    private static String getImagesDir()
-    {
-        return UPLOAD_DIRECTORY + "/" + IMAGES_DIR;
+    public static String saveFile(MultipartFile multipartFile) {
+        Assert.hasLength(multipartFile.getContentType(), "File does not have a content type");
+
+        if(multipartFile.getContentType().startsWith("image/")) {
+            return processImage(multipartFile, false);
+        }
+        throw new RuntimeException("Server currently only handles image uploads"); // TODO
     }
 
-    private static String getAudioDir()
-    {
-        return UPLOAD_DIRECTORY + "/" + AUDIO_DIR;
+    public static byte[] retrieveFile(String resourcePath) {
+        logger.info("Resource Requested: {}", resourcePath);
+
+        String  filePath =   UPLOAD_DIRECTORY + "/" + resourcePath;
+
+        logger.info("File Path: {}", filePath);
+
+        File file = new File(filePath);
+
+        if (file.exists()) {
+            try {
+                return Files.readAllBytes(file.toPath());
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

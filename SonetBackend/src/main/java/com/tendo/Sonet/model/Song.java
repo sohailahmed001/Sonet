@@ -1,5 +1,6 @@
 package com.tendo.Sonet.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,7 +9,6 @@ import java.util.*;
 @Entity
 public class Song
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native")
@@ -26,18 +26,19 @@ public class Song
     @JoinColumn(name = "album_id", nullable = false)
     private Album album;
 
-    @Column(name = "primary_photo_url", nullable = false)
+    @Column(name = "primary_photo_url")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String primaryPhotoUrl;
 
-    @Lob
-    @Column(name = "audio_file", columnDefinition = "LONGBLOB", nullable = false)
+    @Column(name = "audio_file_url")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String audioFileUrl;
+
+    @Transient
+    private byte[] primaryImageFile;
+
+    @Transient
     private byte[] audioFile;
-
-    @Transient
-    private MultipartFile primaryImageFile;
-
-    @Transient
-    private MultipartFile tempAudioFile;
 
     public Song()
     {
@@ -113,16 +114,6 @@ public class Song
         this.audioFile = audioFile;
     }
 
-    public MultipartFile getTempAudioFile()
-    {
-        return tempAudioFile;
-    }
-
-    public void setTempAudioFile(MultipartFile tempAudioFile)
-    {
-        this.tempAudioFile = tempAudioFile;
-    }
-
     public String getPrimaryPhotoUrl() {
         return primaryPhotoUrl;
     }
@@ -131,11 +122,19 @@ public class Song
         this.primaryPhotoUrl = primaryPhotoUrl;
     }
 
-    public MultipartFile getPrimaryImageFile() {
+    public String getAudioFileUrl() {
+        return audioFileUrl;
+    }
+
+    public void setAudioFileUrl(String audioFileUrl) {
+        this.audioFileUrl = audioFileUrl;
+    }
+
+    public byte[] getPrimaryImageFile() {
         return primaryImageFile;
     }
 
-    public void setPrimaryImageFile(MultipartFile primaryImageFile) {
+    public void setPrimaryImageFile(byte[] primaryImageFile) {
         this.primaryImageFile = primaryImageFile;
     }
 }

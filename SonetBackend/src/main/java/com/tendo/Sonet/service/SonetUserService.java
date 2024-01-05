@@ -22,20 +22,6 @@ public class SonetUserService
 
     public SonetUser updateSonetUser(SonetUser sonetUser)
     {
-        SonetUser   savedUser   = getSonetUserByID(sonetUser.getId());
-
-        if (sonetUser.getImageFile() != null)
-        {
-            // delete old Photo if new photo is getting uploaded
-            if (savedUser.getPhotoURL() != null)
-            {
-                SONETUtils.deleteIfFileExist(savedUser.getPhotoURL());
-            }
-
-            String imageURL = SONETUtils.processImage(sonetUser.getImageFile(), false);
-            sonetUser.setPhotoURL(imageURL);
-        }
-
         return sonetUserRepository.save(sonetUser);
     }
 

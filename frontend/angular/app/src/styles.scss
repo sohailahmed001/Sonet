@@ -424,3 +424,22 @@ p-selectButton .p-selectbutton .p-element:enabled, p-selectButton .p-selectbutto
 .p-fieldset .p-fieldset-content {
     padding: 1rem;
 }
+
+.p-button.p-fileupload-choose {
+    margin-top: 0.4rem;
+    background-color: #85c4c1;
+    border: none;
+    padding: 9px;
+    border-radius: 19px;
+    font-size: 13px;
+}
+
+.p-button.p-fileupload-choose .p-button-label {
+    flex: none;
+    max-width: 170px;
+    overflow-x: hidden;
+}
+
+.p-image-preview-container:hover > .p-image-preview-indicator {
+    border-radius: 18px;
+}
