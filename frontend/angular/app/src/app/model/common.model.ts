@@ -26,6 +26,10 @@ export class Song {
     album: any;
     primaryPhotoUrl: string;
     primaryImageFile: any;
+    selectedImageURL: string;
+    audioFileUrl: string;
+    uploadedFileName: string;
+    audioFile: any;
 }
 
 export class Album {
@@ -38,5 +42,5 @@ export class Album {
     songs: any[];
     coverImageURL: string;
     coverImageFile: any;
-    selectedImageURL: SafeUrl;
+    selectedImageURL: string;
 }

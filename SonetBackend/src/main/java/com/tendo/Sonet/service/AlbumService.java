@@ -1,6 +1,7 @@
 package com.tendo.Sonet.service;
 
 import com.tendo.Sonet.dto.AlbumDTO;
+import com.tendo.Sonet.dto.SongDTO;
 import com.tendo.Sonet.exception.NotFoundException;
 import com.tendo.Sonet.model.Album;
 import com.tendo.Sonet.model.Song;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AlbumService
 {
@@ -22,7 +26,7 @@ public class AlbumService
     @Autowired
     private ArtistService artistService;
 
-    public Album createOrUpdateAlbum(Album album)
+    public AlbumDTO createOrUpdateAlbum(Album album)
     {
         boolean isNewObject =   album.getId() == null;
 
@@ -34,22 +38,24 @@ public class AlbumService
         return updateAlbum(album);
     }
 
-    private Album updateAlbum(Album album)
+    private AlbumDTO updateAlbum(Album album)
     {
         if(album.getArtist() == null) {
             Album savedAlbum = this.albumRepository.findById(album.getId()).orElseThrow(() -> new NotFoundException(Album.class));
             album.setArtist(savedAlbum.getArtist());
         }
-        return albumRepository.save(album);
+        Album saved = albumRepository.save(album);
+        return getAlbumByID(saved.getId());
     }
 
-    private Album createAlbum(Album album)
+    private AlbumDTO createAlbum(Album album)
     {
         if(album.getArtist() == null)
         {
             album.setArtist(this.artistService.getArtistByLoggedInUser());
         }
-        return albumRepository.save(album);
+        Album saved = albumRepository.save(album);
+        return getAlbumByID(saved.getId());
     }
 
     public AlbumDTO getAlbumByID(Long id)
@@ -62,5 +68,29 @@ public class AlbumService
             album.setCoverImageFile(SONETUtils.retrieveFile(album.getCoverImageURL()));
         }
         return new AlbumDTO(album);
+    }
+
+    public AlbumDTO getAlbumByIDWithSongs(Long id) {
+        Album album = albumRepository.findByIdWithSongs(id).orElseThrow(() -> new NotFoundException(Album.class));
+
+        if(StringUtils.hasLength(album.getCoverImageURL())) {
+            album.setCoverImageFile(SONETUtils.retrieveFile(album.getCoverImageURL()));
+        }
+
+        if(album.getSongs() != null) {
+            for (Song song : album.getSongs()) {
+                if(StringUtils.hasLength(song.getPrimaryPhotoUrl())) {
+                    song.setPrimaryImageFile(SONETUtils.retrieveFile(song.getPrimaryPhotoUrl()));
+                }
+                if(StringUtils.hasLength(song.getAudioFileUrl())) {
+                    song.setAudioFile(SONETUtils.retrieveFile(song.getAudioFileUrl()));
+                }
+            }
+        }
+
+        List<SongDTO> songsDTO = album.getSongs().stream().map(SongDTO::new).toList();
+        AlbumDTO albumDTO = new AlbumDTO(album);
+        albumDTO.setSongs(songsDTO);
+        return albumDTO;
     }
 }

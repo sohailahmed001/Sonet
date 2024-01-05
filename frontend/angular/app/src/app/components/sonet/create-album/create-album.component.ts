@@ -39,7 +39,7 @@ export class CreateAlbumComponent implements OnInit {
       }
     });
 
-    this.getLocalDataJson();
+    // this.getLocalDataJson();
   }
 
   setStepItems() {
@@ -89,6 +89,17 @@ export class CreateAlbumComponent implements OnInit {
     if(this.album.coverImageFile) {
       this.album.selectedImageURL = 'data:image/jpeg;base64,'+ this.album.coverImageFile;
     }
+    this.songs = this.album.songs || [];
+
+    (this.songs || []).forEach(song => {
+      if(song.primaryImageFile) {
+        song.selectedImageURL = 'data:image/jpeg;base64,'+ song.primaryImageFile;
+      }
+
+      if(song.audioFile) {
+        song.uploadedFileName = song.name;
+      }
+    })
   }
 
   goToPreviousStep() {
@@ -96,10 +107,16 @@ export class CreateAlbumComponent implements OnInit {
   }
 
   goToNextStep() {
-    // if(this.detailsForm.form.invalid) {
-    //   this.utilsService.markFormGroupTouched(this.detailsForm.form);
-    //   return;
-    // }
+    if(this.currentStep == 0 && this.detailsForm?.form?.invalid) {
+      this.utilsService.markFormGroupTouched(this.detailsForm.form);
+      return;
+    }
+
+    console.log('Step', this.currentStep)
+      this.album.songs = this.songs;
+      console.log('Alb', this.album);
+      (this.songs || []).forEach(song => song.album = { id: this.album.id });
+      console.log('Songs', this.songs);
 
     this.showLoader = true;
     this.utilsService.saveObjects('api/sonet/albums', this.album).subscribe({
@@ -131,24 +148,40 @@ export class CreateAlbumComponent implements OnInit {
     });
   }
 
-  onAlbumCoverUpload(event: FileUploadEvent) {
-    if(event.originalEvent)
-    {
-      this.album.coverImageURL = (event.originalEvent as HttpResponse<any>).body?.downloadUri
+  onImageUpload(event: FileUploadEvent, entity: any, urlAttribName: string) {
+    console.log(event);
+    if(event.originalEvent) {
+      entity[urlAttribName] = (event.originalEvent as HttpResponse<any>).body?.downloadUri
       if ((event.files || []).length) {
         const unsafeUrl = (event.files[0] as any).objectURL?.changingThisBreaksApplicationSecurity;
-        this.album.selectedImageURL = this.sanitizer.bypassSecurityTrustUrl(unsafeUrl);
+        entity.selectedImageURL = this.sanitizer.bypassSecurityTrustUrl(unsafeUrl);
       }
     }
   }
 
-  onSongImageSelect(event: any) {
-    console.log(event)
+  onAudioUpload(event: FileUploadEvent, song: Song) {
+    console.log('audioEv', event);
+    if(event.originalEvent) {
+      song.audioFileUrl = (event.originalEvent as HttpResponse<any>).body?.downloadUri;
+      if ((event.files || []).length) {
+        song.uploadedFileName = event.files[0]?.name;
+      }
+    }
   }
 
-  onClearImageClick(photoUpload: any, entity: any, selectedImageURL: string, attributeName: string) {
-    entity[selectedImageURL] = null;
+  onClearImageClick(photoUpload: any, entity: any, attributeName: string) {
+    entity['selectedImageURL'] = null;
     entity[attributeName] = null;
     photoUpload.clear();
+  }
+
+  onClearAudio(songUpload: any, song: Song) {
+    song.uploadedFileName = null;
+    song.audioFileUrl = null;
+    songUpload.clear();
+  }
+
+  onAddNewSongClick() {
+    this.songs.push(new Song());
   }
 }

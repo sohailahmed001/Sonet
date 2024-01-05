@@ -40,7 +40,6 @@ public class Album
     private List<Song> songs;
 
     @Column(name = "cover_image_url")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String coverImageURL;
 
     @Transient
@@ -134,7 +133,6 @@ public class Album
         return coverImageFile;
     }
 
-    @Access(AccessType.PROPERTY)
     public void setCoverImageFile(byte[] coverImageFile) {
         this.coverImageFile = coverImageFile;
     }

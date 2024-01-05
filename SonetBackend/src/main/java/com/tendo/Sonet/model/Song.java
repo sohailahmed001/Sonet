@@ -1,6 +1,7 @@
 package com.tendo.Sonet.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tendo.Sonet.dto.AlbumDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,22 +17,24 @@ public class Song
 
     @Column(nullable = false)
     private String name;
-    private Long views;
-    private Long likes;
+
+    private Long views = 0L;
+
+    private Long likes = 0L;
+
+    private Long minDuration;
 
     @Column(name = "created_date", nullable = false)
-    private Date createdDate;
+    private Date createdDate = new Date();
 
     @ManyToOne
     @JoinColumn(name = "album_id", nullable = false)
     private Album album;
 
     @Column(name = "primary_photo_url")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String primaryPhotoUrl;
 
     @Column(name = "audio_file_url")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String audioFileUrl;
 
     @Transient
@@ -136,5 +139,17 @@ public class Song
 
     public void setPrimaryImageFile(byte[] primaryImageFile) {
         this.primaryImageFile = primaryImageFile;
+    }
+
+    public Long getMinDuration() {
+        return minDuration;
+    }
+
+    public void setMinDuration(Long minDuration) {
+        this.minDuration = minDuration;
+    }
+
+    public AlbumDTO getAlbumDTO() {
+        return new AlbumDTO(album);
     }
 }

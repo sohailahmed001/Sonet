@@ -21,7 +21,7 @@ public class SONETUtils
     private static  final   String  AUDIO_DIR               =   "/audios";
     private static  final   String  UPLOAD_DIRECTORY        =   System.getProperty("user.dir") + STATIC_RESOURCE_PATH; ;
 
-    public static String processImage(MultipartFile file, boolean chooseSongPath)
+    public static String writeFile(MultipartFile file, boolean chooseSongPath)
     {
         try
         {
@@ -80,10 +80,16 @@ public class SONETUtils
     public static String saveFile(MultipartFile multipartFile) {
         Assert.hasLength(multipartFile.getContentType(), "File does not have a content type");
 
-        if(multipartFile.getContentType().startsWith("image/")) {
-            return processImage(multipartFile, false);
+        String contentType = multipartFile.getContentType();
+
+        if(contentType.startsWith("image/")) {
+            return writeFile(multipartFile, false);
         }
-        throw new RuntimeException("Server currently only handles image uploads"); // TODO
+        else if (contentType.startsWith("audio/")) {
+            return writeFile(multipartFile, true);
+        }
+
+        throw new RuntimeException("Only image or audio file is allowed");
     }
 
     public static byte[] retrieveFile(String resourcePath) {

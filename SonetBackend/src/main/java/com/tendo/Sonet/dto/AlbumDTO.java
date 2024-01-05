@@ -1,11 +1,8 @@
 package com.tendo.Sonet.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tendo.Sonet.model.Album;
 import com.tendo.Sonet.model.Artist;
-import com.tendo.Sonet.model.Song;
-import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.List;
@@ -19,8 +16,7 @@ public class AlbumDTO {
     private Date createdDate = new Date();
     private boolean isPublished = false;
     private Artist artist;
-    private List<Song> songs;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<SongDTO> songs;
     private String coverImageURL;
     private byte[] coverImageFile;
 
@@ -36,6 +32,7 @@ public class AlbumDTO {
         this.createdDate = album.getCreatedDate();
         this.coverImageFile = album.getCoverImageFile();
         this.artist = album.getArtist();
+        this.coverImageURL = album.getCoverImageURL();
     }
 
     public Long getId() {
@@ -94,11 +91,11 @@ public class AlbumDTO {
         this.artist = artist;
     }
 
-    public List<Song> getSongs() {
+    public List<SongDTO> getSongs() {
         return songs;
     }
 
-    public void setSongs(List<Song> songs) {
+    public void setSongs(List<SongDTO> songs) {
         this.songs = songs;
     }
 

@@ -15,9 +15,9 @@ public class AlbumController
     private AlbumService albumService;
 
     @PostMapping("/albums")
-    private ResponseEntity<Album> createOrUpdateAlbum(@RequestBody Album album)
+    private ResponseEntity<AlbumDTO> createOrUpdateAlbum(@RequestBody Album album)
     {
-        Album updateAlbum = albumService.createOrUpdateAlbum(album);
+        AlbumDTO updateAlbum = albumService.createOrUpdateAlbum(album);
 
         return new ResponseEntity<>(updateAlbum, HttpStatus.CREATED);
     }
@@ -25,7 +25,7 @@ public class AlbumController
     @GetMapping("/albums/{id}")
     public ResponseEntity<AlbumDTO> getAlbumByID(@PathVariable(value = "id") Long id)
     {
-        AlbumDTO album = albumService.getAlbumByID(id);
+        AlbumDTO album = albumService.getAlbumByIDWithSongs(id);
 
         return new ResponseEntity<>(album, HttpStatus.OK);
     }
