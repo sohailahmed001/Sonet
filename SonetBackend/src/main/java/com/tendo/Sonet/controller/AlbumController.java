@@ -22,10 +22,26 @@ public class AlbumController
         return new ResponseEntity<>(updateAlbum, HttpStatus.CREATED);
     }
 
+    @PostMapping("/albums/publish/{id}")
+    private ResponseEntity<AlbumDTO> publishAlbum(@PathVariable(value = "id") Long id)
+    {
+        AlbumDTO updateAlbum = albumService.publishAlbum(id);
+
+        return new ResponseEntity<>(updateAlbum, HttpStatus.OK);
+    }
+
     @GetMapping("/albums/{id}")
     public ResponseEntity<AlbumDTO> getAlbumByID(@PathVariable(value = "id") Long id)
     {
         AlbumDTO album = albumService.getAlbumDTOByIdWithSongs(id);
+
+        return new ResponseEntity<>(album, HttpStatus.OK);
+    }
+
+    @GetMapping("/albums/unpublished/{id}")
+    public ResponseEntity<AlbumDTO> getUnpublishedAlbumByID(@PathVariable(value = "id") Long id)
+    {
+        AlbumDTO album = albumService.getUnpublishedAlbumWithSongsById(id);
 
         return new ResponseEntity<>(album, HttpStatus.OK);
     }

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -127,6 +128,19 @@ public class AlbumService
         AlbumDTO albumDTO = new AlbumDTO(album);
 
         albumDTO.setSongs(songsDTO);
+        return albumDTO;
+    }
+
+    public AlbumDTO publishAlbum(Long id) {
+        Album album = albumRepository.findById(id).orElseThrow(() -> new NotFoundException(Album.class));
+        album.setPublished(Boolean.TRUE);
+        albumRepository.save(album);
+        return getAlbumByID(id);
+    }
+
+    public AlbumDTO getUnpublishedAlbumWithSongsById(Long id) {
+        AlbumDTO albumDTO = getAlbumDTOByIdWithSongs(id);
+        Assert.isTrue(!albumDTO.isPublished(), "Album is already published");
         return albumDTO;
     }
 }

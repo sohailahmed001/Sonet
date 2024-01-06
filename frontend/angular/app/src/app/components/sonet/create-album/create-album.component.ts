@@ -4,7 +4,7 @@ import { MenuItem } from 'primeng/api';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Album, Song } from 'src/app/model/common.model';
 import { UtilsService } from 'src/app/utils/utils.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { FileUploadEvent } from 'primeng/fileupload';
 import { HttpResponse } from '@angular/common/http';
@@ -25,7 +25,11 @@ export class CreateAlbumComponent implements OnInit {
   showLoader: boolean = false;
   baseUrl: string = environment.baseURL;
 
-  constructor(private utilsService: UtilsService, private sanitizer: DomSanitizer, private route: ActivatedRoute) {}
+  constructor(
+    private utilsService: UtilsService,
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.setStepItems();
@@ -35,7 +39,7 @@ export class CreateAlbumComponent implements OnInit {
         this.album = new Album();
       }
       else if(id > 0) {
-        this.getAlbumById(id);
+        this.getUnpublishedAlbumById(id, this.navigateToMyAlbums.bind(this));
       }
     });
 
@@ -72,8 +76,8 @@ export class CreateAlbumComponent implements OnInit {
     ];
   }
 
-  getAlbumById(id: number) {
-    this.utilsService.getObjectByID('api/sonet/albums', id).subscribe({
+  getUnpublishedAlbumById(id: number, errorFn?: any) {
+    this.utilsService.getObjectByID('api/sonet/albums/unpublished', id).subscribe({
       next: (data: Album) => {
         console.log('alb', data);
         this.album = data;
@@ -81,6 +85,9 @@ export class CreateAlbumComponent implements OnInit {
       },
       error: (error) => {
         this.utilsService.handleError(error);
+        if(errorFn) {
+          errorFn();
+        }
       }
     })
   }
@@ -121,9 +128,9 @@ export class CreateAlbumComponent implements OnInit {
         console.log('Save', data);
         this.showLoader = false;
         this.utilsService.handleSuccess();
-        this.getAlbumById(data.id);
+        this.getUnpublishedAlbumById(data.id);
         if(this.currentStep < 2) {
-          ++this.currentStep > this.visitedSteps && this.visitedSteps++
+          ++this.currentStep > this.visitedSteps && this.visitedSteps++;
         }
       },
       error: (error) => {
@@ -131,7 +138,7 @@ export class CreateAlbumComponent implements OnInit {
         this.utilsService.handleError(error);
       }
     });
-    
+
     // if(this.currentStep < 2) {
     //   ++this.currentStep > this.visitedSteps && this.visitedSteps++
     // }
@@ -190,5 +197,25 @@ export class CreateAlbumComponent implements OnInit {
 
   onRemoveSongClick(song: Song) {
     this.utilsService.removeObject(song, this.songs, song.id ? 'id' : 'tempId');
+  }
+
+  onPublishClick() {
+    this.showLoader = true;
+    this.utilsService.postById('api/sonet/albums/publish', this.album.id).subscribe({
+      next: (data: Album) => {
+        console.log('Publish', data);
+        this.showLoader = false;
+        this.utilsService.handleSuccessMessage('Album Published');
+        this.navigateToMyAlbums();
+      },
+      error: (error) => {
+        this.showLoader = false;
+        this.utilsService.handleError(error);
+      }
+    });
+  }
+
+  navigateToMyAlbums() {
+    this.router.navigate(['/sonet', 'my-albums']);
   }
 }

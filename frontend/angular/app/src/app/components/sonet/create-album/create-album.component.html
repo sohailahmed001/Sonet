@@ -108,7 +108,45 @@
 
 <!-- PUBLISH -->
 <div *ngIf="currentStep == 2">
+    <div class="flex">
+        <p-scrollPanel class="col-6 details" [style]="{ width: '100%', height: '290px' }" styleClass="custombar1">
+            <div class="col flex flex-column justify-content-center p-3">
+                <div class="flex flex-wrap">
+                    <label class="block col-6">Title</label>
+                    <span class="block col-6">{{ album.title }}</span>
+                </div>
+                <div class="flex flex-wrap">
+                    <label class="block col-6">Description</label>
+                    <span class="block col-6">{{ album.description }}</span>
+                </div>
+                <div class="flex flex-wrap">
+                    <label class="block col-6">Release Date</label>
+                    <span class="block col-6">{{ album.releaseDate }}</span>
+                </div>
+                <div *ngIf="album.selectedImageURL" class="flex flex-wrap">
+                    <label class="block col-6">Cover Image</label>
+                    <p-image class="col-6" [src]="album.selectedImageURL" alt="Image" width="65" [preview]="true" [imageStyle]="{'border-radius': '18px', 'border': '2px solid #85c4c1'}" appendTo="body"></p-image>
+                </div>
+            </div>
+        </p-scrollPanel>
 
+        <p-scrollPanel class="col-6" [style]="{ width: '100%', height: '290px' }" styleClass="custombar2">
+            <div class="p-3">
+                <div *ngFor="let song of songs">
+                    <div class="flex align-items-center gap-2 w-full">
+                        <p-avatar [image]="song.selectedImageURL || 'assets/images/sing-img.webp'" shape="circle" />
+                        <span class="font-medium white-space-nowrap">{{ song.name }}</span>
+                    </div>
+                    <p-divider></p-divider>
+                </div>
+            </div>
+        </p-scrollPanel>
+    </div>
+    <div class="flex justify-content-center mt-4">
+        <div class="btn btn-publish">
+            <p-button icon="pi pi-check" label="Publish" (click)="onPublishClick()"></p-button>
+        </div>
+    </div>
 </div>
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 

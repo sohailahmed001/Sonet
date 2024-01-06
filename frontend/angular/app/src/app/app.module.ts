@@ -46,6 +46,8 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   declarations: [
@@ -93,7 +95,9 @@ import { ImageModule } from 'primeng/image';
     FieldsetModule,
     InputTextareaModule,
     FileUploadModule,
-    ImageModule
+    ImageModule,
+    ScrollPanelModule,
+    DividerModule
   ],
   providers: [
     {
