@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { FormGroup, Validators } from '@angular/forms';
+import { Song } from '../model/common.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class UtilsService {
   isDesktop = false;
   isMobile = false;
   errorMessages: any[];
+  uniqueObjIdCounter: number = 0;
 
   constructor(private httpClient: HttpClient,
     private msgsService: MessageService,
@@ -117,5 +119,18 @@ export class UtilsService {
 
     minDate.setFullYear(new Date().getFullYear() - 120);
     maxDate.setFullYear(new Date().getFullYear() - 16);
+  }
+
+  createNewObject(obj: any, uniqueFieldName: string) {
+    if(!obj.id) {
+      obj[uniqueFieldName] = ++this.uniqueObjIdCounter;
+    }
+  }
+
+  removeObject(objectToRemove: any, objects: any[], idAttribName: string) {
+    const index = (objects || []).findIndex(obj => objectToRemove[idAttribName] == obj[idAttribName]);
+    if(index >= 0) {
+      objects.splice(index, 1);
+    }
   }
 }

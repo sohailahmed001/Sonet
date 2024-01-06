@@ -442,3 +442,29 @@ p-selectButton .p-selectbutton .p-element:enabled, p-selectButton .p-selectbutto
 .p-image-preview-container:hover > .p-image-preview-indicator {
     border-radius: 18px;
 }
+
+.p-accordion .p-accordion-header .p-accordion-header-link {
+    padding: 5px;
+    background-color: rgba(51, 55, 59, 0.37);
+    border: 2px solid var(--dark-border-color);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.p-accordion .p-accordion-header .p-accordion-header-link:hover, .p-accordion .p-accordion-header.p-highlight .p-accordion-header-link {
+    border: 2px solid var(--secondary-theme-color);
+}
+
+.p-accordion .p-accordion-content {
+    background-color: var(--dark-alt-color);
+    border: 2px solid var(--secondary-theme-color);
+    border-top: none;
+}
+
+.p-avatar img {
+    width: auto;
+}
+
+p-avatar {
+    display: flex;
+}

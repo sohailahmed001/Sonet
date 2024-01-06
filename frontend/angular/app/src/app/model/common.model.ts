@@ -19,6 +19,7 @@ export class SonetUser {
 
 export class Song {
     id: number;
+    tempId: number;
     name: string;
     view: number;
     likes: number;

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,9 +26,13 @@ public class AlbumService
     private AlbumRepository albumRepository;
     @Autowired
     private ArtistService artistService;
+    @Autowired
+    private SongService songService;
 
     public AlbumDTO createOrUpdateAlbum(Album album)
     {
+        logger.info("Inside Create/Updates");
+
         boolean isNewObject =   album.getId() == null;
 
         if (isNewObject)
@@ -38,13 +43,39 @@ public class AlbumService
         return updateAlbum(album);
     }
 
+    @Transactional
     private AlbumDTO updateAlbum(Album album)
     {
-        if(album.getArtist() == null) {
-            Album savedAlbum = this.albumRepository.findById(album.getId()).orElseThrow(() -> new NotFoundException(Album.class));
-            album.setArtist(savedAlbum.getArtist());
+        Album existingAlbum = getAlbumByIDWithSongs(album.getId());
+        List<Song> updatedSongs = album.getSongs();
+        List<Song> songsToRemove = existingAlbum.getSongs().stream().filter(song -> !updatedSongs.contains(song)).toList();
+
+        logger.info("Updated Songs: {}", updatedSongs);
+        logger.info("PersistedSongs: {}", existingAlbum.getSongs());
+        logger.info("Songs to Rem: {}", songsToRemove);
+
+        existingAlbum.setAttribsFrom(album);
+
+        logger.info("Attribs set: {}", existingAlbum.getSongs());
+
+        existingAlbum.getSongs().clear();
+
+        for(Song song: updatedSongs) {
+            Song savedSong = this.songService.saveSong(song);
+            existingAlbum.getSongs().add(savedSong);
         }
-        Album saved = albumRepository.save(album);
+
+        logger.info("Songs set: {}", existingAlbum.getSongs());
+
+        for(Song song: songsToRemove) {
+            logger.info("Deleting song: {}", song);
+            this.songService.deleteSongById(song.getId());
+            logger.info("Deleted: {}", song);
+        }
+
+        logger.info("Songs Remainnig: {}", existingAlbum.getSongs());
+
+        Album saved = albumRepository.save(existingAlbum);
         return getAlbumByID(saved.getId());
     }
 
@@ -70,7 +101,7 @@ public class AlbumService
         return new AlbumDTO(album);
     }
 
-    public AlbumDTO getAlbumByIDWithSongs(Long id) {
+    public Album getAlbumByIDWithSongs(Long id) {
         Album album = albumRepository.findByIdWithSongs(id).orElseThrow(() -> new NotFoundException(Album.class));
 
         if(StringUtils.hasLength(album.getCoverImageURL())) {
@@ -87,9 +118,14 @@ public class AlbumService
                 }
             }
         }
+        return album;
+    }
 
+    public AlbumDTO getAlbumDTOByIdWithSongs(Long id) {
+        Album album = getAlbumByIDWithSongs(id);
         List<SongDTO> songsDTO = album.getSongs().stream().map(SongDTO::new).toList();
         AlbumDTO albumDTO = new AlbumDTO(album);
+
         albumDTO.setSongs(songsDTO);
         return albumDTO;
     }

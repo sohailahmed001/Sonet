@@ -111,6 +111,10 @@ public class Album
 
     public List<Song> getSongs()
     {
+        if(songs == null)
+        {
+            return new ArrayList<>();
+        }
         return songs;
     }
 
@@ -143,5 +147,13 @@ public class Album
 
     public void setPublished(boolean published) {
         isPublished = published;
+    }
+
+    public void setAttribsFrom(Album album) {
+        setTitle(album.getTitle());
+        setDescription(album.getDescription());
+        setCoverImageURL(album.getCoverImageURL());
+        setPublished(album.isPublished());
+        setReleaseDate(getReleaseDate());
     }
 }

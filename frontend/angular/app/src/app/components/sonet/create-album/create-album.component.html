@@ -63,6 +63,9 @@
                 <span class="flex align-items-center gap-2 w-full">
                     <p-avatar [image]="song.selectedImageURL || 'assets/images/sing-img.webp'" shape="circle" />
                     <span class="font-medium white-space-nowrap">{{ song.name || 'New Song' }}</span>
+                    <div class="btn btn-remove-song ml-auto p-1">
+                        <p-button icon="pi pi-trash" label="" (click)="onRemoveSongClick(song)"></p-button>
+                    </div>
                 </span>
             </ng-template>
             <form #songDetailsForm="ngForm">

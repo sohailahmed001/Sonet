@@ -112,11 +112,8 @@ export class CreateAlbumComponent implements OnInit {
       return;
     }
 
-    console.log('Step', this.currentStep)
-      this.album.songs = this.songs;
-      console.log('Alb', this.album);
-      (this.songs || []).forEach(song => song.album = { id: this.album.id });
-      console.log('Songs', this.songs);
+    this.album.songs = this.songs;
+    (this.songs || []).forEach(song => song.album = { id: this.album.id });
 
     this.showLoader = true;
     this.utilsService.saveObjects('api/sonet/albums', this.album).subscribe({
@@ -134,6 +131,10 @@ export class CreateAlbumComponent implements OnInit {
         this.utilsService.handleError(error);
       }
     });
+    
+    // if(this.currentStep < 2) {
+    //   ++this.currentStep > this.visitedSteps && this.visitedSteps++
+    // }
   }
 
   getLocalDataJson() {
@@ -182,6 +183,12 @@ export class CreateAlbumComponent implements OnInit {
   }
 
   onAddNewSongClick() {
-    this.songs.push(new Song());
+    const newSong = new Song();
+    this.utilsService.createNewObject(newSong, 'tempId');
+    (this.songs || []).push(newSong);
+  }
+
+  onRemoveSongClick(song: Song) {
+    this.utilsService.removeObject(song, this.songs, song.id ? 'id' : 'tempId');
   }
 }
