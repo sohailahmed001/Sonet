@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/sonet")
 public class AlbumController
@@ -22,18 +24,19 @@ public class AlbumController
         return new ResponseEntity<>(updateAlbum, HttpStatus.CREATED);
     }
 
-    @PostMapping("/albums/publish/{id}")
-    private ResponseEntity<AlbumDTO> publishAlbum(@PathVariable(value = "id") Long id)
+    @PostMapping("/albums/publish")
+    private ResponseEntity<AlbumDTO> publishAlbum(@RequestBody Album album)
     {
-        AlbumDTO updateAlbum = albumService.publishAlbum(id);
+        AlbumDTO updatedAlbum = albumService.createOrUpdateAlbum(album);
+        updatedAlbum = albumService.publishAlbum(updatedAlbum.getId());
 
-        return new ResponseEntity<>(updateAlbum, HttpStatus.OK);
+        return new ResponseEntity<>(updatedAlbum, HttpStatus.OK);
     }
 
-    @GetMapping("/albums/{id}")
-    public ResponseEntity<AlbumDTO> getAlbumByID(@PathVariable(value = "id") Long id)
+    @GetMapping("/albums/published/{id}")
+    public ResponseEntity<AlbumDTO> getPublishedAlbumByID(@PathVariable(value = "id") Long id)
     {
-        AlbumDTO album = albumService.getAlbumDTOByIdWithSongs(id);
+        AlbumDTO album = albumService.getPublishedAlbumByIdWithSongs(id);
 
         return new ResponseEntity<>(album, HttpStatus.OK);
     }
@@ -44,5 +47,11 @@ public class AlbumController
         AlbumDTO album = albumService.getUnpublishedAlbumWithSongsById(id);
 
         return new ResponseEntity<>(album, HttpStatus.OK);
+    }
+
+    @GetMapping("/albums/artist")
+    public ResponseEntity<List<AlbumDTO>> getAllAlbumsOfArtist(@PathVariable(value = "id", required = false) Long id) {
+        List<AlbumDTO> albums = albumService.getAllAlbumsOfArtist(id);
+        return new ResponseEntity<>(albums, HttpStatus.OK);
     }
 }

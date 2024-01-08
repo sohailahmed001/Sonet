@@ -31,12 +31,15 @@ export class Song {
     audioFileUrl: string;
     uploadedFileName: string;
     audioFile: any;
+    duration: number;
+    tempAudioSrc: string;
 }
 
 export class Album {
     id: number;
     title: string;
     description: string;
+    published: boolean;
     releaseDate: string;
     createdDate: string;
     artist: any;

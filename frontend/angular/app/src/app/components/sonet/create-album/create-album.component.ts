@@ -42,8 +42,6 @@ export class CreateAlbumComponent implements OnInit {
         this.getUnpublishedAlbumById(id, this.navigateToMyAlbums.bind(this));
       }
     });
-
-    // this.getLocalDataJson();
   }
 
   setStepItems() {
@@ -119,11 +117,8 @@ export class CreateAlbumComponent implements OnInit {
       return;
     }
 
-    this.album.songs = this.songs;
-    (this.songs || []).forEach(song => song.album = { id: this.album.id });
-
     this.showLoader = true;
-    this.utilsService.saveObjects('api/sonet/albums', this.album).subscribe({
+    this.utilsService.saveObjects('api/sonet/albums', this.prepareData(this.album)).subscribe({
       next: (data: Album) => {
         console.log('Save', data);
         this.showLoader = false;
@@ -144,16 +139,10 @@ export class CreateAlbumComponent implements OnInit {
     // }
   }
 
-  getLocalDataJson() {
-    this.utilsService.getDataFromJSON('sonet.data.json').subscribe({
-      next: (sonetData) => {
-        this.songs = sonetData['songs'];
-        console.log('songs', this.songs)
-      },
-      error: (error) => {
-        this.utilsService.handleError(error);
-      }
-    });
+  prepareData(album: Album): Album {
+    album.songs = this.songs;
+    (this.songs || []).forEach(song => song.album = { id: album.id });
+    return this.album;
   }
 
   onImageUpload(event: FileUploadEvent, entity: any, urlAttribName: string) {
@@ -201,7 +190,7 @@ export class CreateAlbumComponent implements OnInit {
 
   onPublishClick() {
     this.showLoader = true;
-    this.utilsService.postById('api/sonet/albums/publish', this.album.id).subscribe({
+    this.utilsService.saveObjects('api/sonet/albums/publish', this.prepareData(this.album)).subscribe({
       next: (data: Album) => {
         console.log('Publish', data);
         this.showLoader = false;

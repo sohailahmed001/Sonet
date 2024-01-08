@@ -6,13 +6,13 @@
 </div>
 <div class="alb-top card mb-2 flex align-items-center ml-5">
     <div class="btn mr-4">
-        <p-button [disabled]="currentStep == 0" icon="pi pi-chevron-left" label="Prev" (click)="goToPreviousStep()"></p-button>
+        <p-button [disabled]="showLoader || currentStep == 0" icon="pi pi-chevron-left" label="Prev" (click)="goToPreviousStep()"></p-button>
     </div>
     <div class="col-10">
         <p-steps [model]="createStepItems" [readonly]="false" [activeIndex]="currentStep" [styleClass]="'completed-'+visitedSteps"></p-steps>
     </div>
     <div class="btn">
-        <p-button [disabled]="currentStep == 2" icon="pi pi-chevron-right" label="Next" (click)="goToNextStep()"></p-button>
+        <p-button [disabled]="showLoader || currentStep == 2" icon="pi pi-chevron-right" label="Next" (click)="goToNextStep()"></p-button>
     </div>
 </div>
 
@@ -109,7 +109,7 @@
 <!-- PUBLISH -->
 <div *ngIf="currentStep == 2">
     <div class="flex">
-        <p-scrollPanel class="col-6 details" [style]="{ width: '100%', height: '290px' }" styleClass="custombar1">
+        <p-scrollPanel class="col-6 summary" [style]="{ width: '100%', height: '290px' }" styleClass="custombar1">
             <div class="col flex flex-column justify-content-center p-3">
                 <div class="flex flex-wrap">
                     <label class="block col-6">Title</label>

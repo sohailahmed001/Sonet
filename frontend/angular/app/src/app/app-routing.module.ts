@@ -68,7 +68,7 @@ const routes: Routes = [
         data: { roles: ['ROLE_LISTENER', 'ROLE_ARTIST'] }
       },
       {
-        path: 'album-details',
+        path: 'album-details/:id',
         component: AlbumDetailsComponent,
         canActivate: [AuthGuard],
         data: { roles: ['ROLE_LISTENER', 'ROLE_ARTIST'] }

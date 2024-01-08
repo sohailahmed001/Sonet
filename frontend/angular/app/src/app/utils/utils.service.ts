@@ -40,10 +40,6 @@ export class UtilsService {
     return this.httpClient.delete(this.apiURL + serviceName + '/' + deletedObjId, {withCredentials: true});
   }
 
-  postById(serviceName: string, id: any) {
-    return this.httpClient.post(this.apiURL + serviceName + '/' + id, null, {withCredentials: true});
-  }
-
   handleSuccessMessage(message: any = null) {
     let detailMessage = message?.length > 0 ? message : 'Details Saved Successfully';
     this.msgsService.add({ severity: 'success', detail: detailMessage });

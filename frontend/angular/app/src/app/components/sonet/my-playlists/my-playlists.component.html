@@ -23,7 +23,7 @@
 <ng-template #albumTemplate let-rowData="rowData">
     <div class="flex flex-column align-items-start gap-2 p-3">
       <div class="album-img-div">
-        <img class="album-img" [src]="rowData.image" alt="Album Image" [routerLink]="rowData.routerLink">
+        <img class="album-img" [src]="rowData.image" alt="Album Image">
       </div>
       <div class="text-xs">
         <span class="block">{{ rowData.title }}</span>

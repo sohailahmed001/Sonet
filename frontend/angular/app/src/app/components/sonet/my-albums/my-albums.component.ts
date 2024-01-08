@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Album } from 'src/app/model/common.model';
 import { UtilsService } from 'src/app/utils/utils.service';
 
 @Component({
@@ -8,19 +9,44 @@ import { UtilsService } from 'src/app/utils/utils.service';
   styleUrls: ['./my-albums.component.scss']
 })
 export class MyAlbumsComponent implements OnInit {
-  albums: any[];
+  publishedAlbums: Album[] = [];
+  unpublishedAlbums: Album[] = [];
 
   constructor(private utilsService: UtilsService, public router: Router) { }
 
   ngOnInit(): void {
-    this.utilsService.getDataFromJSON('sonet.data.json').subscribe({
-      next: (sonetData) => {
-        this.albums = sonetData['albums'];        
+    this.getAlbums();
+  }
+
+  getAlbums() {
+    this.utilsService.getObjects('api/sonet/albums/artist', {}).subscribe({
+      next: (data) => {
+        console.log('Albums', data);
+        this.publishedAlbums = (data || []).filter(album => album.published);
+        this.unpublishedAlbums = (data || []).filter(album => !album.published);
+        this.postAlbumsFetch();
       },
       error: (error) => {
         this.utilsService.handleError(error);
       }
-    });
+    })
+  }
+
+  postAlbumsFetch() {
+    (this.publishedAlbums || []).forEach(album => {
+      if(album.coverImageFile) {
+        album.selectedImageURL = 'data:image/jpeg;base64,'+ album.coverImageFile;
+      }
+    })
+  }
+
+  onAlbumSelect(album: Album) {
+    if(album.published) {
+      this.router.navigate(['/sonet', 'album-details', album.id]);
+    }
+    else {
+    this.router.navigate(['/sonet', 'create-album', album.id]);
+    }
   }
 
 }

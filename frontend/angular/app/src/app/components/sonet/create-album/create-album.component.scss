@@ -112,19 +112,8 @@
         border-color: var(--danger-theme-color);
     }
 
-    .p-scrollpanel {
-        background-color: var(--dark-alt-color);
-        border: 2px solid var(--dark-border-color);
-        color: white;
-        border-radius: 7px;
-    }
-
-    .details span {
+    .summary span {
         color: var(--secondary-theme-color);
-    }
-
-    .p-divider.p-divider-horizontal {
-        margin: 0.7rem 0;
     }
 
     .btn-publish .p-button {

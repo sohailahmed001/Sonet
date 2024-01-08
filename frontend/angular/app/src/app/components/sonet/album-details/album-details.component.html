@@ -1,12 +1,12 @@
 <div class="al-container">
     <div class="top-section">
         <div class="img-div">
-            <img class="album-img" src="assets/images/album3.jpg">
+            <img class="album-img" [src]="album.selectedImageURL" alt="Album Cover">
         </div>
         <div class="details">
-            <span class="title">1000 Forms of Fear</span>
-            <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae aspernatur magnam aut perspiciatis voluptates provident quaerat repudiandae iste, nostrum sapiente?</span>
-            <span>12 songs - 12 hrs+</span>
+            <span class="title">{{ album.title }}</span>
+            <span>{{ album.description }}</span>
+            <span>{{ (songs || []).length }} songs - x hrs+</span>
             <div class="buttons">
                 <button pButton label="Play all" icon="pi pi-play" class="btn btn-play-all"></button>
                 <button pButton label="Add to playlist" class="btn btn-play-all">
@@ -16,10 +16,10 @@
         </div>
     </div>
     <div class="song-list">
-        <div class="song-item" *ngFor="let song of songs">
+        <div class="song-item" *ngFor="let song of songs" (click)="onSongClick(song)">
               <div class="s-first">
                 <div class="song-img-div">
-                  <img class="song-img" [src]="song.image" alt="Song Image">
+                  <img class="song-img" [src]="song.selectedImageURL" alt="Song Image">
                 </div>
               </div>
               <div class="s-title">

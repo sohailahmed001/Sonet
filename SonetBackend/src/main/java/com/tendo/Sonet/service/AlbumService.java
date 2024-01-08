@@ -4,6 +4,7 @@ import com.tendo.Sonet.dto.AlbumDTO;
 import com.tendo.Sonet.dto.SongDTO;
 import com.tendo.Sonet.exception.NotFoundException;
 import com.tendo.Sonet.model.Album;
+import com.tendo.Sonet.model.Artist;
 import com.tendo.Sonet.model.Song;
 import com.tendo.Sonet.repository.AlbumRepository;
 import com.tendo.Sonet.utils.SONETUtils;
@@ -16,6 +17,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,39 +98,19 @@ public class AlbumService
 
         logger.info("Album imageUrl: {}", album.getCoverImageURL());
 
-        if(StringUtils.hasLength(album.getCoverImageURL())) {
-            album.setCoverImageFile(SONETUtils.retrieveFile(album.getCoverImageURL()));
-        }
+        setFileFieldsForAlbum(album);
         return new AlbumDTO(album);
     }
 
     public Album getAlbumByIDWithSongs(Long id) {
         Album album = albumRepository.findByIdWithSongs(id).orElseThrow(() -> new NotFoundException(Album.class));
-
-        if(StringUtils.hasLength(album.getCoverImageURL())) {
-            album.setCoverImageFile(SONETUtils.retrieveFile(album.getCoverImageURL()));
-        }
-
-        if(album.getSongs() != null) {
-            for (Song song : album.getSongs()) {
-                if(StringUtils.hasLength(song.getPrimaryPhotoUrl())) {
-                    song.setPrimaryImageFile(SONETUtils.retrieveFile(song.getPrimaryPhotoUrl()));
-                }
-                if(StringUtils.hasLength(song.getAudioFileUrl())) {
-                    song.setAudioFile(SONETUtils.retrieveFile(song.getAudioFileUrl()));
-                }
-            }
-        }
+        setFileFieldsForAlbumAndSongs(album, true);
         return album;
     }
 
     public AlbumDTO getAlbumDTOByIdWithSongs(Long id) {
         Album album = getAlbumByIDWithSongs(id);
-        List<SongDTO> songsDTO = album.getSongs().stream().map(SongDTO::new).toList();
-        AlbumDTO albumDTO = new AlbumDTO(album);
-
-        albumDTO.setSongs(songsDTO);
-        return albumDTO;
+        return convertToDTO(album, album.getSongs());
     }
 
     public AlbumDTO publishAlbum(Long id) {
@@ -141,6 +123,56 @@ public class AlbumService
     public AlbumDTO getUnpublishedAlbumWithSongsById(Long id) {
         AlbumDTO albumDTO = getAlbumDTOByIdWithSongs(id);
         Assert.isTrue(!albumDTO.isPublished(), "Album is already published");
+        return albumDTO;
+    }
+
+    public AlbumDTO getPublishedAlbumByIdWithSongs(Long id) {
+        AlbumDTO albumDTO = getAlbumDTOByIdWithSongs(id);
+        Assert.isTrue(albumDTO.isPublished(), "Album not available");
+        return albumDTO;
+    }
+
+    public List<AlbumDTO> getAllAlbumsOfArtist(Long artistId) {
+        if(artistId == null) {
+            artistId = artistService.getArtistByLoggedInUser().getId();
+        }
+        List<Album> albums = this.albumRepository.findAllByArtistId(artistId);
+
+        if(albums == null) {
+            albums = new ArrayList<>();
+        }
+
+        albums.forEach(this::setFileFieldsForAlbum);
+        return albums.stream().map(AlbumDTO::new).toList();
+    }
+
+    private void setFileFieldsForAlbumAndSongs(Album album, boolean withAudio) {
+        setFileFieldsForAlbum(album);
+
+        if(album.getSongs() != null) {
+            for (Song song : album.getSongs()) {
+                if(StringUtils.hasLength(song.getPrimaryPhotoUrl())) {
+                    song.setPrimaryImageFile(SONETUtils.retrieveFile(song.getPrimaryPhotoUrl()));
+                }
+                if(withAudio && StringUtils.hasLength(song.getAudioFileUrl())) {
+                    song.setAudioFile(SONETUtils.retrieveFile(song.getAudioFileUrl()));
+                }
+            }
+        }
+    }
+
+    private void setFileFieldsForAlbum(Album album) {
+        if(StringUtils.hasLength(album.getCoverImageURL())) {
+            album.setCoverImageFile(SONETUtils.retrieveFile(album.getCoverImageURL()));
+        }
+    }
+
+    public AlbumDTO convertToDTO(Album album, List<Song> songs) {
+        AlbumDTO albumDTO = new AlbumDTO(album);
+
+        if(songs != null) {
+            albumDTO.setSongs(album.getSongs().stream().map(SongDTO::new).toList());
+        }
         return albumDTO;
     }
 }

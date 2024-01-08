@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="controls">
-        <audio #audioPlayer [src]="audioSamplePath" (timeupdate)="updateSlider()" (loadedmetadata)="setInitialValues()"></audio>
+        <audio #audioPlayer [src]="audioSamplePath" (timeupdate)="updateSlider()" (loadedmetadata)="setInitialValues()" (canplaythrough)="onCanPlay($event)"></audio>
         <div class="icon-controls">
             <i [ngClass]="{'control-active': controlActive == 'play'}" class="fa fa-play" (click)="play()"></i>
             <i [ngClass]="{'control-active': controlActive == 'pause'}" class="fa fa-pause" (click)="pause()"></i>

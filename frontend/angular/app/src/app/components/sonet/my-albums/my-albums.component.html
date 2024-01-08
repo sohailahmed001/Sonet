@@ -10,21 +10,42 @@
             <p-button icon="pi pi-plus" label="Create Album" (click)="router.navigate(['/sonet', 'create-album', 0])"></p-button>
         </div>
     </div>
-    <div class="flex flex-wrap">
-        <ng-container *ngFor="let album of albums">
-            <ng-container *ngTemplateOutlet="albumTemplate; context: { rowData: album }"></ng-container>
-        </ng-container>
+    <div class="flex">
+        <p-scrollPanel *ngIf="(publishedAlbums || []).length" class="col-6 flex-grow-1" [style]="{ width: '100%', height: '68vh' }">
+            <div class="p-3">
+                <div>
+                    <h4 class="mt-0">PUBLISHED ALBUMS</h4>
+                </div>
+                <div class="flex flex-wrap">
+                    <ng-container *ngFor="let album of publishedAlbums">
+                        <ng-container *ngTemplateOutlet="albumTemplate; context: { rowData: album }"></ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </p-scrollPanel>
+        <p-scrollPanel *ngIf="(unpublishedAlbums || []).length" class="col-6 flex-grow-1" [style]="{ width: '100%', height: '68vh' }">
+            <div class="p-3">
+                <div>
+                    <h4 class="mt-0">UNPUBLISHED ALBUMS</h4>
+                </div>
+                <div class="flex flex-wrap">
+                    <ng-container *ngFor="let album of unpublishedAlbums">
+                        <ng-container *ngTemplateOutlet="albumTemplate; context: { rowData: album }"></ng-container>
+                    </ng-container>
+                </div>
+            </div>
+    </p-scrollPanel>
     </div>
 </div>
 
 <ng-template #albumTemplate let-rowData="rowData">
-    <div class="flex flex-column align-items-start gap-2 p-3">
+    <div class="p-3">
       <div class="album-img-div">
-        <img class="album-img" [src]="rowData.image" alt="Album Image" [routerLink]="rowData.routerLink">
+        <img class="album-img" [src]="rowData.selectedImageURL || 'assets/images/sing-img.webp'" alt="Album Image" (click)="onAlbumSelect(rowData)">
       </div>
-      <div class="text-xs">
+      <div class="text-xs pl-1 mt-1">
         <span class="block">{{ rowData.title }}</span>
-        <span class="block text-600">{{ rowData.artist }}</span>
+        <span class="block text-600">{{ rowData.artist?.sonetUser?.firstName }}</span>
       </div>
     </div>
 </ng-template>

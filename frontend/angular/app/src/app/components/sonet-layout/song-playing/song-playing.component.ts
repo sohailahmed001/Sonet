@@ -1,4 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Song } from 'src/app/model/common.model';
+import { SonetService } from 'src/app/services/sonet.service';
 
 @Component({
   selector: 'app-song-playing',
@@ -14,15 +16,40 @@ export class SongPlayingComponent implements OnInit {
   currentVolume = 0.4;
   isSeeking = false;
   isSeekingVolume = false;
+  playOnLoad:boolean = false;
 
-  constructor() {}
+  constructor(private sonetService: SonetService) {}
 
   ngOnInit(): void {
+    this.sonetService.songPlayingSubject.subscribe((song: Song) => {
+      if(song) {
+        this.stop();
+        this.setInitialValues();
+        this.convertAudio(song);
+        this.playOnLoad = true;
+      }
+    })
   }
 
   setInitialValues() {
     this.audioDuration = this.audioPlayerRef.nativeElement.duration;
     this.audioPlayerRef.nativeElement.volume = this.currentVolume; 
+  }
+
+  convertAudio(song: Song) {
+    if(!song.tempAudioSrc && song.audioFile) {
+      const binaryAudioData = atob(song.audioFile);
+      const bytes = new Uint8Array(binaryAudioData.length);
+
+      for (let i = 0; i < binaryAudioData.length; i++) {
+        bytes[i] = binaryAudioData.charCodeAt(i);
+      }
+
+      const blob = new Blob([bytes], { type: 'audio/mpeg' });
+      const audio = new Audio(URL.createObjectURL(blob)) as HTMLAudioElement;
+      song.tempAudioSrc = audio.src;
+      this.audioSamplePath = song.tempAudioSrc;
+    }
   }
 
   play() {
@@ -49,7 +76,6 @@ export class SongPlayingComponent implements OnInit {
   }
 
   seekAudio(event: any) {
-    console.log('Seek', event)
     this.isSeeking = true;
     const targetTime = event.value;
     this.audioPlayerRef.nativeElement.currentTime = targetTime;
@@ -57,7 +83,6 @@ export class SongPlayingComponent implements OnInit {
   }
 
   onSeekEnd(event: any) {
-    console.log('End', event)
     this.isSeeking = false;
   }
 
@@ -70,5 +95,12 @@ export class SongPlayingComponent implements OnInit {
 
   onVolumeSeekEnd(event: any) {
     this.isSeekingVolume = false;
+  }
+
+  onCanPlay(event: any) {
+    if(this.playOnLoad) {
+      this.playOnLoad = false;
+      this.play();
+    }
   }
 }
