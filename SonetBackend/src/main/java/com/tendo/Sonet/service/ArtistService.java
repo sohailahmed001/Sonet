@@ -34,6 +34,6 @@ public class ArtistService
         if(artists != null && !artists.isEmpty()) {
             return artists.get(0);
         }
-        throw new RuntimeException("Logged In User is not an Artist");
+        return null;
     }
 }

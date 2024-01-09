@@ -9,6 +9,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "sonet_user")
@@ -41,6 +43,14 @@ public class SonetUser
     @OneToOne
     @JoinColumn(name = "app_user_id", nullable = false)
     private AppUser appUser;
+
+    @ManyToMany()
+    @JoinTable(
+            name = "sonetuser_album",
+            joinColumns = @JoinColumn(name = "sonetuser_id"),
+            inverseJoinColumns = @JoinColumn(name = "album_id")
+    )
+    private Set<Album> likedAlbums = new HashSet<>();
 
     @Transient
     private byte[] imageFile;
@@ -130,5 +140,13 @@ public class SonetUser
 
     public void setImageFile(byte[] imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public Set<Album> getLikedAlbums() {
+        return likedAlbums;
+    }
+
+    public void setLikedAlbums(Set<Album> likedAlbums) {
+        this.likedAlbums = likedAlbums;
     }
 }

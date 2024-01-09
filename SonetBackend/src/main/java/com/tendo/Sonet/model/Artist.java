@@ -22,6 +22,10 @@ public class Artist
     @OneToMany(mappedBy = "artist")
     private List<Album> albums = new ArrayList<>();
 
+    public Artist()
+    {
+    }
+
     public Long getId()
     {
         return id;
@@ -62,7 +66,20 @@ public class Artist
         this.albums = albums;
     }
 
-    public Artist()
-    {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Artist artist = (Artist) o;
+        return Objects.equals(id, artist.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

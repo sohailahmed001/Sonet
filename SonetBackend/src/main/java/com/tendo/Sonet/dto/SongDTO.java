@@ -17,7 +17,9 @@ public class SongDTO {
 
     private Date createdDate = new Date();
 
-    private AlbumDTO album;
+    private AlbumDTO albumDTO;
+
+    private String artistName;
 
     private String primaryPhotoUrl;
 
@@ -34,7 +36,6 @@ public class SongDTO {
         this.likes = song.getLikes();
         this.minDuration = song.getMinDuration();
         this.createdDate = song.getCreatedDate();
-        this.album = song.getAlbumDTO();
         this.primaryPhotoUrl = song.getPrimaryPhotoUrl();
         this.audioFileUrl = song.getAudioFileUrl();
         this.primaryImageFile = song.getPrimaryImageFile();
@@ -89,12 +90,12 @@ public class SongDTO {
         this.createdDate = createdDate;
     }
 
-    public AlbumDTO getAlbum() {
-        return album;
+    public AlbumDTO getAlbumDTO() {
+        return albumDTO;
     }
 
-    public void setAlbum(AlbumDTO album) {
-        this.album = album;
+    public void setAlbumDTO(AlbumDTO album) {
+        this.albumDTO = album;
     }
 
     public String getPrimaryPhotoUrl() {
@@ -127,5 +128,13 @@ public class SongDTO {
 
     public void setAudioFile(byte[] audioFile) {
         this.audioFile = audioFile;
+    }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
     }
 }

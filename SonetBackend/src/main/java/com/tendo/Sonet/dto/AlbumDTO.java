@@ -16,9 +16,12 @@ public class AlbumDTO {
     private Date createdDate = new Date();
     private boolean isPublished = false;
     private Artist artist;
+    private String artistName;
     private List<SongDTO> songs;
     private String coverImageURL;
     private byte[] coverImageFile;
+    private boolean isLiked = false;
+    private Long likes = 0L;
 
     public AlbumDTO() {
     }
@@ -31,8 +34,8 @@ public class AlbumDTO {
         this.releaseDate = album.getReleaseDate();
         this.createdDate = album.getCreatedDate();
         this.coverImageFile = album.getCoverImageFile();
-        this.artist = album.getArtist();
         this.coverImageURL = album.getCoverImageURL();
+        this.artistName = album.getArtist().getSonetUser().getFirstName();
     }
 
     public Long getId() {
@@ -113,5 +116,29 @@ public class AlbumDTO {
 
     public void setCoverImageFile(byte[] coverImageFile) {
         this.coverImageFile = coverImageFile;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
+
+    public Long getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Long likes) {
+        this.likes = likes;
+    }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
     }
 }

@@ -71,6 +71,22 @@ export class AlbumDetailsComponent implements OnInit, OnDestroy {
     this.sonetService.songPlayingSubject.next(song);
   }
 
+  isSongPlaying(song: Song): boolean {
+    return song.id == this.sonetService.songPlaying?.id;
+  }
+
+  onLikeAlbumClick() {
+    this.utilsService.postByPathVariable('api/sonet/albums/toggleLike', this.album.id).subscribe({
+      next: (data: any) => {
+        console.log('onLike', data);
+        this.album.liked = !this.album.liked;
+      },
+      error: (error) => {
+        this.utilsService.handleError(error);
+      }
+    })
+  }
+
   navigateToHome() {
     this.router.navigate(['/sonet', 'home']);
   }

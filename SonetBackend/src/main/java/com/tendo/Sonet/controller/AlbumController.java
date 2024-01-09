@@ -60,4 +60,10 @@ public class AlbumController
         List<AlbumDTO> albums = albumService.getLatestAlbums();
         return new ResponseEntity<>(albums, HttpStatus.OK);
     }
+
+    @PostMapping("/albums/toggleLike/{id}")
+    public ResponseEntity<Boolean> toggleLikeAlbum(@PathVariable(value = "id") Long albumId) {
+        albumService.toggleLikeAlbum(albumId);
+        return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+    }
 }

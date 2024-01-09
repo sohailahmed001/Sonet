@@ -14,6 +14,7 @@ export class SonetService {
     PROJECT_PREFIX: string = environment.PROJECT_PREFIX;
     songPlayingSubject = new Subject<Song>();
     albumBackgroundSubject = new Subject<string>();
+    songPlaying: Song;
 
     constructor(private http: HttpClient, private utilsService: UtilsService) { }
 

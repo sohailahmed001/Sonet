@@ -63,6 +63,7 @@ export class SongPlayingComponent implements OnInit {
   play() {
     this.audioPlayerRef.nativeElement.play();
     this.controlActive = 'play';
+    this.sonetService.songPlaying = this.song;
   }
 
   pause() {
@@ -75,6 +76,7 @@ export class SongPlayingComponent implements OnInit {
     this.audioPlayerRef.nativeElement.currentTime = 0;
     this.currentTrackTime = 0;
     this.controlActive = 'stop';
+    this.sonetService.songPlaying = null;
   }
 
   updateSlider() {

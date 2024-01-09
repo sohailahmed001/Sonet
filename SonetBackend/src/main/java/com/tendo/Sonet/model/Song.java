@@ -1,11 +1,11 @@
 package com.tendo.Sonet.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tendo.Sonet.dto.AlbumDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.web.multipart.MultipartFile;
-import java.util.*;
+
+import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Song

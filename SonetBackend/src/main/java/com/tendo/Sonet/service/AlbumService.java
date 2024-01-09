@@ -5,21 +5,21 @@ import com.tendo.Sonet.dto.SongDTO;
 import com.tendo.Sonet.exception.NotFoundException;
 import com.tendo.Sonet.model.Album;
 import com.tendo.Sonet.model.Artist;
+import com.tendo.Sonet.model.SonetUser;
 import com.tendo.Sonet.model.Song;
 import com.tendo.Sonet.repository.AlbumRepository;
 import com.tendo.Sonet.utils.SONETUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AlbumService
@@ -31,6 +31,8 @@ public class AlbumService
     private ArtistService artistService;
     @Autowired
     private SongService songService;
+    @Autowired
+    private SonetUserService sonetUserService;
 
     public AlbumDTO createOrUpdateAlbum(Album album)
     {
@@ -127,8 +129,16 @@ public class AlbumService
     }
 
     public AlbumDTO getPublishedAlbumByIdWithSongs(Long id) {
-        AlbumDTO albumDTO = getAlbumDTOByIdWithSongs(id);
-        Assert.isTrue(albumDTO.isPublished(), "Album not available");
+        Artist artist = this.artistService.getArtistByLoggedInUser();
+        Album album = getAlbumByIDWithSongs(id);
+        AlbumDTO albumDTO = convertToDTO(album, album.getSongs());
+
+        Assert.isTrue(album.isPublished(), "Album not available");
+
+        if(artist != null && album.getArtist().equals(artist)) {
+            albumDTO.setLikes(album.getLikes());
+        }
+        albumDTO.setLiked(this.sonetUserService.isAlbumLikedByUser(album));
         return albumDTO;
     }
 
@@ -143,7 +153,11 @@ public class AlbumService
         }
 
         albums.forEach(this::setFileFieldsForAlbum);
-        return albums.stream().map(AlbumDTO::new).toList();
+        return albums.stream().map(album -> {
+            AlbumDTO albumDTO = new AlbumDTO(album);
+            albumDTO.setLikes(album.getLikes());
+            return albumDTO;
+        }).toList();
     }
 
     private void setFileFieldsForAlbumAndSongs(Album album, boolean withAudio) {
@@ -171,7 +185,9 @@ public class AlbumService
         AlbumDTO albumDTO = new AlbumDTO(album);
 
         if(songs != null) {
-            albumDTO.setSongs(album.getSongs().stream().map(SongDTO::new).toList());
+            List<SongDTO> songDTOs = album.getSongs().stream().map(SongDTO::new).toList();
+            songDTOs.forEach(songDTO -> songDTO.setArtistName(albumDTO.getArtistName()));
+            albumDTO.setSongs(songDTOs);
         }
         return albumDTO;
     }
@@ -184,5 +200,23 @@ public class AlbumService
             return albums.stream().map(AlbumDTO::new).toList();
         }
         return null;
+    }
+
+    @Transactional
+    public void toggleLikeAlbum(Long albumId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        SonetUser sonetUser = this.sonetUserService.getSonetUserByUsername(username);
+        Album album = this.albumRepository.findById(albumId).orElseThrow(() -> new NotFoundException(Album.class));
+
+        if(sonetUser.getLikedAlbums().contains(album)) {
+            sonetUser.getLikedAlbums().remove(album);
+            album.setLikes(album.getLikes()-1);
+        }
+        else {
+            sonetUser.getLikedAlbums().add(album);
+            album.setLikes(album.getLikes()+1);
+        }
+        this.sonetUserService.updateSonetUser(sonetUser);
+        this.albumRepository.save(album);
     }
 }

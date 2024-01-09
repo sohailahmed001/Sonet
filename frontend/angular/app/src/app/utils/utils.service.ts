@@ -29,16 +29,20 @@ export class UtilsService {
     return this.httpClient.get(this.apiURL + serviceName, { params: queryParams, withCredentials: true });
   }
 
-  getObjectByID(serviceName: string, id: any) {
+  getObjectByID(serviceName: string, id: any): Observable<any> {
     return this.httpClient.get(this.apiURL + serviceName + '/' + id, {withCredentials: true});
   }
 
-  saveObjects(serviceName: string , createdObj : any){
+  saveObjects(serviceName: string , createdObj : any): Observable<any> {
     return this.httpClient.post(this.apiURL + serviceName, createdObj, {withCredentials: true});
   }
 
-  deleteObjects(serviceName: string , deletedObjId : any){
+  deleteObjects(serviceName: string , deletedObjId : any): Observable<any> {
     return this.httpClient.delete(this.apiURL + serviceName + '/' + deletedObjId, {withCredentials: true});
+  }
+
+  postByPathVariable(serviceName: string, id: any, body: any = {}): Observable<any> {
+    return this.httpClient.post(this.apiURL + serviceName + '/' + id, body, {withCredentials: true});
   }
 
   handleSuccessMessage(message: any = null) {

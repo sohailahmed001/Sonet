@@ -32,6 +32,9 @@ public class Album
     @Column(name = "is_published", nullable = false)
     private boolean isPublished = false;
 
+    @Column(name = "likes")
+    private Long likes = 0L;
+
     @ManyToOne
     @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
@@ -149,11 +152,36 @@ public class Album
         isPublished = published;
     }
 
+    public Long getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Long likes) {
+        this.likes = likes;
+    }
+
     public void setAttribsFrom(Album album) {
         setTitle(album.getTitle());
         setDescription(album.getDescription());
         setCoverImageURL(album.getCoverImageURL());
         setPublished(album.isPublished());
         setReleaseDate(getReleaseDate());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Album album = (Album) o;
+        return Objects.equals(id, album.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

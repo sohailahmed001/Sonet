@@ -20,14 +20,14 @@
 }
 
 .details {
-    flex: 0 0 600px;
+    flex: 0 0 800px;
     margin-left: 2rem;
     font-size: 12px;
     color: white;
     font-weight: 200;
 }
 
-.details span {
+.details > span {
     display: block;
     margin-bottom: 1rem;
 }
@@ -60,4 +60,16 @@
             fill: #85c4c1;
         }
     }
+
+    .s-playing {
+        border: 2px solid var(--secondary-theme-color);
+    }
+}
+
+.like {
+    margin-left: 0.7rem;
+}
+
+.like i {
+    font-size: 16px;
 }

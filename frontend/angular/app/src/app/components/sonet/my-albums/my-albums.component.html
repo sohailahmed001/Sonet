@@ -40,12 +40,16 @@
 
 <ng-template #albumTemplate let-rowData="rowData">
     <div class="p-3">
-      <div class="album-img-div">
+      <div class="album-img-div relative">
+        <span class="alb-like">
+            <i [style.color]="'red'" class="fa-solid fa-heart"></i>
+            {{ rowData.likes || 0 }}
+        </span>
         <img class="album-img" [src]="rowData.selectedImageURL || 'assets/images/sing-img.webp'" alt="Album Image" (click)="onAlbumSelect(rowData)">
       </div>
       <div class="text-xs pl-1 mt-1">
         <span class="block">{{ rowData.title }}</span>
-        <span class="block text-600">{{ rowData.artist?.sonetUser?.firstName }}</span>
+        <span class="block text-600">{{ rowData.artistName }}</span>
       </div>
     </div>
 </ng-template>
