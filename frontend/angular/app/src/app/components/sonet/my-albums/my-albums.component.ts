@@ -35,7 +35,7 @@ export class MyAlbumsComponent implements OnInit {
   postAlbumsFetch() {
     (this.publishedAlbums || []).forEach(album => {
       if(album.coverImageFile) {
-        album.selectedImageURL = 'data:image/jpeg;base64,'+ album.coverImageFile;
+        album.selectedImageURL = this.utilsService.base64ImageConvertPrefix + album.coverImageFile;
       }
     })
   }

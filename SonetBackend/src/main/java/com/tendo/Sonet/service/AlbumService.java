@@ -175,4 +175,14 @@ public class AlbumService
         }
         return albumDTO;
     }
+
+    public List<AlbumDTO> getLatestAlbums() {
+        List<Album> albums = this.albumRepository.findByPublishedAndReleaseDateDesc();
+
+        if(albums != null) {
+            albums.forEach(this::setFileFieldsForAlbum);
+            return albums.stream().map(AlbumDTO::new).toList();
+        }
+        return null;
+    }
 }

@@ -48,6 +48,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { DividerModule } from 'primeng/divider';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { DividerModule } from 'primeng/divider';
     FileUploadModule,
     ImageModule,
     ScrollPanelModule,
-    DividerModule
+    DividerModule,
+    ProgressBarModule
   ],
   providers: [
     {

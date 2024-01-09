@@ -18,6 +18,7 @@ export class UtilsService {
   isMobile = false;
   errorMessages: any[];
   uniqueObjIdCounter: number = 0;
+  base64ImageConvertPrefix: string = 'data:image/jpeg;base64,';
 
   constructor(private httpClient: HttpClient,
     private msgsService: MessageService,

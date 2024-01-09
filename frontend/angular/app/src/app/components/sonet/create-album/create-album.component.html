@@ -88,12 +88,13 @@
                                     <div *ngIf="song.uploadedFileName" class="btn btn-clear mr-2">
                                         <button pButton type="button" icon="pi pi-times" (click)="onClearAudio(songUpload, song)"></button>
                                     </div>
-                                    <p-fileUpload #songUpload mode="basic" name="file" [auto]="true" [url]="baseUrl+'api/file/uploadSingle'" [withCredentials]="true" accept="audio/*" [maxFileSize]="10000000" (onUpload)="onAudioUpload($event, song)" chooseLabel="Upload Audio">
+                                    <p-fileUpload #songUpload mode="basic" name="file" [auto]="true" [url]="baseUrl+'api/file/uploadSingle'" [withCredentials]="true" accept="audio/*" [maxFileSize]="100000000" (onUpload)="onAudioUpload($event, song)" (onProgress)="onAudioUploadProgress($event, song)" chooseLabel="Upload Audio">
                                         <ng-template pTemplate="chooseicon">
                                             <i class="fas fa-music"></i>
                                         </ng-template>
                                     </p-fileUpload>
                                 </div>
+                                <p-progressBar *ngIf="song.uploadedValue && song.uploadedValue < 100" [value]="song.uploadedValue"></p-progressBar>
                             </div>
                             <div *ngIf="song.uploadedFileName" class="flex mt-2 ml-2 align-items-center">
                                 <span class="font-semibold text-pink-300 font-italic">{{ song.uploadedFileName }}</span>

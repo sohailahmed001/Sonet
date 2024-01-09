@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Album } from 'src/app/model/common.model';
 import { UtilsService } from 'src/app/utils/utils.service';
 
 @Component({
@@ -7,8 +8,7 @@ import { UtilsService } from 'src/app/utils/utils.service';
   styleUrls: ['./sonet-home.component.scss']
 })
 export class SonetHomeComponent implements OnInit {
-  songs: any[];
-  albums: any[];
+  albums: Album[];
   mostLikedAlbums: any[];
   responsiveOptions: any[];
   carouselImages: any[] = [];
@@ -16,7 +16,44 @@ export class SonetHomeComponent implements OnInit {
   constructor(private utilsService: UtilsService) { }
 
   ngOnInit(): void {
+    this.setCarouselImages()
+    this.getDataFromJSON();
+    this.getLatestPublishedAlbums();
+  }
 
+  getLatestPublishedAlbums() {
+    this.utilsService.getObjects('api/sonet/albums/latest', {}).subscribe({
+      next: (albums: any[]) => {
+        this.albums = albums;
+        this.postAlbumFetch();
+      },
+      error: (error) => {
+        this.utilsService.handleError(error);
+      }
+    });
+  }
+
+  postAlbumFetch() {
+    (this.albums || []).forEach(album => {
+      if(album.coverImageFile) {
+        album.selectedImageURL = this.utilsService.base64ImageConvertPrefix + album.coverImageFile;
+      }
+    });
+  }
+
+  getDataFromJSON() {
+    this.utilsService.getDataFromJSON('sonet.data.json').subscribe({
+      next: (sonetData) => {
+        this.albums = sonetData['albums'];
+        this.mostLikedAlbums = (sonetData['albums'] || []).slice(0, 3);
+      },
+      error: (error) => {
+        this.utilsService.handleError(error);
+      }
+    });
+  }
+
+  setCarouselImages() {
     this.carouselImages = [
       {
         name: 'Image1',
@@ -44,16 +81,5 @@ export class SonetHomeComponent implements OnInit {
           numScroll: 1
       }
     ];
-
-    this.utilsService.getDataFromJSON('sonet.data.json').subscribe({
-      next: (sonetData) => {
-        this.songs = sonetData['songs'];
-        this.albums = sonetData['albums'];
-        this.mostLikedAlbums = (sonetData['albums'] || []).slice(0, 3);
-      },
-      error: (error) => {
-        this.utilsService.handleError(error);
-      }
-    });
   }
 }

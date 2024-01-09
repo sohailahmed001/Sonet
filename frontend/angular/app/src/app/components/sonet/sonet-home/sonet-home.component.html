@@ -36,11 +36,11 @@
     <div class="flex flex-wrap">
       <div class="flex flex-column align-items-start gap-2 p-3" *ngFor="let album of albums">
         <div class="album-img-div">
-          <img class="album-img" [src]="album.image" alt="Album Image">
+          <img class="album-img" [src]="album.selectedImageURL" alt="Album Image" [routerLink]="'/sonet/album-details/' + album.id">
         </div>
         <div class="text-xs pl-1">
           <span class="block">{{ album.title }}</span>
-          <span class="block text-600">{{ album.artist }}</span>
+          <span class="block text-600">{{ album?.artist?.sonetUser?.firstName }}</span>
         </div>
       </div>
     </div>

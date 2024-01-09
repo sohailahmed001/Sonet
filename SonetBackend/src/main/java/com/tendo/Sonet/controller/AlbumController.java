@@ -54,4 +54,10 @@ public class AlbumController
         List<AlbumDTO> albums = albumService.getAllAlbumsOfArtist(id);
         return new ResponseEntity<>(albums, HttpStatus.OK);
     }
+
+    @GetMapping("/albums/latest")
+    public ResponseEntity<List<AlbumDTO>> getAllLatestAlbums() {
+        List<AlbumDTO> albums = albumService.getLatestAlbums();
+        return new ResponseEntity<>(albums, HttpStatus.OK);
+    }
 }

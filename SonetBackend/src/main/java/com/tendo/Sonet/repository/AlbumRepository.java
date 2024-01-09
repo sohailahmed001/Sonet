@@ -22,4 +22,7 @@ public interface AlbumRepository extends JpaRepository<Album, Long>
 
     @Query("SELECT DISTINCT a FROM Album a WHERE a.artist.id = :artistId")
     List<Album> findAllByArtistId(Long artistId);
+
+    @Query("SELECT a FROM Album a WHERE a.isPublished = true ORDER BY a.releaseDate DESC")
+    List<Album> findByPublishedAndReleaseDateDesc();
 }

@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Song } from 'src/app/model/common.model';
 import { SonetService } from 'src/app/services/sonet.service';
+import { UtilsService } from 'src/app/utils/utils.service';
 
 @Component({
   selector: 'app-song-playing',
@@ -19,7 +20,7 @@ export class SongPlayingComponent implements OnInit {
   isSeekingVolume = false;
   playOnLoad:boolean = false;
 
-  constructor(private sonetService: SonetService) {}
+  constructor(private sonetService: SonetService, private utilsService: UtilsService) {}
 
   ngOnInit(): void {
     this.sonetService.songPlayingSubject.subscribe((song: Song) => {
@@ -42,7 +43,7 @@ export class SongPlayingComponent implements OnInit {
     if(!song.tempAudioSrc && song.audioFile) {
       
       if(song.primaryImageFile) {
-        song.selectedImageURL = 'data:image/jpeg;base64,'+ song.primaryImageFile;
+        song.selectedImageURL = this.utilsService.base64ImageConvertPrefix + song.primaryImageFile;
       }
 
       const binaryAudioData = atob(song.audioFile);

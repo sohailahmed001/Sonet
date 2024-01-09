@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Album, Song } from 'src/app/model/common.model';
@@ -10,7 +10,7 @@ import { UtilsService } from 'src/app/utils/utils.service';
   templateUrl: './album-details.component.html',
   styleUrls: ['./album-details.component.scss']
 })
-export class AlbumDetailsComponent implements OnInit {
+export class AlbumDetailsComponent implements OnInit, OnDestroy {
   album: Album = new Album();
   songs: Song[] = [];
 
@@ -33,6 +33,10 @@ export class AlbumDetailsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.sonetService.albumBackgroundSubject.next(null);
+  }
+
   getPublishedAlbumById(id: number, errorFn?: any) {
     this.utilsService.getObjectByID('api/sonet/albums/published', id).subscribe({
       next: (data: Album) => {
@@ -51,15 +55,16 @@ export class AlbumDetailsComponent implements OnInit {
 
   postAlbumFetch() {
     if(this.album.coverImageFile) {
-      this.album.selectedImageURL = 'data:image/jpeg;base64,'+ this.album.coverImageFile;
+      this.album.selectedImageURL = this.utilsService.base64ImageConvertPrefix + this.album.coverImageFile;
+      this.sonetService.albumBackgroundSubject.next(this.album.selectedImageURL);
     }
     this.songs = this.album.songs || [];
 
     (this.songs || []).forEach(song => {
       if(song.primaryImageFile) {
-        song.selectedImageURL = 'data:image/jpeg;base64,'+ song.primaryImageFile;
+        song.selectedImageURL = this.utilsService.base64ImageConvertPrefix + song.primaryImageFile;
       }
-    })
+    });
   }
 
   onSongClick(song: Song) {

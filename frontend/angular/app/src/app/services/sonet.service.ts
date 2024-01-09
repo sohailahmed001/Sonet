@@ -13,6 +13,7 @@ export class SonetService {
     baseURL = environment.baseURL;
     PROJECT_PREFIX: string = environment.PROJECT_PREFIX;
     songPlayingSubject = new Subject<Song>();
+    albumBackgroundSubject = new Subject<string>();
 
     constructor(private http: HttpClient, private utilsService: UtilsService) { }
 

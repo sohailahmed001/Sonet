@@ -6,7 +6,7 @@ import { Album, Song } from 'src/app/model/common.model';
 import { UtilsService } from 'src/app/utils/utils.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { FileUploadEvent } from 'primeng/fileupload';
+import { FileProgressEvent, FileUploadEvent } from 'primeng/fileupload';
 import { HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -92,13 +92,13 @@ export class CreateAlbumComponent implements OnInit {
 
   postAlbumFetch() {
     if(this.album.coverImageFile) {
-      this.album.selectedImageURL = 'data:image/jpeg;base64,'+ this.album.coverImageFile;
+      this.album.selectedImageURL = this.utilsService.base64ImageConvertPrefix + this.album.coverImageFile;
     }
     this.songs = this.album.songs || [];
 
     (this.songs || []).forEach(song => {
       if(song.primaryImageFile) {
-        song.selectedImageURL = 'data:image/jpeg;base64,'+ song.primaryImageFile;
+        song.selectedImageURL = this.utilsService.base64ImageConvertPrefix + song.primaryImageFile;
       }
 
       if(song.audioFile) {
@@ -202,6 +202,11 @@ export class CreateAlbumComponent implements OnInit {
         this.utilsService.handleError(error);
       }
     });
+  }
+
+  onAudioUploadProgress(event: FileProgressEvent, song: Song) {
+    console.log('UP', event);
+    song.uploadedValue = event.progress;
   }
 
   navigateToMyAlbums() {

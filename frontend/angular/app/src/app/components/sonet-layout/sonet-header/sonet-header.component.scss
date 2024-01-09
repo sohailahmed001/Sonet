@@ -53,7 +53,13 @@
 .user-icon {
     border: 2px solid var(--secondary-theme-color);
     border-radius: 50%;
-    padding: 6px;
+    width: 2rem;
+    height: 2rem;
+}
+
+.user-icon .fa {
+    vertical-align: -webkit-baseline-middle;
+    margin-left: 2px;
 }
 
 .user-icon .fa:hover {

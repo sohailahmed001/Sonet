@@ -33,6 +33,7 @@ export class Song {
     audioFile: any;
     duration: number;
     tempAudioSrc: string;
+    uploadedValue: number;
 }
 
 export class Album {
