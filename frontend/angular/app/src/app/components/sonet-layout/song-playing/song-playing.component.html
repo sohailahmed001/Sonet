@@ -1,14 +1,14 @@
 <div class="now-playing-container">
     <div class="details">
         <div class="song-img-div">
-            <img class="song-img" src="assets/images/album4.jpg" alt="logo" >
+            <img class="song-img" [src]="song?.selectedImageURL || 'assets/images/album4.jpg'" alt="logo" >
         </div>
         <div class="description">
             <div class="s-name">
-                <span>Bird set free</span>
+                <span>{{ song?.name || 'Song name' }}</span>
             </div>
             <div class="s-artist">
-                <span>Sia</span>
+                <span>{{ song?.album?.artist?.sonetUser?.firstName || 'Artist' }}</span>
             </div>
         </div>
     </div>

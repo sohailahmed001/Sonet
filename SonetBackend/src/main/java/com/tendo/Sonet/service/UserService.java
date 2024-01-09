@@ -132,15 +132,20 @@ public class UserService implements UserDetailsService
     {
         if (user.getId() != null)
         {
-            if (user.getPassword() == null)
+            AppUser existingUser = getUserByIdWithRoles(user.getId()).orElseThrow(() -> new NotFoundException(AppUser.class));
+
+            existingUser.setUsername(user.getUsername());
+
+            if (user.getPassword() != null)
             {
-                AppUser existingUser = getUserById(user.getId()).orElseThrow(() -> new NotFoundException(AppUser.class));
-                user.setPassword(existingUser.getPassword());
+                existingUser.setPassword(this.passwordEncoder.encode(user.getPassword()));
             }
-            else
-            {
-                user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+
+            if(existingUser.getRoles() != null) {
+                existingUser.getRoles().clear();
             }
+            existingUser.setRoles(user.getRoles());
+            return saveUser(existingUser);
         }
         else
         {
@@ -151,9 +156,8 @@ public class UserService implements UserDetailsService
 
             user.setPassword(this.passwordEncoder.encode(user.getPassword()));
             user.setCreatedDate(new Date());
+            return saveUser(user);
         }
-
-        return saveUser(user);
     }
 
     public void updateCredentials(CredentialsDTO credentialsDTO) {

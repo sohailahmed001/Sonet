@@ -9,6 +9,7 @@ import { SonetService } from 'src/app/services/sonet.service';
 })
 export class SongPlayingComponent implements OnInit {
   @ViewChild('audioPlayer') audioPlayerRef: ElementRef;
+  song: Song;
   audioSamplePath: string = 'assets/sunshine-bliss.mp3' // For Testing
   controlActive: string;
   audioDuration = 0;
@@ -23,6 +24,7 @@ export class SongPlayingComponent implements OnInit {
   ngOnInit(): void {
     this.sonetService.songPlayingSubject.subscribe((song: Song) => {
       if(song) {
+        this.song = song;
         this.stop();
         this.setInitialValues();
         this.convertAudio(song);
@@ -38,6 +40,11 @@ export class SongPlayingComponent implements OnInit {
 
   convertAudio(song: Song) {
     if(!song.tempAudioSrc && song.audioFile) {
+      
+      if(song.primaryImageFile) {
+        song.selectedImageURL = 'data:image/jpeg;base64,'+ song.primaryImageFile;
+      }
+
       const binaryAudioData = atob(song.audioFile);
       const bytes = new Uint8Array(binaryAudioData.length);
 
@@ -48,8 +55,8 @@ export class SongPlayingComponent implements OnInit {
       const blob = new Blob([bytes], { type: 'audio/mpeg' });
       const audio = new Audio(URL.createObjectURL(blob)) as HTMLAudioElement;
       song.tempAudioSrc = audio.src;
-      this.audioSamplePath = song.tempAudioSrc;
     }
+    this.audioSamplePath = song.tempAudioSrc;
   }
 
   play() {

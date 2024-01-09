@@ -37,7 +37,7 @@ public class AppUser
     private Set<Role> roles;
 
     @JsonIgnoreProperties("appUser")
-    @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "appUser")
     private SonetUser sonetUser;
 
     public Long getId()

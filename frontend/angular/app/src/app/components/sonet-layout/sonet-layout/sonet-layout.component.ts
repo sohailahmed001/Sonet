@@ -46,16 +46,14 @@ export class SonetLayoutComponent implements OnInit {
           this.resetBackground('playlist-bg.jpg');
         }
       },
-    ];
-
-    if(this.authService.hasAnyRole(['ROLE_ARTIST'])) {
-      this.sideMenuItems.push({
+      {
         icon: '	fas fa-record-vinyl',
         tooltip: 'My Albums',
         tooltipOptions: this.tooltipOptions,
         routerLink: '/sonet/my-albums',
-      });
-    }
+        visible: this.authService.hasAnyRole(['ROLE_ARTIST'])
+      }
+    ];
   }
 
   resetBackground(imagePath: string) {
