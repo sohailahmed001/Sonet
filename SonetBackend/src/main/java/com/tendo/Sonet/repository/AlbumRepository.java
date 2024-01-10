@@ -25,4 +25,7 @@ public interface AlbumRepository extends JpaRepository<Album, Long>
 
     @Query("SELECT a FROM Album a WHERE a.isPublished = true ORDER BY a.releaseDate DESC")
     List<Album> findByPublishedAndReleaseDateDesc();
+
+    @Query("SELECT a FROM Album a WHERE a.isPublished = true ORDER BY a.likes DESC LIMIT 3")
+    List<Album> findByPublishedAndMostLiked();
 }

@@ -9,7 +9,7 @@ import { UtilsService } from 'src/app/utils/utils.service';
 })
 export class SonetHomeComponent implements OnInit {
   albums: Album[];
-  mostLikedAlbums: any[];
+  mostLikedAlbums: Album[];
   responsiveOptions: any[];
   carouselImages: any[] = [];
 
@@ -17,7 +17,7 @@ export class SonetHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.setCarouselImages()
-    this.getDataFromJSON();
+    this.getMostLikedAlbums();
     this.getLatestPublishedAlbums();
   }
 
@@ -25,7 +25,7 @@ export class SonetHomeComponent implements OnInit {
     this.utilsService.getObjects('api/sonet/albums/latest', {}).subscribe({
       next: (albums: any[]) => {
         this.albums = albums;
-        this.postAlbumFetch();
+        this.postAlbumFetch(this.albums);
       },
       error: (error) => {
         this.utilsService.handleError(error);
@@ -33,24 +33,36 @@ export class SonetHomeComponent implements OnInit {
     });
   }
 
-  postAlbumFetch() {
-    (this.albums || []).forEach(album => {
+  getMostLikedAlbums() {
+    this.utilsService.getObjects('api/sonet/albums/mostLiked', {}).subscribe({
+      next: (albums: any[]) => {
+        this.mostLikedAlbums = albums;
+        this.postAlbumFetch(this.mostLikedAlbums);
+      },
+      error: (error) => {
+        this.utilsService.handleError(error);
+      }
+    });
+  }
+
+  postAlbumFetch(albums: any[]) {
+    (albums || []).forEach(album => {
       if(album.coverImageFile) {
         album.selectedImageURL = this.utilsService.base64ImageConvertPrefix + album.coverImageFile;
       }
     });
   }
 
-  getDataFromJSON() {
-    this.utilsService.getDataFromJSON('sonet.data.json').subscribe({
-      next: (sonetData) => {
-        this.albums = sonetData['albums'];
-        this.mostLikedAlbums = (sonetData['albums'] || []).slice(0, 3);
+  onLikeAlbumClick(album: Album) {
+    this.utilsService.postByPathVariable('api/sonet/albums/toggleLike', album.id).subscribe({
+      next: (data: any) => {
+        console.log('onLike', data);
+        album.liked = !album.liked;
       },
       error: (error) => {
         this.utilsService.handleError(error);
       }
-    });
+    })
   }
 
   setCarouselImages() {

@@ -219,4 +219,18 @@ public class AlbumService
         this.sonetUserService.updateSonetUser(sonetUser);
         this.albumRepository.save(album);
     }
+
+    public List<AlbumDTO> getMostLikedAlbums() {
+        List<Album> albums = this.albumRepository.findByPublishedAndMostLiked();
+
+        if(albums != null) {
+            albums.forEach(this::setFileFieldsForAlbum);
+            return albums.stream().map(album -> {
+                AlbumDTO albumDTO = new AlbumDTO(album);
+                albumDTO.setLiked(this.sonetUserService.isAlbumLikedByUser(album));
+                return albumDTO;
+            }).toList();
+        }
+        return null;
+    }
 }

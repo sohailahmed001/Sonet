@@ -61,6 +61,12 @@ public class AlbumController
         return new ResponseEntity<>(albums, HttpStatus.OK);
     }
 
+    @GetMapping("/albums/mostLiked")
+    public ResponseEntity<List<AlbumDTO>> getMostLikedAlbums() {
+        List<AlbumDTO> albums = albumService.getMostLikedAlbums();
+        return new ResponseEntity<>(albums, HttpStatus.OK);
+    }
+
     @PostMapping("/albums/toggleLike/{id}")
     public ResponseEntity<Boolean> toggleLikeAlbum(@PathVariable(value = "id") Long albumId) {
         albumService.toggleLikeAlbum(albumId);

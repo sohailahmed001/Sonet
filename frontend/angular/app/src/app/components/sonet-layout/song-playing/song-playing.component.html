@@ -23,6 +23,6 @@
     </div>
     <div class="volume-container">
         <span [style.display]="'block'"><i [class]="currentVolume ? 'fas fa-volume-up' : 'fas fa-volume-mute'"></i></span>
-        <p-slider [min]="0" [max]="1" [step]="0.1" [(ngModel)]="currentVolume" (onChange)="changeVolume($event)" (onSlideEnd)="onVolumeSeekEnd($event)"></p-slider>
+        <p-slider [min]="0" [max]="1" [step]="0.01" [(ngModel)]="currentVolume" (onChange)="changeVolume($event)" (onSlideEnd)="onVolumeSeekEnd($event)"></p-slider>
     </div>
 </div>
