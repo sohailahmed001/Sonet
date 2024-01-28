@@ -1,35 +1,39 @@
-Spring Boot & Angular Starter Project
+# SONET - Audio Streaming Platform
 
+SONET is an Audio Streaming platform developed using Spring Boot, Spring Security, Spring Data JPA, JWT, Role-based authentication & authorization, Angular. User can either register as Artist OR Listener.
 
-B.E Changes:
+## Features
 
-- /SpringInit/pom.xml ->
+- **User Authentication and Authorization:**
+  - Utilizes Spring Security for secure user authentication.
+  - Implements role-based access control using JSON Web Tokens (JWT).
 
-    1) Rename following:
+- **Admin Dashboard:**
+  - Admin dashboard to manage users, their authorities & roles
 
-    <groupId>com.tendo</groupId>
-	<artifactId>SpringInit</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>SpringInit</name>
-	<description>Spring Boot Init with Spring Security</description>
+- **Artist Functionality:**
+  - Artists can create albums, add songs to albums, and publish their work.
+  - Role-based access ensures that only authorized artists can perform these actions.
 
-- /SpringInit/src/test/java ->
+- **Listener Experience:**
+  - Users can discover and listen to albums and songs.
+  - Provides an intuitive interface for users to like and express their appreciation for songs.
 
-    1) Rename package & Class accordingly
+- **Clean and Appealing UI Experience:**
+  - Delivers a visually appealing and user-friendly interface for an enhanced streaming experience.
 
-- /SpringInit/src/main/java ->
+## Technologies Used
 
-    1) Rename package & imports
-    2) Rename "SpringInitApplication" class
-    3) Update "utils/SecurityConstants.java" values
+- **Backend:**
+  - Spring Boot
+  - Spring Security
+  - Spring Data JPA
+  - JSON Web Tokens (JWT)
 
+- **Frontend:**
+  - Angular
+  - PrimeNG
+  - Scss for styling
 
-F.E Changes:
-
-- Update Title in "/frontent/angular/app/src/index.html"
-
-- Update "PROJECT_PREFIX" in "/frontent/angular/app/src/environments/environment.ts"
-
-- Update Assets and Theme under "/frontent/angular/app/src/assets"
-
-- Update "home.component.html" under "/frontent/angular/app/src/app/components/home"
+- **Database:**
+  - MySQL
