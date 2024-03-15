@@ -3,8 +3,7 @@
 SONET is an Audio Streaming platform developed using Spring Boot, Spring Security, Spring Data JPA, JWT, Role-based authentication & authorization, Angular. User can either register as Artist OR Listener.
 
 
-<img src="./frontend/angular/app/src/assets/images/Sonet-1.png" alt="Sonet1" style="height: 250px; width:500px;"/>
-<img src="./frontend/angular/app/src/assets/images/Sonet-2.png" alt="Sonet1" style="height: 250px; width:500px;"/>
+<img src="./frontend/angular/app/src/assets/images/Sonet-1.png" alt="Sonet1" style="height: 250px; width:500px;"/> <img src="./frontend/angular/app/src/assets/images/Sonet-2.png" alt="Sonet1" style="height: 250px; width:500px;"/>
 
 ## Features
 
